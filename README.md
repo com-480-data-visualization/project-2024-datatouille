@@ -1,4 +1,6 @@
-# Project of Data Visualization (COM-480)
+# Project of Data Visualization (COM-480) - Datatouille
+
+![datatouille](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/2b603de7-855f-4689-8ff1-afd2411a275e)
 
 | Student's name | SCIPER |
 | -------------- | ------ |
