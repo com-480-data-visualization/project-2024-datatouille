@@ -79,7 +79,9 @@ This plot presents Michelin Guide listings by continent, with **Europe** leading
 
 **Air conditioning** is the most common facility in Michelin Guide listings, followed by terrace and car park.
 
+![merged_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/42aa9a73-f4a9-48c3-b000-99de3df58857)
 
+The `1 Star` category shows a broader range of prices, with **Very High EUR** and **High EUR** being most common. `2 Stars` and `3 Stars` are less diverse, favoring higher prices. `Bib Gourmand` has more **Low EUR** and **Moderate EUR** options, indicating a more affordable selection.
 
 ### Related work
 
