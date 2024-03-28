@@ -71,7 +71,7 @@ This bar chart showcases that France leads significantly, followed by Japan and 
 
 This plot presents Michelin Guide listings by continent, with **Europe** leading by a substantial margin, followed by Asia and North America, while South America has the fewest listings.
 
-![restaurant_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/81870e5f-0022-4b33-ae63-2d3d9cba848a)
+![cuisine_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/e33c7bb2-6d1c-45f9-a6c2-fae0fb578d3c)
 
 Modern Cuisine dominates Michelin listings, far ahead of Creative and Japanese.
 
