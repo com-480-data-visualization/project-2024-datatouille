@@ -59,7 +59,7 @@ For some of the restaurants in Europe, there are also some entries on the websit
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
 
-Following our dataset overview, we've proceeded with exploratory data analysis (EDA) on the Michelin Guide Restaurants dataset in the [`eda.ipynb`]() notebook. This step aims to understand the dataset's structure and key characteristics, focusing on the geographical distribution of restaurants, cuisine diversity, and Michelin awards distribution.
+Following our dataset overview, we've proceeded with exploratory data analysis (EDA) on the Michelin Guide Restaurants dataset in the [`eda.ipynb`](https://github.com/com-480-data-visualization/project-2024-datatouille/blob/main/milestone1/eda.ipynb) notebook. This step aims to understand the dataset's structure and key characteristics, focusing on the geographical distribution of restaurants, cuisine diversity, and Michelin awards distribution.
 
 The analysis includes visualizing the restaurants' locations to assess geographical trends, examining the distribution of Michelin stars, and exploring the relationship between restaurant pricing and awards. These insights are crucial for our next steps, particularly for **visualizing data** on an interactive map.
 
