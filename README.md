@@ -56,7 +56,15 @@ For some of the restaurants in Europe, there are also some entries on the websit
 
 Following our dataset overview, we've proceeded with exploratory data analysis (EDA) on the Michelin Guide Restaurants dataset in the [`eda.ipynb`]() notebook. This step aims to understand the dataset's structure and key characteristics, focusing on the geographical distribution of restaurants, cuisine diversity, and Michelin awards distribution.
 
-The analysis includes visualizing the restaurants' locations to assess geographical trends, examining the distribution of Michelin stars, and exploring the relationship between restaurant pricing and awards. These insights are crucial for our next steps, particularly for visualizing data on an interactive map.
+The analysis includes visualizing the restaurants' locations to assess geographical trends, examining the distribution of Michelin stars, and exploring the relationship between restaurant pricing and awards. These insights are crucial for our next steps, particularly for **visualizing data** on an interactive map.
+
+![restaurant_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/6d577873-7430-43b9-9fd6-24f6ca87317b)
+
+This bar chart showcases that France leads significantly, followed by Japan and Italy, indicating these countries' **strong culinary reputations** and high concentration of Michelin-recognized restaurants.
+
+![continent_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/35d7b3e8-a1d6-4ee5-90e4-095ce99186da)
+
+This plot presents Michelin Guide listings by continent, with **Europe** leading by a substantial margin, followed by Asia and North America, while South America has the fewest listings.
 
 ### Related work
 
