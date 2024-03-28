@@ -73,7 +73,13 @@ This plot presents Michelin Guide listings by continent, with **Europe** leading
 
 ![cuisine_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/e33c7bb2-6d1c-45f9-a6c2-fae0fb578d3c)
 
-Modern Cuisine dominates Michelin listings, far ahead of Creative and Japanese.
+**Modern Cuisine** dominates Michelin listings, far ahead of Creative and Japanese.
+
+![facilities_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/b97f0c9b-2f4c-46ac-b970-6dc545efda65)
+
+**Air conditioning** is the most common facility in Michelin Guide listings, followed by terrace and car park.
+
+
 
 ### Related work
 
