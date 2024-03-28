@@ -21,10 +21,6 @@ Please, fill the following sections about your project.
 
 ### Dataset
 
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)), you could use also the DataSets proposed by the ENAC (see the Announcements section on Zulip).
-
 We will mainly work with the [Michelin Guide Restaurants](https://www.kaggle.com/datasets/ngshiheng/michelin-guide-restaurants-2021) dataset, which is a CSV list of restaurants mentioned by the [Michelin Guide](https://guide.michelin.com/en). The dataset consists of **6794 rows**, each representing a unique Michelin-starred restaurant. This dataset encompasses **13 columns** which provide various details about the restaurants such as:
 
 - `Name`
@@ -59,7 +55,6 @@ For some of the restaurants in Europe, there are also some entries on the websit
 > - Show some basic statistics and get insights about the data
 
 ### Related work
-
 
 > - What others have already done with the data?
 > - Why is your approach original?
