@@ -67,17 +67,25 @@ The analysis includes visualizing the restaurants' locations to assess geographi
 
 This bar chart showcases that France leads significantly, followed by Japan and Italy, indicating these countries' **strong culinary reputations** and high concentration of Michelin-recognized restaurants.
 
+---
+
 ![continent_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/35d7b3e8-a1d6-4ee5-90e4-095ce99186da)
 
 This plot presents Michelin Guide listings by continent, with **Europe** leading by a substantial margin, followed by Asia and North America, while South America has the fewest listings.
+
+---
 
 ![cuisine_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/e33c7bb2-6d1c-45f9-a6c2-fae0fb578d3c)
 
 **Modern Cuisine** dominates Michelin listings, far ahead of Creative and Japanese.
 
+---
+
 ![facilities_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/b97f0c9b-2f4c-46ac-b970-6dc545efda65)
 
 **Air conditioning** is the most common facility in Michelin Guide listings, followed by terrace and car park.
+
+---
 
 ![merged_output](https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/42aa9a73-f4a9-48c3-b000-99de3df58857)
 
