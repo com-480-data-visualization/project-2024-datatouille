@@ -1,19 +1,19 @@
 # Project of Data Visualization (COM-480) - Datatouille
 
-## Project Logo
-<p align="center">
-  <img src="https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/2b603de7-855f-4689-8ff1-afd2411a275e" alt="datatouille" width="60%"/>
-</p>
-
----
-
 | Student's name | SCIPER |
 | -------------- | ------ |
 |Nazlican Turan|315262|
 |İlker Gül|353296|
 |Berke Argin|376695|
 
-[Milestone 1](##milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
+[Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
+
+## Project Logo
+<p align="center">
+  <img src="https://github.com/com-480-data-visualization/project-2024-datatouille/assets/62402657/2b603de7-855f-4689-8ff1-afd2411a275e" alt="datatouille" width="60%"/>
+</p>
+
+---
 
 ## Milestone 1 (29th March, 5pm)
 
