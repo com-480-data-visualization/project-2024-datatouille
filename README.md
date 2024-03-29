@@ -65,9 +65,8 @@ What the Visualization Aims to Show:
 - **Detailed Restaurant Insights**: Provides in-depth information on restaurants, including services, facilities, opening hours, and reviews for a comprehensive understanding of the dining experience.
 - **Customized Dining Experience**: Offers filtering options for dietary needs, ambiance, cuisine type, and more, enabling users to find restaurants that match their specific preferences.
 - **Location-Based Filtering**: Utilizes geolocation or manual input to recommend restaurants based on their proximity to the user's chosen location, prioritizing geographical relevance.
-- **Budget Consideration**: Allows users to specify their budget, filtering restaurants to match financial constraints and align with user expectations.
+- **Personalized Recommendations**: Combines user-selected preferences and budget considerations to offer tailored restaurant recommendations, aligning options closely with individual tastes and financial expectations.
 - **Interactive Map Integration**: Visual representation of restaurants meeting location and budget criteria on an interactive map, simplifying the exploration of dining options.
-- **Personalized Recommendations**: Leverages user preferences and historical data to tailor recommendations, enhancing satisfaction by aligning with the user’s dining history and preferences.
 
 This project will be particularly beneficial for:
 - **Travelers**: Individuals visiting a new city or region can find top-rated dining experiences within easy reach of their accommodation or points of interest.
