@@ -60,7 +60,7 @@ For more details regarding **Google Places API** and **TheFork**, [see Notebook]
 
 The project aims to map Michelin Guide Restaurants, highlighting their locations, star ratings, and key details. It enriches the dining exploration by integrating additional data from Google Places and The Fork The Spoon APIs, allowing users to search by location, cuisine, and awards for a more immersive experience.
 
-What the Visualization Aims to Show:
+What We Aim to Show with the Visualization:
 - **Geographical Trends & Accessibility**: Highlights the distribution of Michelin-starred restaurants (stars and Bib Gourmand), making it easier to find quality dining options near user-selected locations.
 - **Detailed Restaurant Insights**: Provides in-depth information on restaurants, including services, facilities, opening hours, and reviews for a comprehensive understanding of the dining experience.
 - **Customized Dining Experience**: Offers filtering options for dietary needs, ambiance, cuisine type, and more, enabling users to find restaurants that match their specific preferences.
