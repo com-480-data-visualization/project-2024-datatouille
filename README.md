@@ -54,10 +54,30 @@ For some of the restaurants in Europe, there are also some entries on the websit
 > - What am I trying to show with my visualization?
 > - Think of an overview for the project, your motivation, and the target audience.
 
+---
+
+The project aims to map Michelin Guide Restaurants, highlighting their locations, star ratings, and key details. It enriches the dining exploration by integrating additional data from Google Places and The Fork The Spoon APIs, allowing users to search by location, cuisine, and awards for a more immersive experience.
+
+What the Visualization Aims to Show:
+- **Geographical Trends & Accessibility**: Highlights the distribution of Michelin-starred restaurants (stars and Bib Gourmand), making it easier to find quality dining options near user-selected locations.
+- **Detailed Restaurant Insights**: Provides in-depth information on restaurants, including services, facilities, opening hours, and reviews for a comprehensive understanding of the dining experience.
+- **Customized Dining Experience**: Offers filtering options for dietary needs, ambiance, cuisine type, and more, enabling users to find restaurants that match their specific preferences.
+- **Location-Based Filtering**: Utilizes geolocation or manual input to recommend restaurants based on their proximity to the user's chosen location, prioritizing geographical relevance.
+- **Budget Consideration**: Allows users to specify their budget, filtering restaurants to match financial constraints and align with user expectations.
+- **Interactive Map Integration**: Visual representation of restaurants meeting location and budget criteria on an interactive map, simplifying the exploration of dining options.
+- **Personalized Recommendations**: Leverages user preferences and historical data to tailor recommendations, enhancing satisfaction by aligning with the user’s dining history and preferences.
+
+This project will be particularly beneficial for:
+- **Travelers**: Individuals visiting a new city or region can find top-rated dining experiences within easy reach of their accommodation or points of interest.
+- **Budget-Conscious Diners**: Users who wish to enjoy Michelin-starred or recommended restaurants without exceeding their budgetary limits.
+- **Event Planners**: Those planning special occasions or business meetings can easily locate suitable venues that meet logistical and financial requirements.
+
 ### Exploratory Data Analysis
 
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
+
+---
 
 Following our dataset overview, we've proceeded with exploratory data analysis (EDA) on the Michelin Guide Restaurants dataset in the [`eda.ipynb`](https://github.com/com-480-data-visualization/project-2024-datatouille/blob/main/milestone1/eda.ipynb) notebook. This step aims to understand the dataset's structure and key characteristics, focusing on the geographical distribution of restaurants, cuisine diversity, and Michelin awards distribution.
 
@@ -97,6 +117,8 @@ The `1 Star` category shows a broader range of prices, with **Very High EUR** an
 > - Why is your approach original?
 > - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
 > - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
+
+---
 
 The most significant website for the users searching for Michelin Restaurants is [Guide Michelin](https://guide.michelin.com/en) which enables them to filter the restaurants based on their star ratings, price and cuisine preferances. [Via Michelin](https://www.viamichelin.com/web/Maps) is also allow users to view Michelin restaurants in a map. However, the website provides route planning services independent from Michelin-rated restaurants and offer basic filtering options based on star ratings and price which can be expanded much more. Our third inspiration is the platform [The Fork](https://www.thefork.com/) where users can search any restaurant, see their menus and filter according to their features but it's not including every Michelin Restaurants and is limited to European countries only.
 
