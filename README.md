@@ -69,7 +69,7 @@ What the Visualization Aims to Show:
 
 This project will be particularly beneficial for:
 - **Travelers**: Individuals visiting a new city or region can find top-rated dining experiences within easy reach of their accommodation or points of interest.
-- **Budget-Conscious Diners**: Users who wish to enjoy Michelin-starred or recommended restaurants without exceeding their budgetary limits.
+- **Budget-Conscious Diners**: Users who wish to enjoy Michelin Guide restaurants without exceeding their budgetary limits.
 - **Event Planners**: Those planning special occasions or business meetings can easily locate suitable venues that meet logistical and financial requirements.
 
 ### Exploratory Data Analysis
