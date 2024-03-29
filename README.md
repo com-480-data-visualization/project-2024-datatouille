@@ -48,6 +48,8 @@ In addition, we also plan to expand this data with the [Google Places API](https
 
 For some of the restaurants in Europe, there are also some entries on the website [TheFork](https://www.thefork.com/). For those restaurants, we plan to utilize the [The Fork The Spoon API](https://rapidapi.com/apidojo/api/the-fork-the-spoon), which returns further information such as chef name, accepted currency, and menu data, a nested JSON list with meal descriptions (e.g. ingredients, chef commentary, and price). 
 
+For more details regarding **Google Places API** and **TheFork**, [see Notebook](https://github.com/com-480-data-visualization/project-2024-datatouille/blob/main/milestone1/dataset_with_api_demonstration.ipynb)
+
 ### Problematic
 
 > Frame the general topic of your visualization and the main axis that you want to develop.
