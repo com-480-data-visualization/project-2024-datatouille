@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
             height: 100%;
@@ -62,10 +63,10 @@
             gap: 20px; /* Add some space between the boxes if they wrap */
         }
 
-        #chart-box, #explanation-box {
+        .chart-container {
             flex: 1; /* Each box takes equal width */
             margin: 10px; /* Adds some space between the boxes */
-            min-width: 500px; /* Set a minimum width for each box */
+            min-width: 400px; /* Set a minimum width for each box */
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -76,39 +77,15 @@
             justify-content: start;
             align-items: center;
             /* Set the height to be at least as tall as the chart, adjust as necessary */
-            min-height: 500px; 
+            min-height: 400px; 
         }
-
-        #content-area-horizontal {
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        #horizontal-chart-box {
-            flex: 1;
-            margin: 10px;
-            min-width: 600px; /* Adjust based on your layout */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #e8e8e8;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            align-items: center;
-            min-height: 500px;
-        }
-
 
         /* Add specific styles for SVG to avoid overflow */
-        #chart svg {
+        .chart-container svg {
             max-width: 100%;
             height: auto; /* Adjust height proportionally */
         }
+
         .tooltip {
             position: absolute;
             text-align: center;
@@ -132,7 +109,7 @@
             margin: auto;
             width: 80%;
             padding: 20px;
-            background-color: #f7c0c0;  
+            background-color: rgb(237, 214, 214);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
             border-radius: 8px;  
         }
@@ -153,12 +130,8 @@
         }
 
         .filter-btn.selected {
-            background-color: #007bff;
+            background-color: rgb(166, 48, 48);
             color: white;
-        }
-
-        #horizontal-chart-box {
-            padding: 20px;
         }
 
         .tooltip {
@@ -194,35 +167,25 @@
     </div>
 
     <div id="content-area">
-        <div id="chart-box">
+        <div class="chart-container">
             <h2 style="text-align: center;">Michelin Guide Listings by Continent</h2>
             <div id="chart"></div>
         </div>
-        <div id="explanation-box">
-            <h2 style="text-align: center;">Chart Explanation</h2>
-            <p>This chart visualizes the distribution of Michelin Guide listings by continent, showing a significant concentration in Europe, followed by Asia, North America, and South America. Detailed statistics help stakeholders understand market penetration and growth opportunities.</p>
+        <div class="chart-container">
+            <h2 style="text-align: center;">Michelin Map by Country</h2>
+            <div id="map-chart"></div>
         </div>
-    </div>
-
-    <div id="horizontal-chart-container">
-        <h2 style="text-align: center;">Michelin Guide Listings by Country</h2>
-        <div id="filter-container">
-            <button class="filter-btn" data-continent="All">All</button>
-            <button class="filter-btn" data-continent="Asia">Asia</button>
-            <button class="filter-btn" data-continent="Europe">Europe</button>
-            <button class="filter-btn" data-continent="North America">North America</button>
-            <button class="filter-btn" data-continent="South America">South America</button>
-        </div>
-        <div id="horizontal-chart-box">
+        <div class="chart-container">
+            <h2 style="text-align: center;">Michelin Guide Listings by Country</h2>
             <div id="horizontal-chart"></div>
         </div>
-    </div>
-
-    <div id="horizontal-chart-container">
-        <div id="chart-box">
-            <h2 style="text-align: center;">Michelin Guide  Cuisines</h2>
+        <div class="chart-container">
+            <h2 style="text-align: center;">Michelin Guide Cuisines</h2>
             <div id="second-horizontal-chart"></div>
         </div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" defer></script>
     <script src="../static/statistics.js" defer></script>
 
 </body>

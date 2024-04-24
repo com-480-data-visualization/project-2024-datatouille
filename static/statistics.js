@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initVerticalChart();
     initHorizontalChart();
     SecondHorizontalChart();
+    MapChart();
 });
 
 function initVerticalChart() {
@@ -149,6 +150,67 @@ function hideTooltip(tooltip) {
         .duration(500)
         .style("opacity", 0);
 }
+function MapChart() {
+    const michelinData = {
+        'France': 1016, 'Japan': 733, 'Italy': 651, 'USA': 600, 'Germany': 581, 'Spain': 500, 'United Kingdom': 275,
+        'Belgium': 270, 'Switzerland': 257, 'China Mainland': 242, 'Thailand': 231, 'Netherlands': 219, 'Taiwan': 182,
+        'Hong Kong SAR China': 139, 'Singapore': 132, 'South Korea': 89, 'Portugal': 73, 'Canada': 61, 'Malaysia': 50,
+        'Brazil': 47, 'Denmark': 47, 'United Arab Emirates': 41, 'Turkey': 38, 'Vietnam': 33, 'Ireland': 33,
+        'Sweden': 29, 'Austria': 25, 'Croatia': 25, 'Macau SAR China': 22, 'Norway': 21, 'Greece': 17, 'Slovenia': 16,
+        'Luxembourg': 16, 'Hungary': 15, 'Argentina': 14, 'Poland': 10, 'Malta': 10, 'Finland': 9, 'Estonia': 8,
+        'Czech Republic': 7, 'Latvia': 4, 'Iceland': 3, 'Serbia': 2, 'Andorra': 1
+    };
+
+    // Mapping ISO Alpha-3 country codes for visualization purposes (not needed in this case)
+
+    // Prepare data for Plotly map visualization
+    const expandedData = Object.keys(michelinData).map(country => ({
+        'Country': country,
+        'Listings': michelinData[country]
+    }));
+
+    const fig = {
+        data: [{
+            type: 'choropleth',
+            locationmode: 'country names',
+            locations: expandedData.map(item => item.Country),
+            z: expandedData.map(item => item.Listings),
+            text: expandedData.map(item => `${item.Country}: ${item.Listings} listings`),
+            colorscale: 'Greens',
+            colorbar: {
+                title: 'Listings'
+            }
+        }],
+        layout: {
+            geo: {
+                showframe: false,
+                showcoastlines: false,
+                projection: {
+                    type: 'natural earth'
+                },
+                showcountries: true,
+                showland: true,
+                countrywidth: 0.5,
+                landcolor: 'lightgrey',
+                countrycolor: 'grey',
+                bgcolor: 'lightblue',
+                lakecolor: 'blue'
+            },
+            margin: {
+                r: 0,
+                t: 50,
+                l: 0,
+                b: 0
+            }
+        }
+    };
+
+    const mapChartDiv = document.getElementById('map-chart');
+    Plotly.newPlot(mapChartDiv, fig);
+}
+
+
+
 function SecondHorizontalChart() {
     const cuisineData = {
         "Modern Cuisine": 918,
