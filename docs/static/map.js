@@ -1,7 +1,7 @@
 // Define constants for configuration
 const MAP_CENTER = [46.519653, 6.632273];
 const MAP_ZOOM_LEVEL = 10;
-const DATA_URL = "../data/michelin_restaurants.geojson";
+const DATA_URL = "/data/michelin_restaurants.geojson";
 
 let currentFilters = {}; // Store current filters globally
 let allFeaturesData = []; // Cache all features data
