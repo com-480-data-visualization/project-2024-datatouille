@@ -229,6 +229,7 @@ function createPopupContent(datapoint) {
         <p><strong>Country:</strong> ${datapoint.properties.Country}</p>
         <p><strong>City:</strong> ${datapoint.properties.City}</p>
         <p><strong>Award:</strong> ${awardImageHtml}</p>
+        <p><strong>Cuisine:</strong> ${datapoint.properties.PrimaryCuisine}</p>
     `;
 }
 
@@ -327,7 +328,7 @@ function applyFilters(data, filters) {
         if (filters.awards && filters.awards.length > 0 && !filters.awards.includes(d.properties.Award)) return false;
         if (filters.continents && filters.continents.length > 0 && !filters.continents.includes(d.properties.Continent)) return false;
         if (filters.priceRange && d.properties.priceRange !== filters.priceRange) return false;
-        if (filters.cuisineType && d.properties.cuisineType !== filters.cuisineType) return false;
+        if (filters.cuisineType && d.properties.cuisineType !== filters.PrimaryCuisine) return false;
         if (filters.ambiance && d.properties.ambiance !== filters.ambiance) return false;
         return true;
     });
