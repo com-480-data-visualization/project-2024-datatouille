@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Project - Datatouille</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Roboto', sans-serif;
+        }
+        #nav-bar {
+            width: 100%;
+            background-color: #faf7f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px;
+            height: 100px; /* Assuming 70px is the total height including padding */
+        }
+        .navbar-title, .navbar-logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo {
+            height: 70px;
+            margin-right: 2px; /* Space between logo and title */
+        }
+        .navbar-title {
+            color: rgb(166, 48, 48);
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .navbar-nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .navbar a {
+            color: rgb(166, 48, 48);
+            padding: 14px 30px;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            font-size: 18px;
+        }
+        .content {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: rgb(166, 48, 48); /* Dark blue for a modern look */
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            background-color: #e7e7ef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        .feature-icon img {
+            width: 50%;
+        }
+        .feature-description h3 {
+            margin: 0;
+            color: rgb(166, 48, 48);
+        }
+        .intro-paragraph {
+            margin-bottom: 2em; /* Adds space equivalent to roughly 2 lines */
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-bar" class="navbar navbar-expand-lg navbar-dark">
+        <div class="navbar-logo-container">
+            <img src="../static/images/website_logo.jpg" class="navbar-logo" alt="Website Logo">
+            <!-- Make the title a link to the main page -->
+            <a href="../index.html" class="navbar-title-link">
+                <div class="navbar-title">Datatouille</div>
+            </a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <!-- Make the Home link refer back to the main page -->
+            <a class="navbar-title-link" href="../index.html">Home</a>
+            <a class="navbar-title-link" href="../templates/michelin_guide.html">Michelin Guide</a>
+            <a class="navbar-title-link" href="../templates/statistics.html">Statistics</a>
+            <a class="navbar-title-link" href="../templates/about_us.html">About Us</a>
+            <a class="navbar-title-link" href="#about-project">Project</a>
+        </div>
+    </div>
+    <div class="content">
+        <h1>About Our Project</h1>
+        <p class="intro-paragraph">Welcome to Datatouille! Our mission is to enrich the dining experience by integrating data from Michelin Guide with Google Places API, allowing for a comprehensive exploration of dining options tailored to user preferences.</p>
+        <h2>What We Aim to Show with the Visualization:</h2>
+        
+        <!-- Existing feature -->
+        <div class="feature">
+            <div class="feature-icon">
+                <img src="../static/icons/geography-icon.png" alt="Geographical Trends">
+            </div>
+            <div class="feature-description">
+                <h3>Geographical Trends & Accessibility</h3>
+                <p>Highlights the distribution of Michelin-starred restaurants, enhancing the discovery of quality dining options near user-selected locations.</p>
+            </div>
+        </div>
+        
+        <!-- Additional features -->
+        <div class="feature">
+            <div class="feature-icon">
+                <img src="../static/icons/insight-icon.png" alt="Detailed Insights">
+            </div>
+            <div class="feature-description">
+                <h3>Detailed Restaurant Insights</h3>
+                <p>Provides in-depth information on restaurants, including services, facilities, opening hours, and reviews for a comprehensive understanding of the dining experience.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">
+                <img src="../static/icons/custom-dining-icon.png" alt="Customized Dining">
+            </div>
+            <div class="feature-description">
+                <h3>Customized Dining Experience</h3>
+                <p>Offers filtering options for dietary needs, ambiance, cuisine type, and more, enabling users to find restaurants that match their specific preferences.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">
+                <img src="../static/icons/location-icon.png" alt="Location-Based Filtering">
+            </div>
+            <div class="feature-description">
+                <h3>Location-Based Filtering</h3>
+                <p>Utilizes geolocation or manual input to recommend restaurants based on their proximity to the user's chosen location, prioritizing geographical relevance.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">
+                <img src="../static/icons/recommendation-icon.png" alt="Personalized Recommendations">
+            </div>
+            <div class="feature-description">
+                <h3>Personalized Recommendations</h3>
+                <p>Combines user-selected preferences and budget considerations to offer tailored restaurant recommendations, aligning options closely with individual tastes and financial expectations.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">
+                <img src="../static/icons/map-icon.png" alt="Interactive Map">
+            </div>
+            <div class="feature-description">
+                <h3>Interactive Map Integration</h3>
+                <p>Visual representation of restaurants meeting location and budget criteria on an interactive map, simplifying the exploration of dining options.</p>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

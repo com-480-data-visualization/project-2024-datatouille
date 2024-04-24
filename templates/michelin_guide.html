@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Michelin Guide - Datatouille</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Roboto', sans-serif;
+        }
+        #nav-bar {
+            width: 100%;
+            background-color: #faf7f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            height: 100px;
+        }
+        .navbar-title, .navbar-logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo {
+            height: 70px;
+            margin-right: 2px;
+        }
+        .navbar-title {
+            color: rgb(166, 48, 48);
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .navbar-nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .navbar a {
+            color: rgb(166, 48, 48);
+            padding: 14px 30px;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            font-size: 18px;
+        }
+        .main-title {
+            text-align: center;
+            font-size: 32px;
+            margin-top: 20px;
+            color: #a63030;
+        }
+        .tv-frame {
+            width: calc(80% + 60px); /* Video frame */
+            margin: 40px auto; /* Adjusting */
+            background-color: #333; 
+            border-radius: 20px; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); 
+            padding: 30px; 
+            box-sizing: border-box; 
+            border: 5px solid rgba(255, 255, 255, 0.2); 
+        }
+
+        .video-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            position: relative;
+            height: 0;
+        }
+
+        .video-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+        .text-content {
+            padding: 20px;
+            text-align: justify;
+            max-width: 800px; /* Ensures text lines are not too long */
+            margin: 40px auto;
+            font-size: 18px;
+            line-height: 1.6; /* Enhances readability */
+            color: #333;
+        }
+        .video-title {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #a63030; /* Keeping it consistent with your main title color */
+            font-family: 'Montserrat', sans-serif; /* Ensuring font consistency */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="nav-bar" class="navbar navbar-expand-lg navbar-dark">
+        <div class="navbar-logo-container">
+            <img src="../static/images/website_logo.jpg" class="navbar-logo" alt="Website Logo">
+            <a href="../index.html" class="navbar-title-link">
+                <div class="navbar-title">Datatouille</div>
+            </a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a class="navbar-title-link" href="../index.html">Home</a>
+            <a class="navbar-title-link" href="#michelin-guide">Michelin Guide</a>
+            <a class="navbar-title-link" href="../templates/statistics.html">Statistics</a>
+            <a class="navbar-title-link" href="../templates/about_us.html">About Us</a>
+            <a class="navbar-title-link" href="../templates/about_project.html">Project</a>
+        </div>
+    </div>
+    <h1 class="main-title">Michelin Guide</h1>
+    <div class="text-content">
+        <p>The Michelin Guide is a prestigious rating system used to grade restaurants on their quality. The guide was first created in 1900 by the French tire company Michelin as a way to increase demand for automobiles—and accordingly, tires—by encouraging car owners to take road trips to fine dining destinations. Over the years, it has evolved into a respected authority in the culinary world.</p>
+        <p>The Michelin Guide awards up to three stars based on anonymous reviews by its inspectors. One star signifies "a very good restaurant in its category," offering cuisine prepared to a consistently high standard. Two stars are given for "excellent cooking, worth a detour," where dishes demonstrate skillful and careful crafting of superior ingredients. Three stars, the highest level of distinction, indicate "exceptional cuisine, worth a special journey." At this level, restaurants display a distinctive character and a mastery of technique in their dishes that elevate them above their peers.</p>
+        <p>Apart from stars, the Michelin Guide also recognizes smaller establishments that provide good food at moderate prices with a Bib Gourmand designation. This award highlights restaurants offering "good meals at reasonable prices," a concept that varies from city to city. Over the decades, the Michelin Guide has expanded globally, influencing restaurant trends and elevating culinary standards around the world. However, its ratings can also be a source of controversy, as some critics argue that the criteria can be overly rigid, lacking in transparency, or biased towards certain styles of cooking or dining experiences. Regardless, the impact of a Michelin star on a restaurant's business and reputation is profound and indisputable.</p>
+    </div>
+    <p class="video-title">To learn more about Michelin Guide ratings, watch this video:</p>
+    <div class="tv-frame">
+        <div class="video-responsive">
+            <iframe src="https://www.youtube.com/embed/tceSuaTbcU8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
