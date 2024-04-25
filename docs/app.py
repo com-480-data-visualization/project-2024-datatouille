@@ -5,7 +5,7 @@ import json
 
 app = Flask(__name__)
 
-@app.route('project-2024-datatouille/data/michelin_restaurants.geojson')
+@app.route('/project-2024-datatouille/data/michelin_restaurants.geojson')
 def places():
     with open('data/michelin_restaurants.geojson') as f:
         data = json.load(f)
