@@ -169,6 +169,9 @@ function updateMapCenter() {
     } else if (currentFilters.continents && currentFilters.continents.length > 1) {
         // More general view for multiple continents
         map.setView([0, 0], 3); // World view
+    } else if ( currentFilters.awards || currentFilters.priceRange || currentFilters.ambiance || currentFilters.cuisine) {
+        // More general view for multiple continents
+        return;
     } else {
         // Default view
         map.setView(MAP_CENTER, MAP_ZOOM_LEVEL);
@@ -234,7 +237,7 @@ function createPopupContent(datapoint) {
 }
 
 function getAwardImage(award) {
-    const baseImgPath = "/project-2024-datatouille/static/images/";
+    const baseImgPath = "../static/images/";
     // Define a structure containing filename and specific width for each award type
     const awards = {
         "Bib Gourmand": { file: "bib_gourmand.jpg", width: 30 },
@@ -305,20 +308,107 @@ function toggleFilterPanel() {
 
 function initializeFilterControls() {
     document.getElementById('apply-filters').addEventListener('click', function() {
+        let selectedCuisines = Array.from(document.querySelectorAll('.cuisine-chip .cuisine-text')).map(span => span.textContent.trim());
+        // Check if any cuisines are selected; if none, set to null
+        selectedCuisines = selectedCuisines.length > 0 ? selectedCuisines : null;
         currentFilters = {
             country: document.getElementById('country-input').value || null,
             city: document.getElementById('city-input').value || null,
             name: document.getElementById('name-input').value || null,
-            awards: Array.from(document.querySelectorAll('#filter-form input[name="award"]:checked')).map(input => input.value),
+            awards: (tempAwards = Array.from(document.querySelectorAll('#filter-form input[name="award"]:checked')).map(input => input.value), tempAwards.length > 0 ? tempAwards : null),
             continents: Array.from(document.querySelectorAll('#filter-form input[name="continent"]:checked')).map(input => input.value),
             priceRange: document.getElementById('price-range').value || null,
-            cuisineType: document.getElementById('cuisine-type-input').value || null,
-            ambiance: document.getElementById('ambiance').value || null
+            ambiance: document.getElementById('ambiance').value || null,
+            cuisine: selectedCuisines,
         };
         console.log('Applying filters:', currentFilters);
         processFilteredData(); // Reload data with new filters
     });
 }
+
+const predefinedCuisines = [
+    'Afghan', 'Alpine', 'Alsatian', 'American', 'Andalusian', 'Anago / Saltwater Eel', 'Apulian', 'Argentinian', 'Asian',
+    'Asian and Western', 'Asian Contemporary', 'Asian Influences', 'Austrian', 'Bakery', 'Balkan', 'Barbecue', 'Basque',
+    'Bavarian', 'Beef', 'Beijing Cuisine', 'Belgian', 'Brazilian', 'Breton', 'British Contemporary', 'Bulgogi', 'Burmese',
+    'Calabrian', 'Californian', 'Campanian', 'Cantonese', 'Cantonese Roast Meats', 'Caribbean', 'Catalan', 'Central Asian',
+    'Chao Zhou', 'Chicken Specialities', 'Chinese', 'Chinese Contemporary', 'Chiu Chow', 'Classic Cuisine', 'Classic French',
+    'Colombian', 'Congee', 'Contemporary', 'Corsican', 'Country cooking', 'Creole', 'Creative', 'Creative British', 'Creative French',
+    'Croatian', 'Crab Specialities', 'Cuban', 'Cuisine from Abruzzo', 'Cuisine from Basilicata', 'Cuisine from Lazio',
+    'Cuisine from Romagna', 'Cuisine from South West France', 'Cuisine from the Aosta Valley', 'Cuisine from the Marches',
+    'Cuisine from Valtellina', 'Czech', 'Danish', 'Deli', 'Dim Sum', 'Doganitang', 'Dongbei', 'Dumplings', 'Dubu', 'Dwaeji-gukbap',
+    'Emilian', 'Emirati Cuisine', 'Ethiopian', 'European', 'European Contemporary', 'Farm to table', 'Filipino', 'Finnish',
+    'French', 'French Contemporary', 'Friulian', 'Fujian', 'Fugu / Pufferfish', 'Fusion', 'Galician', 'Gastropub', 'Gejang',
+    'German', 'Greek', 'Grills', 'Gomtang', 'Hang Zhou', 'Hakkanese', 'Home Cooking', 'Hotpot', 'Huaiyang', 'Hubei',
+    'Hunanese', 'Indian', 'Indian Vegetarian', 'Indonesian', 'Innovative', 'International', 'Iranian', 'Iraqi', 'Irish',
+    'Israeli', 'Italian', 'Italian-American', 'Italian Contemporary', 'Izakaya', 'Jiangzhe', 'Japanese', 'Japanese Contemporary',
+    'Jokbal', 'Korean', 'Korean Contemporary', 'Kushiage', 'Lamb dishes', 'Latin American', 'Lebanese', 'Ligurian',
+    'Lombardian', 'Macanese', 'Malaysian', 'Mandu', 'Mantuan', 'Meats and Grills', 'Memil-guksu', 'Mexican', 'Middle Eastern',
+    'Modern British', 'Modern Cuisine', 'Modern French', 'Naengmyeon', 'Nepali', 'Ningbo', 'Noodles', 'Noodles and Congee',
+    'Norwegian', 'Northern Thai', 'North African', 'Obanzai', 'Oden', 'Okonomiyaki', 'Onigiri', 'Organic', 'Pakistani',
+    'Pasta', 'Peking Duck', 'Peranakan', 'Peruvian', 'Piedmontese', 'Piedmontese', 'Pies and pastries', 'Pizza', 'Polish',
+    'Pork', 'Portuguese', 'Provençal', 'Regional Cuisine', 'Roman', 'Russian', 'Sardine Specialities', 'Sardinian', 'Savoyard',
+    'Scandinavian', 'Seafood', 'Seasonal Cuisine', 'Seolleongtang', 'Shandong', 'Sharing', 'Shanghai', 'Shanghainese', 'Shojin',
+    'Sicilian', 'Singaporean', 'Singaporean and Malaysian', 'Sichuan', 'Smørrebrød', 'Soba', 'South African', 'South East Asian',
+    'South Indian', 'South Tyrolean', 'Southern', 'Southern Thai', 'Spanish', 'Spanish Contemporary', 'Steakhouse', 'Street Food',
+    'Sujebi', 'Swedish', 'Swiss', 'Taiwanese', 'Taiwanese contemporary', 'Taizhou', 'Tempura', 'Teochew', 'Teppanyaki',
+    'Tex-Mex', 'Thai', 'Thai contemporary', 'Thai-Chinese', 'Tibetan', 'Tonkatsu', 'Traditional British', 'Traditional Cuisine',
+    'Turkish', 'Tuscan', 'Udon', 'Umbrian', 'Unagi / Freshwater Eel', 'Vegan', 'Vegetarian', 'Venetian', 'Vietnamese',
+    'Vietnamese Contemporary', 'World Cuisine', 'Xibei', 'Xinjiang', 'Yakitori', 'Yoshoku', 'Yukhoe', 'Yunnanese', 'Zhejiang'
+];
+
+document.getElementById('cuisine-input').addEventListener('input', function() {
+    const input = this.value;
+    const cuisineList = document.getElementById('cuisine-list');
+    cuisineList.innerHTML = ''; // Clear existing suggestions
+
+    if (input.length > 0) {
+        const filteredCuisines = predefinedCuisines.filter(cuisine =>
+            cuisine.toLowerCase().includes(input.toLowerCase())
+        );
+
+        filteredCuisines.forEach(function(cuisine) {
+            const div = document.createElement('div');
+            div.textContent = cuisine;
+            div.className = 'suggestion-item';
+            div.onclick = function() {
+                document.getElementById('cuisine-input').value = '';
+                addSelectedCuisine(cuisine);
+                cuisineList.innerHTML = ''; // Clear suggestions after selection
+            };
+            cuisineList.appendChild(div);
+        });
+    }
+});
+
+function addSelectedCuisine(cuisine) {
+    const container = document.getElementById('selected-cuisines');
+    const chip = document.createElement('div');
+    chip.className = 'cuisine-chip';
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = cuisine;
+    textSpan.className = 'cuisine-text';  // A specific class for the text part
+
+    const closeBtn = document.createElement('span');
+    closeBtn.textContent = '×';
+    closeBtn.className = 'close-btn';
+    closeBtn.onclick = function() {
+        container.removeChild(chip);
+    };
+
+    chip.appendChild(textSpan);
+    chip.appendChild(closeBtn);
+    container.appendChild(chip);
+}
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', function(event) {
+    const cuisineInput = document.getElementById('cuisine-input');
+    const cuisineList = document.getElementById('cuisine-list');
+    if (!cuisineInput.contains(event.target)) {
+        cuisineList.innerHTML = '';
+    }
+});
 
 function applyFilters(data, filters) {
     return data.filter(d => {
@@ -328,8 +418,9 @@ function applyFilters(data, filters) {
         if (filters.awards && filters.awards.length > 0 && !filters.awards.includes(d.properties.Award)) return false;
         if (filters.continents && filters.continents.length > 0 && !filters.continents.includes(d.properties.Continent)) return false;
         if (filters.priceRange && d.properties.priceRange !== filters.priceRange) return false;
-        if (filters.cuisineType && d.properties.cuisineType !== filters.PrimaryCuisine) return false;
         if (filters.ambiance && d.properties.ambiance !== filters.ambiance) return false;
+        // New filter condition for cuisine
+        if (filters.cuisine && filters.cuisine.length > 0 && !filters.cuisine.some(cuisine => d.properties.PrimaryCuisine.toLowerCase() === cuisine.toLowerCase())) return false;
         return true;
     });
 }
