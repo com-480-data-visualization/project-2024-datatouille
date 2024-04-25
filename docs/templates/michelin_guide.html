@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <style>
         body {
             height: 100%;
@@ -93,6 +98,15 @@
             line-height: 1.6; /* Enhances readability */
             color: #333;
         }
+        .text-content1 {
+            padding: 5px;
+            text-align: justify;
+            max-width: 800px; /* Ensures text lines are not too long */
+            margin: 40px auto;
+            font-size: 18px;
+            line-height: 1.6; /* Enhances readability */
+            color: #333;
+        }
         .video-title {
             text-align: center;
             margin-top: 10px;
@@ -101,6 +115,51 @@
             color: #a63030; /* Keeping it consistent with your main title color */
             font-family: 'Montserrat', sans-serif; /* Ensuring font consistency */
         }
+        #accordion {
+            max-width: 800px; /* Set the maximum width */
+            margin: 0 auto; /* Center the accordion horizontally */
+        }
+        /* Accordion Styles */
+        #accordion .card {
+            border: none; /* Remove default card border */
+            border-bottom: 1px solid #ddd; /* Only a subtle bottom border */
+            border-radius: 0; /* No border radius for a more modern look */
+        }
+
+        #accordion .card-header {
+            background-color: #faf7f7; /* Light background to match navbar */
+            border-bottom: 1px solid #ddd; /* Subtle line to separate headers */
+            padding: .75rem 1.25rem; /* Comfortable padding around accordion header */
+        }
+
+        #accordion .card-header h5 {
+            margin-bottom: 0; /* Remove margin-bottom from header titles */
+        }
+
+        #accordion .btn-link {
+            text-decoration: none; /* Remove underline from links */
+            color: #a63030; /* Color to match your primary theme */
+            font-size: 1.1rem; /* Slightly larger font for readability */
+            transition: color 0.3s ease; /* Smooth color transition on hover/focus */
+        }
+
+        #accordion .btn-link:hover, #accordion .btn-link:focus {
+            color: #6f1e1e; /* Darker shade on hover/focus for visual feedback */
+        }
+
+        #accordion .collapse.show .card-body {
+            padding: 1rem; /* Padding inside the body of the expanded item */
+        }
+
+        #accordion .card-body p {
+            margin-bottom: .5rem; /* Reduced space between paragraphs */
+            font-size: 0.9rem; /* Slightly smaller font size for the content */
+        }
+
+        #accordion .collapse {
+            border: none; /* No additional border for collapsed items */
+        }
+
 
     </style>
 </head>
@@ -126,6 +185,419 @@
         <p>The Michelin Guide awards up to three stars based on anonymous reviews by its inspectors. One star signifies "a very good restaurant in its category," offering cuisine prepared to a consistently high standard. Two stars are given for "excellent cooking, worth a detour," where dishes demonstrate skillful and careful crafting of superior ingredients. Three stars, the highest level of distinction, indicate "exceptional cuisine, worth a special journey." At this level, restaurants display a distinctive character and a mastery of technique in their dishes that elevate them above their peers.</p>
         <p>Apart from stars, the Michelin Guide also recognizes smaller establishments that provide good food at moderate prices with a Bib Gourmand designation. This award highlights restaurants offering "good meals at reasonable prices," a concept that varies from city to city. Over the decades, the Michelin Guide has expanded globally, influencing restaurant trends and elevating culinary standards around the world. However, its ratings can also be a source of controversy, as some critics argue that the criteria can be overly rigid, lacking in transparency, or biased towards certain styles of cooking or dining experiences. Regardless, the impact of a Michelin star on a restaurant's business and reputation is profound and indisputable.</p>
     </div>
+
+    <div class="container mt-4 mb-4">
+        <h1 class="main-title">Restaurants' Price Range Index</h1>
+        <div class="text-content1">
+            <p>Here's what the price symbols mean in the MICHELIN Guide:</p>
+        </div>
+        <div id="accordion">
+            <!-- Each card in the accordion represents a region -->
+            <div class="card">
+                <div class="card-header" id="headingUSA">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseUSA" aria-expanded="false" aria-controls="collapseUSA">
+                            USA
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseUSA" class="collapse" aria-labelledby="headingUSA" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>$:</strong> &lt; $25</p>
+                        <p><strong>$$:</strong> $25-50</p>
+                        <p><strong>$$$:</strong> $50-75</p>
+                        <p><strong>$$$$:</strong> &gt; $75</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Euro-Zone -->
+            <div class="card">
+                <div class="card-header" id="headingEuroZone">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEuroZone" aria-expanded="false" aria-controls="collapseEuroZone">
+                            Euro-Zone
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseEuroZone" class="collapse" aria-labelledby="headingEuroZone" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; €35</p>
+                        <p><strong>€€:</strong> €35-60</p>
+                        <p><strong>€€€:</strong> €60-100</p>
+                        <p><strong>€€€€:</strong> &gt; €100</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for UK -->
+            <div class="card">
+                <div class="card-header" id="headingUK">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseUK" aria-expanded="false" aria-controls="collapseUK">
+                            UK
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseUK" class="collapse" aria-labelledby="headingUK" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>£:</strong> &lt; £25</p>
+                        <p><strong>££:</strong> £25-50</p>
+                        <p><strong>£££:</strong> £50-90</p>
+                        <p><strong>££££:</strong> &gt; £90</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Czechia -->
+            <div class="card">
+                <div class="card-header" id="headingCzechia">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseCzechia" aria-expanded="false" aria-controls="collapseCzechia">
+                            Czechia
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseCzechia" class="collapse" aria-labelledby="headingCzechia" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; Kronen 800</p>
+                        <p><strong>€€:</strong> Kronen 800-1'200</p>
+                        <p><strong>€€€:</strong> Kronen 1'200-2'000</p>
+                        <p><strong>€€€€:</strong> &gt; Kronen 2'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for China -->
+            <div class="card">
+                <div class="card-header" id="headingChina">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseChina" aria-expanded="false" aria-controls="collapseChina">
+                            China
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseChina" class="collapse" aria-labelledby="headingChina" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>$:</strong> &lt; ¥100</p>
+                        <p><strong>$$:</strong> ¥100-400</p>
+                        <p><strong>$$$:</strong> ¥400-1'000</p>
+                        <p><strong>$$$$:</strong> &gt; ¥1'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Denmark -->
+            <div class="card">
+                <div class="card-header" id="headingDenmark">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseDenmark" aria-expanded="false" aria-controls="collapseDenmark">
+                            Denmark
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseDenmark" class="collapse" aria-labelledby="headingDenmark" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; DKK400</p>
+                        <p><strong>€€:</strong> DKK400-800</p>
+                        <p><strong>€€€:</strong> DKK800-1'800</p>
+                        <p><strong>€€€€:</strong> &gt; DKK1'800</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Hong Kong -->
+            <div class="card">
+                <div class="card-header" id="headingHongkong">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseHongkong" aria-expanded="false" aria-controls="collapseHongkong">
+                            Hong Kong
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseHongkong" class="collapse" aria-labelledby="headingHongkong" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>$:</strong> &lt; HK$100</p>
+                        <p><strong>$$:</strong> HK$100-800</p>
+                        <p><strong>$$$:</strong> HK$800-1'600</p>
+                        <p><strong>$$$$:</strong> &gt; HK$1'600</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Hungary -->
+            <div class="card">
+                <div class="card-header" id="headingHungary">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseHungary" aria-expanded="false" aria-controls="collapseHungary">
+                            Hungary
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseHungary" class="collapse" aria-labelledby="headingHungary" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; Ft8'000</p>
+                        <p><strong>€€:</strong> Ft8'000-16'000</p>
+                        <p><strong>€€€:</strong> Ft16'000-25'000</p>
+                        <p><strong>€€€€:</strong> &gt; Ft25'000</p>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- Card for Iceland -->
+            <div class="card">
+                <div class="card-header" id="headingIceland">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseIceland" aria-expanded="false" aria-controls="collapseIceland">
+                            Iceland
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseIceland" class="collapse" aria-labelledby="headingIceland" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; ISK600</p>
+                        <p><strong>€€:</strong> ISK600-800</p>
+                        <p><strong>€€€:</strong> ISK800-1'500</p>
+                        <p><strong>€€€€:</strong> &gt; ISK1'500</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Japan -->
+            <div class="card">
+                <div class="card-header" id="headingJapan">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseJapan" aria-expanded="false" aria-controls="collapseJapan">
+                            Japan
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseJapan" class="collapse" aria-labelledby="headingJapan" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>¥:</strong> &lt; ¥5'000</p>
+                        <p><strong>¥¥:</strong> ¥5'000-10'000</p>
+                        <p><strong>¥¥¥:</strong> ¥10'000-30'000</p>
+                        <p><strong>¥¥¥¥:</strong> &gt; ¥30'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Macao -->
+            <div class="card">
+                <div class="card-header" id="headingMacao">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseMacao" aria-expanded="false" aria-controls="collapseMacao">
+                            Macao
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseMacao" class="collapse" aria-labelledby="headingMacao" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>$:</strong> &lt; MOP$100</p>
+                        <p><strong>$$:</strong> MOP$100-800</p>
+                        <p><strong>$$$:</strong> MOP$800-1'600</p>
+                        <p><strong>$$$$:</strong> &gt; MOP$1'600</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Norway -->
+            <div class="card">
+                <div class="card-header" id="headingNorway">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNorway" aria-expanded="false" aria-controls="collapseNorway">
+                            Norway
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseNorway" class="collapse" aria-labelledby="headingNorway" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; NOK400</p>
+                        <p><strong>€€:</strong> NOK400-800</p>
+                        <p><strong>€€€:</strong> NOK800-1'800</p>
+                        <p><strong>€€€€:</strong> &gt; NOK1'800</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Poland -->
+            <div class="card">
+                <div class="card-header" id="headingPoland">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsePoland" aria-expanded="false" aria-controls="collapsePoland">
+                            Poland
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapsePoland" class="collapse" aria-labelledby="headingPoland" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; PLN80</p>
+                        <p><strong>€€:</strong> PLN80-150</p>
+                        <p><strong>€€€:</strong> PLN150-240</p>
+                        <p><strong>€€€€:</strong> &gt; PLN240</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Serbia -->
+            <div class="card">
+                <div class="card-header" id="headingSerbia">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSerbia" aria-expanded="false" aria-controls="collapseSerbia">
+                            Serbia
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSerbia" class="collapse" aria-labelledby="headingSerbia" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; din./дин.2'500</p>
+                        <p><strong>€€:</strong> din./дин.2'500-5'000</p>
+                        <p><strong>€€€:</strong> din./дин.5'000-8'000</p>
+                        <p><strong>€€€€:</strong> &gt; din./дин.8'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Singapore -->
+            <div class="card">
+                <div class="card-header" id="headingSingapore">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSingapore" aria-expanded="false" aria-controls="collapseSingapore">
+                            Singapore
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSingapore" class="collapse" aria-labelledby="headingSingapore" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; S$25</p>
+                        <p><strong>€€:</strong> S$25-150</p>
+                        <p><strong>€€€:</strong> S$150-300</p>
+                        <p><strong>€€€€:</strong> &gt; S$300</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for South Korea -->
+            <div class="card">
+                <div class="card-header" id="headingSouthKorea">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSouthKorea" aria-expanded="false" aria-controls="collapseSouthKorea">
+                            South Korea
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSouthKorea" class="collapse" aria-labelledby="headingSouthKorea" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>₩:</strong> &lt; ₩50'000</p>
+                        <p><strong>₩₩:</strong> ₩50'000-150'000</p>
+                        <p><strong>₩₩₩:</strong> ₩150'000-250'000</p>
+                        <p><strong>₩₩₩₩:</strong> &gt; ₩250'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Sweden -->
+            <div class="card">
+                <div class="card-header" id="headingSweden">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSweden" aria-expanded="false" aria-controls="collapseSweden">
+                            Sweden
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSweden" class="collapse" aria-labelledby="headingSweden" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; SEK400</p>
+                        <p><strong>€€:</strong> SEK400-800</p>
+                        <p><strong>€€€:</strong> SEK800-1'400</p>
+                        <p><strong>€€€€:</strong> &gt; SEK1'400</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Switzerland -->
+            <div class="card">
+                <div class="card-header" id="headingSwitzerland">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSwitzerland" aria-expanded="false" aria-controls="collapseSwitzerland">
+                            Switzerland
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSwitzerland" class="collapse" aria-labelledby="headingSwitzerland" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>€:</strong> &lt; CHF50</p>
+                        <p><strong>€€:</strong> CHF50-100</p>
+                        <p><strong>€€€:</strong> CHF80-150</p>
+                        <p><strong>€€€€:</strong> &gt; CHF150</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Taiwan -->
+            <div class="card">
+                <div class="card-header" id="headingTaiwan">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTaiwan" aria-expanded="false" aria-controls="collapseTaiwan">
+                            Taiwan
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseTaiwan" class="collapse" aria-labelledby="headingTaiwan" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>$:</strong> &lt; NT$300</p>
+                        <p><strong>$$:</strong> NT$300-2'000</p>
+                        <p><strong>$$$:</strong> NT$2'000-4'000</p>
+                        <p><strong>$$$$:</strong> &gt; NT$4'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Thailand -->
+            <div class="card">
+                <div class="card-header" id="headingThailand">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThailand" aria-expanded="false" aria-controls="collapseThailand">
+                            Thailand
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseThailand" class="collapse" aria-labelledby="headingThailand" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>฿:</strong> &lt; ฿300</p>
+                        <p><strong>฿฿:</strong> ฿300-1'500</p>
+                        <p><strong>฿฿฿:</strong> ฿1'500-4'000</p>
+                        <p><strong>฿฿฿฿:</strong> &gt; ฿4'000</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for Turkey-->
+            <div class="card">
+                <div class="card-header" id="headingTürkiye">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTürkiye" aria-expanded="false" aria-controls="collapseTürkiye">
+                            Türkiye
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseTürkiye" class="collapse" aria-labelledby="headingTürkiye" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>₺:</strong> &lt; ₺1'000</p>
+                        <p><strong>₺₺:</strong> ₺1'000-1'600</p>
+                        <p><strong>₺₺₺:</strong> ₺1'600-2'400</p>
+                        <p><strong>₺₺₺₺:</strong> &gt; ₺2'400</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Card for UAE -->
+            <div class="card">
+                <div class="card-header" id="headingUAE">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseUAE" aria-expanded="false" aria-controls="collapseUAE">
+                            UAE
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseUAE" class="collapse" aria-labelledby="headingUAE" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>$:</strong> &lt; 150</p>
+                        <p><strong>$$:</strong> 150-250</p>
+                        <p><strong>$$$:</strong> 250-350</p>
+                        <p><strong>$$$$:</strong> &gt; 350</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- Video title and frame here... -->
     <p class="video-title">To learn more about Michelin Guide ratings, watch this video:</p>
     <div class="tv-frame">
         <div class="video-responsive">
