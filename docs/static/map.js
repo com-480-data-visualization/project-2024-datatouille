@@ -473,7 +473,7 @@ function applyFilters(data, filters) {
         if (filters.name && !d.properties.Name.toLowerCase().includes(filters.name.toLowerCase())) return false;
         if (filters.awards && filters.awards.length > 0 && !filters.awards.includes(d.properties.Award)) return false;
         if (filters.continents && filters.continents.length > 0 && !filters.continents.includes(d.properties.Continent)) return false;
-        if (filters.priceRange && d.properties.priceRange !== filters.priceRange) return false;
+        if (filters.priceRange && d.properties.currentPrice !== filters.priceRange) return false;
         // New filter condition for cuisine
         if (filters.cuisine && filters.cuisine.length > 0 && !filters.cuisine.some(cuisine => d.properties.PrimaryCuisine.toLowerCase() === cuisine.toLowerCase())) return false;
         if (filters.facilitiesAndServices && filters.facilitiesAndServices.length > 0) {
