@@ -6,7 +6,7 @@
 |İlker Gül|353296|
 |Berke Argin|376695|
 
-[Milestone 1](#milestone-1-29th-march-5pm) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3) • [Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) 
+[Milestone 1](#milestone-1-29th-march-5pm) • [Milestone 2](#milestone-2-26th-april-5pm) • [Milestone 3](#milestone-3) • [Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) 
 
 ## Project Logo
 <p align="center">
@@ -133,6 +133,16 @@ By combining the past approaches and providing a platform to visualize both the 
 ## Milestone 2 (26th April, 5pm)
 
 **10% of the final grade**
+
+Here are some key resources for Milestone 2:
+
+### 📄 Project Report
+For detailed insights and analysis regarding Milestone 2, check out our comprehensive [Project Report](https://github.com/com-480-data-visualization/project-2024-datatouille/blob/main/milestone2/com480_datatouille_milestone2.pdf).
+
+### 🌐 Project Website
+Visit our initial [Project Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) to explore interactive visualizations and more detailed content about our work.
+
+
 
 
 ## Milestone 3 (31st May, 5pm)
