@@ -262,7 +262,32 @@
             background-color: #f0f0f0;
         }
     
-    </style>
+        .tag {
+            display: inline-block;
+            background-color: red; /* Red background for the tag */
+            color: white;           /* White text color */
+            padding: 5px 10px;      /* Padding around the text */
+            margin: 2px;            /* Space between tags */
+            border-radius: 5px;     /* Rounded corners for the tag */
+            cursor: pointer;        /* Pointer cursor on hover */
+        }
+    
+        .tag:hover {
+            opacity: 0.8;           /* Slightly transparent on hover for better UI feedback */
+        }
+    
+        .selected-facility ul {
+            list-style-type: disc; /* Uses default disc for bullets */
+            padding-left: 20px; /* Adjust as needed for alignment */
+            margin-top: 5px; /* Spacing above the list */
+        }
+    
+        .selected-facility ul li {
+            font-size: 15px; /* Increases font size, set to your preference */
+            margin-bottom: 5px; /* Spacing between list items */
+        }
+    
+        </style>
 
 </head>
 <body>
@@ -368,18 +393,6 @@
                     </div>
                 </div>
                 
-                <!-- Price Filter -->
-                <div class="filter-section">
-                    <label for="price-range">Price Range:</label>
-                    <select id="price-range" name="price-range">
-                        <option value="">Select</option>
-                        <option value="1">$ (Cheap)</option>
-                        <option value="2">$$ (Moderate)</option>
-                        <option value="3">$$$ (Expensive)</option>
-                        <option value="4">$$$$ (Very Expensive)</option>
-                    </select>
-                </div>
-
                 <!-- Cuisine Filter with Multiple Selection -->
                 <div class="filter-section">
                     <label for="cuisine-input">Cuisine:</label>
@@ -388,18 +401,46 @@
                     <div id="selected-cuisines" class="selected-cuisines"></div> <!-- Container for selected cuisines -->
                 </div>
 
+                <!-- Price Filter -->
+                <div class="filter-section">
+                    <label for="price-range">Price:</label>
+                    <select id="price-range" name="price-range">
+                        <option value="">Select</option>
+                        <option value="1">$ (Cheap)</option>
+                        <option value="2">$$ (Affordable)</option>
+                        <option value="3">$$$ (Moderate)</option>
+                        <option value="4">$$$$ (Expensive)</option>
+                    </select>
+                </div>
+
                 <!-- Ambiance Filter -->
                 <div class="filter-section">
-                    <label for="ambiance">Ambiance:</label>
-                    <select id="ambiance" name="ambiance">
-                        <option value="">Select</option>
-                        <option value="Casual">Casual</option>
-                        <option value="Fine Dining">Fine Dining</option>
-                        <option value="Family-Friendly">Family-Friendly</option>
-                        <option value="Romantic">Romantic</option>
-                        <option value="Cozy">Cozy</option>
-                        <option value="Outdoor">Outdoor</option>
+                    <label for="ambiance-dropdown">Facilities and Services:</label>
+                    <select id="ambiance-dropdown">
+                        <option value="">Select Facility/Service</option>
+                        <option value="Air conditioning">Air conditioning</option>
+                        <option value="Booking essential">Booking essential</option>
+                        <option value="Brunch">Brunch</option>
+                        <option value="Car park">Car park</option>
+                        <option value="Cash only">Cash only</option>
+                        <option value="Cash only - lunch">Cash only - lunch</option>
+                        <option value="Counter dining">Counter dining</option>
+                        <option value="Credit cards not accepted">No Credit cards</option>
+                        <option value="Foreign credit cards not accepted">No Foreign credit cards</option>
+                        <option value="Garden or park">Garden or park</option>
+                        <option value="Great view">Great view</option>
+                        <option value="Interesting wine list">Interesting wine list</option>
+                        <option value="No facility and/or service listed">No facility and/or service</option>
+                        <option value="Notable sake list">Notable sake list</option>
+                        <option value="Restaurant offering vegetarian menus">Vegetarian Menu</option>
+                        <option value="Reservations not accepted">No Reservations</option>
+                        <option value="Shoes must be removed">Shoes must be removed</option>
+                        <option value="Terrace">Terrace</option>
+                        <option value="Valet parking">Valet parking</option>
+                        <option value="Wheelchair access">Wheelchair access</option>
+                        <option value="Bring your own bottle">Bring your own bottle</option>
                     </select>
+                    <div id="ambiance-tag-container" class="selected-ambiance"></div>
                 </div>
         
                 <!-- Submit Button -->

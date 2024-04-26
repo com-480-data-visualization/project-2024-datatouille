@@ -227,14 +227,26 @@ function setupMarkerInteractions(marker, latLng, datapoint) {
 
 function createPopupContent(datapoint) {
     const awardImageHtml = getAwardImage(datapoint.properties.Award);
+
+    const facilitiesHtml = datapoint.properties.FacilitiesAndServices
+        .split(',')
+        .map(facility => `<li>${facility.trim()}</li>`)
+        .join('');
+
     return `
         <h2>${datapoint.properties.Name}</h2>
         <p><strong>Country:</strong> ${datapoint.properties.Country}</p>
         <p><strong>City:</strong> ${datapoint.properties.City}</p>
         <p><strong>Award:</strong> ${awardImageHtml}</p>
         <p><strong>Cuisine:</strong> ${datapoint.properties.PrimaryCuisine}</p>
+        <p><strong>Price:</strong> ${datapoint.properties.Price}</p>
+        <p><strong>Facilities and Services:</strong></p>
+        <div class="selected-facility">
+            <ul>${facilitiesHtml}</ul>
+        </div>
     `;
 }
+
 
 function getAwardImage(award) {
     const baseImgPath = "../static/images/";
@@ -311,6 +323,7 @@ function initializeFilterControls() {
         let selectedCuisines = Array.from(document.querySelectorAll('.cuisine-chip .cuisine-text')).map(span => span.textContent.trim());
         // Check if any cuisines are selected; if none, set to null
         selectedCuisines = selectedCuisines.length > 0 ? selectedCuisines : null;
+        const selectedAmbiances = collectAmbianceTags();
         currentFilters = {
             country: document.getElementById('country-input').value || null,
             city: document.getElementById('city-input').value || null,
@@ -318,7 +331,7 @@ function initializeFilterControls() {
             awards: (tempAwards = Array.from(document.querySelectorAll('#filter-form input[name="award"]:checked')).map(input => input.value), tempAwards.length > 0 ? tempAwards : null),
             continents: Array.from(document.querySelectorAll('#filter-form input[name="continent"]:checked')).map(input => input.value),
             priceRange: document.getElementById('price-range').value || null,
-            ambiance: document.getElementById('ambiance').value || null,
+            facilitiesAndServices: selectedAmbiances,
             cuisine: selectedCuisines,
         };
         console.log('Applying filters:', currentFilters);
@@ -326,6 +339,7 @@ function initializeFilterControls() {
     });
 }
 
+// CUISINE
 const predefinedCuisines = [
     'Afghan', 'Alpine', 'Alsatian', 'American', 'Andalusian', 'Anago / Saltwater Eel', 'Apulian', 'Argentinian', 'Asian',
     'Asian and Western', 'Asian Contemporary', 'Asian Influences', 'Austrian', 'Bakery', 'Balkan', 'Barbecue', 'Basque',
@@ -410,6 +424,48 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// CUISINE
+
+// Ambiance
+document.getElementById('ambiance-dropdown').addEventListener('change', function() {
+    const selectedOption = this.value;
+    if (selectedOption) {
+        addAmbianceTag(selectedOption);
+        this.value = ''; // Reset dropdown after selection
+    }
+});
+
+function addAmbianceTag(ambiance) {
+    const container = document.getElementById('ambiance-tag-container');
+    // Check if the tag already exists to prevent duplicate tags
+    if (Array.from(container.children).some(tag => tag.textContent.slice(0, -2) === ambiance)) {
+        alert('Ambiance already added!');
+        return false;
+    }
+
+    // Create a new tag element
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.textContent = ambiance + ' x';
+    
+    // Add an onclick event to the tag for removal functionality
+    tag.onclick = function() {
+        container.removeChild(this);  // Remove the tag from the container
+        updateFilters();  // Update the filters based on current tags
+    };
+
+    // Append the newly created tag to the container
+    container.appendChild(tag);
+    return true;
+}
+
+function collectAmbianceTags() {
+    const tags = Array.from(document.getElementById('ambiance-tag-container').children);
+    const ambiances = tags.map(tag => tag.textContent.slice(0, -2));
+    return ambiances.length > 0 ? ambiances : null;
+}
+// Ambiance
+
 function applyFilters(data, filters) {
     return data.filter(d => {
         if (filters.country && d.properties.Country !== filters.country) return false;
@@ -417,10 +473,14 @@ function applyFilters(data, filters) {
         if (filters.name && !d.properties.Name.toLowerCase().includes(filters.name.toLowerCase())) return false;
         if (filters.awards && filters.awards.length > 0 && !filters.awards.includes(d.properties.Award)) return false;
         if (filters.continents && filters.continents.length > 0 && !filters.continents.includes(d.properties.Continent)) return false;
-        if (filters.priceRange && d.properties.priceRange !== filters.priceRange) return false;
-        if (filters.ambiance && d.properties.ambiance !== filters.ambiance) return false;
+        if (filters.priceRange && d.properties.currentPrice !== filters.priceRange) return false;
         // New filter condition for cuisine
         if (filters.cuisine && filters.cuisine.length > 0 && !filters.cuisine.some(cuisine => d.properties.PrimaryCuisine.toLowerCase() === cuisine.toLowerCase())) return false;
+        if (filters.facilitiesAndServices && filters.facilitiesAndServices.length > 0) {
+            const facilitiesList = d.properties.FacilitiesAndServices.split(',').map(facility => facility.trim().toLowerCase());
+            // Ensure every selected facility/service is included in the facilities list
+            if (!filters.facilitiesAndServices.every(facility => facilitiesList.includes(facility.toLowerCase()))) return false;
+        }
         return true;
     });
 }
