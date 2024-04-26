@@ -318,6 +318,7 @@ function toggleFilterPanel() {
     map.invalidateSize();  // Ensure the map adjusts to new dimensions
 }
 
+// Filter part
 function initializeFilterControls() {
     document.getElementById('apply-filters').addEventListener('click', function() {
         let selectedCuisines = Array.from(document.querySelectorAll('.cuisine-chip .cuisine-text')).map(span => span.textContent.trim());
@@ -338,6 +339,7 @@ function initializeFilterControls() {
         processFilteredData(); // Reload data with new filters
     });
 }
+// Filter part
 
 // CUISINE
 const predefinedCuisines = [
