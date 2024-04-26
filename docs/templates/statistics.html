@@ -56,122 +56,71 @@
             font-size: 18px;
         }
         
-        #content-area {
-            display: flex;
-            justify-content: center;
+        .container {
+            margin-top: 20px;
+            padding: 20px; /* Adds padding of 20px on all sides */
+        }
+
+
+        .chart-container {
+            border-radius: 10px;
+            border: 1px solid #ceabab;
             padding: 20px;
-            flex-wrap: wrap; /* Allow the boxes to wrap if needed */
-            gap: 20px; /* Add some space between the boxes if they wrap */
+            transition: all 0.3s ease;
+            overflow: hidden; /* Ensure the container size matches the chart */
         }
 
-        #chart-box, #explanation-box {
-            flex: 1; /* Each box takes equal width */
-            margin: 10px; /* Adds some space between the boxes */
-            min-width: 500px; /* Set a minimum width for each box */
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #e8e8e8;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            align-items: center;
-            /* Set the height to be at least as tall as the chart, adjust as necessary */
-            min-height: 500px; 
+        .chart-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
-        #content-area-horizontal {
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        #horizontal-chart-box {
-            flex: 1;
-            margin: 10px;
-            min-width: 600px; /* Adjust based on your layout */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #e8e8e8;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            align-items: center;
-            min-height: 500px;
+        .chart-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-top: 20px;    /* Adds 20px padding to the top */
+            padding-bottom: 20px; /* Adds 20px padding to the bottom */
         }
 
 
-        /* Add specific styles for SVG to avoid overflow */
-        #chart svg {
-            max-width: 100%;
-            height: auto; /* Adjust height proportionally */
+        .chart {
+            width: 100%; /* Ensure the chart fills the container */
+            height: 100%; /* Ensure the chart fills the container */
         }
-        .tooltip {
-            position: absolute;
-            text-align: center;
-            padding: 6px;
-            font-size: 14px;
-            background: lightsteelblue;
-            border: 0px;
-            border-radius: 4px;
-            pointer-events: none;
-            opacity: 0;
+        .map-container {
+            border-radius: 30px;
+            border: 1px solid #ceabab;
+            padding: 0px;
+            transition: all 0.3s ease;
+            overflow: hidden; /* Ensure the container size matches the chart */
+            width: 110%; /* Ensure the chart fills the container */
+            height: 80%; /* Ensure the chart fills the container */
         }
-        .grid line {
-            stroke: rgb(67, 61, 61);
-            stroke-opacity: 0.7;
-            shape-rendering: crispEdges;
-        }
-        .grid path {
-            stroke-width: 0;
-        }
-        #horizontal-chart-container {
-            margin: auto;
-            width: 80%;
-            padding: 20px;
-            background-color: #f7c0c0;  
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
-            border-radius: 8px;  
+
+        .map-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         #filter-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .filter-btn {
-            padding: 10px 20px;
-            margin: 5px;
+            padding: 5px 10px;
+            margin: 2.5px;
             border: none;
-            background-color: #e8e8e8;
+            background-color: #ede7e7;
             cursor: pointer;
             border-radius: 5px;
             outline: none;
         }
 
         .filter-btn.selected {
-            background-color: #007bff;
+            background-color: #470e03;
             color: white;
-        }
-
-        #horizontal-chart-box {
-            padding: 20px;
-        }
-
-        .tooltip {
-            position: absolute;
-            text-align: center;
-            padding: 6px 10px;
-            background: rgba(0, 0, 0, 0.8);
-            color: lightsteelblue;
-            border-radius: 4px;
-            pointer-events: none;
-            opacity: 0;
         }
 
     </style>
@@ -195,43 +144,47 @@
         </div>
     </div>
 
-    <div id="content-area">
-        <div id="chart-box">
-            <h2 style="text-align: center;">Michelin Guide Listings by Continent</h2>
-            <div id="chart"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-title">Michelin Guide Listings by Continent</div>
+                <div id="chart" class="chart-container"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-title">Michelin Guide Restaurants by Country</div>
+                <div id="map-chart" class="map-container"></div>
+            </div>
         </div>
-        <div id="explanation-box">
-            <h2 style="text-align: center;">Chart Explanation</h2>
-            <p>This chart visualizes the distribution of Michelin Guide listings by continent, showing a significant concentration in Europe, followed by Asia, North America, and South America. Detailed statistics help stakeholders understand market penetration and growth opportunities.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-title">Michelin Guide Listings by Country</div>
+                <div id="filter-container">
+                    <button class="filter-btn" data-continent="All">All</button>
+                    <button class="filter-btn" data-continent="Asia">Asia</button>
+                    <button class="filter-btn" data-continent="Europe">Europe</button>
+                    <button class="filter-btn" data-continent="North America">North America</button>
+                    <button class="filter-btn" data-continent="South America">South America</button>
+                </div>        
+                <div id="horizontal-chart" class="chart-container"> </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-title">Facilities of Michelin restaurants</div>
+                <div id="facility-chart" class="chart-container"> </div>
+            </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-title">Michelin Guide Cuisines</div>
+                <div id="second-horizontal-chart" class="chart-container"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-title">Michelin Awards</h2>
+                <div id="bib-gourmand" class="chart-container"></div>
+            </div>
+        </div>
+        
     </div>
-
-    <div id="horizontal-chart-container">
-        <h2 style="text-align: center;">Michelin Guide Listings by Country</h2>
-        <div id="filter-container">
-            <button class="filter-btn" data-continent="All">All</button>
-            <button class="filter-btn" data-continent="Asia">Asia</button>
-            <button class="filter-btn" data-continent="Europe">Europe</button>
-            <button class="filter-btn" data-continent="North America">North America</button>
-            <button class="filter-btn" data-continent="South America">South America</button>
-        </div>
-        <div id="horizontal-chart-box">
-            <div id="horizontal-chart"></div>
-        </div>
-    </div>
-
-    <div id="horizontal-chart-container">
-        <div id="chart-box">
-            <h2 style="text-align: center;">Michelin Guide  Cuisines</h2>
-            <div id="second-horizontal-chart"></div>
-        </div>
-    </div>
-    <div id="horizontal-chart-container">
-        <div id="chart-box">
-            <h2 style="text-align: center;">Michelin Map by Country</h2>
-            <div id="map-chart"></div>
-        </div>
-    </div>
+    
     <script src="../static/statistics.js" defer></script>
 
 </body>
