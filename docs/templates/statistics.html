@@ -76,7 +76,8 @@
         }
 
         .chart-title {
-            font-size: 20px;
+            color: rgb(166, 48, 48);
+            font-size: 25px;
             font-weight: bold;
             margin-bottom: 10px;
             padding-top: 20px;    /* Adds 20px padding to the top */
@@ -123,6 +124,20 @@
             color: white;
         }
 
+        .award-btn {
+            padding: 5px 10px;
+            margin: 2.5px;
+            border: none;
+            background-color: #ede7e7;
+            cursor: pointer;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .award-btn.selected {
+            background-color: #470e03;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -178,13 +193,23 @@
                 <div id="second-horizontal-chart" class="chart-container"></div>
             </div>
             <div class="col-md-6">
-                <div class="chart-title">Michelin Awards</h2>
+                <div class="chart-title">Michelin Awards</div>
                 <div id="bib-gourmand" class="chart-container"></div>
             </div>
         </div>
-        
+    <div class="row">
+        <div class="col-md-6">
+            <div class="chart-title">Michelin Guide Awards by Prices</div>
+            <div id="filter-container">
+                <button class="award-btn" data-award="All">All</button>
+                <button class="award-btn" data-award="Bib Gourmand">Bib Gourmand</button>
+                <button class="award-btn" data-award="1 Star">1 Star</button>
+                <button class="award-btn" data-award="2 Stars">2 Stars</button>
+                <button class="award-btn" data-award="3 Stars">3 Stars</button>
+            </div>        
+            <div id="price-chart" class="chart-container"> </div>
+        </div>
     </div>
-    
     <script src="../static/statistics.js" defer></script>
 
 </body>
