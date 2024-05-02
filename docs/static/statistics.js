@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     SecondHorizontalChart();
     MapChart();
     createBibGourmandTable();
+    createPriceDistributionPlots()
     adjustContainerSizes();
 
 });
@@ -414,6 +415,164 @@ function SecondHorizontalChart() {
 
 
 }
+function createPriceDistributionPlots() {
+    const dataHorizontal = [
+        {"Price": "$","1 Star": 1,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 266},
+        {"Price": "$$","1 Star": 37,"2 Stars": 3,"3 Stars": 0,"Bib Gourmand": 533},
+        {"Price": "$$$","1 Star": 112,"2 Stars": 11,"3 Stars": 2,"Bib Gourmand": 21},
+        {"Price": "$$$$","1 Star": 250,"2 Stars": 58,"3 Stars": 27,"Bib Gourmand": 1},
+        {"Price": "£","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 4},
+        {"Price": "££","1 Star": 5,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 93},
+        {"Price": "£££","1 Star": 59,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 0},
+        {"Price": "££££","1 Star": 88,"2 Stars": 18,"3 Stars": 8,"Bib Gourmand": 0},
+        {"Price": "¥","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 201},
+        {"Price": "¥¥","1 Star": 20,"2 Stars": 1,"3 Stars": 0,"Bib Gourmand": 247},
+        {"Price": "¥¥¥","1 Star": 286,"2 Stars": 31,"3 Stars": 3,"Bib Gourmand": 10},
+        {"Price": "¥¥¥¥","1 Star": 105,"2 Stars": 48,"3 Stars": 23,"Bib Gourmand": 0},
+        {"Price": "฿","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 81},
+        {"Price": "฿฿","1 Star": 1,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 114},
+        {"Price": "฿฿฿","1 Star": 13,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 1},
+        {"Price": "฿฿฿฿","1 Star": 14,"2 Stars": 7,"3 Stars": 0,"Bib Gourmand": 0},
+        {"Price": "₩","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 49},
+        {"Price": "₩₩","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 8},
+        {"Price": "₩₩₩","1 Star": 6,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 0},
+        {"Price": "₩₩₩₩","1 Star": 18,"2 Stars": 7,"3 Stars": 1,"Bib Gourmand": 0},
+        {"Price": "₫","1 Star": 0,"2 Stars": 0,"3 Stars": 1,"Bib Gourmand": 0},
+        {"Price": "₫₫","1 Star": 2,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 25},
+        {"Price": "₫₫₫","1 Star": 2,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 4},
+        {"Price": "₫₫₫₫","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 307},
+        {"Price": "€","1 Star": 26,"2 Stars": 2,"3 Stars": 0,"Bib Gourmand": 1313},
+        {"Price": "€€","1 Star": 767,"2 Stars": 287,"3 Stars": 79,"Bib Gourmand": 29},
+        {"Price": "€€€","1 Star": 1021,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 0},
+        {"Price": "€€€€","1 Star": 0,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 10},
+        {"Price": "₺","1 Star": 1,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 16},
+        {"Price": "₺₺","1 Star": 6,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 0},
+        {"Price": "₺₺₺","1 Star": 4,"2 Stars": 0,"3 Stars": 0,"Bib Gourmand": 0},
+        {"Price": "₺₺₺₺","1 Star": 0,"2 Stars": 1,"3 Stars": 0,"Bib Gourmand": 0}
+    ];
+
+    let activeAwards = new Set();
+
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+          width = 460 - margin.left - margin.right,
+          height = 400 - margin.top - margin.bottom;
+
+    const svg = d3.select("#price-chart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const x = d3.scaleLinear()
+        .range([0, width]);
+
+    const y = d3.scaleBand()
+        .padding(0.1)
+        .range([0, height]);
+
+    const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    const tooltip = setupTooltip();
+
+    function updateChart() {
+        let filteredData = dataHorizontal.filter(d => {
+            if (activeAwards.size === 0) return true;
+            let awardMatch = false;
+            activeAwards.forEach(award => {
+                if (d[award] > 0) {
+                    awardMatch = true;
+                }
+            });
+            return awardMatch;
+        });
+    
+        // Calculate total prices for selected awards
+        let totalPrices = filteredData.map(d => {
+            let totalPrice = 0;
+            if (activeAwards.size === 0) {
+                // If no awards are selected, sum up all prices
+                Object.keys(d).forEach(key => {
+                    if (key !== "Price") {
+                        totalPrice += d[key];
+                    }
+                });
+            } else {
+                // Sum up prices for selected awards
+                activeAwards.forEach(award => {
+                    totalPrice += d[award];
+                });
+            }
+            return {
+                Price: d.Price,
+                TotalPrice: totalPrice
+            };
+        });
+
+        // Sort filtered data by total prices and select top 10
+        totalPrices = totalPrices.sort((a, b) => b.TotalPrice - a.TotalPrice).slice(0, 10);
+    
+        x.domain([0, d3.max(totalPrices, d => d.TotalPrice)]);
+        y.domain(totalPrices.map(d => d.Price));
+    
+        svg.selectAll(".bar").remove();
+        svg.selectAll(".axis").remove();
+    
+        svg.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y));
+        svg.selectAll(".axis--y text")
+            .style("font-size", "12px");
+    
+        svg.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x).ticks(5).tickSize(-height));
+    
+        svg.selectAll(".bar")
+            .data(totalPrices)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("y", d => y(d.Price))
+            .attr("height", y.bandwidth())
+            .attr("x", 0)
+            .attr("width", d => x(d.TotalPrice))
+            .attr("fill", (d, i) => color(i))
+            .on("mouseover", function(event, d) {
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.html(d.Price + ": " + d.TotalPrice)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+        adjustContainerSizes();
+    }
+    
+    // Award filter buttons
+    document.querySelectorAll(".award-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const award = this.dataset.award;
+            if (award === "All") {
+                activeAwards.clear();
+                document.querySelectorAll(".award-btn").forEach(b => b.classList.remove("selected"));
+            } else {
+                if (activeAwards.has(award)) {
+                    activeAwards.delete(award);
+                    this.classList.remove("selected");
+                } else {
+                    activeAwards.add(award);
+                    this.classList.add("selected");
+                }
+            }
+            updateChart();
+        });
+    });
+
+    updateChart();  // Initialize the chart
+}
+
 function initHorizontalChart() {
     const dataHorizontal = [
         {"City": "France", "Listings": 1016, "Continent": "Europe"},
