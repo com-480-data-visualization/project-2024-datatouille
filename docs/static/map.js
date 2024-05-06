@@ -143,6 +143,16 @@ function processFilteredData() {
     map.on("viewreset", () => resetView(path, featuresData));
     resetView(path, featuresData);
 
+    // First check for name filter before updating map view generally
+    if (currentFilters.name) {
+        const nameFilterLower = currentFilters.name.toLowerCase();
+        const matchedData = featuresData.find(d => d.properties.Name.toLowerCase().includes(nameFilterLower));
+        if (matchedData) {
+            const coordinates = matchedData.geometry.coordinates;
+            map.setView(new L.LatLng(coordinates[1], coordinates[0]), 13);
+            return; // Stop further map center updates
+        }
+    }
     // Update map center based on filters
     updateMapCenter();
 }
@@ -218,9 +228,23 @@ function setupMarkerInteractions(marker, latLng, datapoint) {
                   lastClicked = marker;
                   marker.bindPopup(createPopupContent(datapoint)).openPopup();
               } else {
-                  map.setView(latLng, 10);
+                  // Close the current popup and reset the last clicked marker
                   marker.closePopup();
                   lastClicked = null;
+
+                  // Set default zoom level, overridden by specific filters if they are set
+                  let zoomLevel = 9; // Default zoom level for no specific filter set
+                  // Adjust zoom level based on the most specific filter set
+                  if (currentFilters.name) {
+                    zoomLevel = 12; // Higher zoom for specific name filter
+                  } else if (currentFilters.city && currentFilters.city in cityCoordinates) {
+                    zoomLevel = 11; // City level zoom
+                  } else if (currentFilters.country && countryDetails[currentFilters.country]) {
+                    zoomLevel = countryDetails[currentFilters.country].zoom; // Country specific zoom from details
+                  }
+
+                  // Set view with the determined zoom level
+                  map.setView(latLng, zoomLevel);
               }
           });
 }
@@ -240,6 +264,7 @@ function createPopupContent(datapoint) {
         <p><strong>Award:</strong> ${awardImageHtml}</p>
         <p><strong>Cuisine:</strong> ${datapoint.properties.PrimaryCuisine}</p>
         <p><strong>Price:</strong> ${datapoint.properties.Price}</p>
+        <p><strong>Address:</strong> ${datapoint.properties.Address}</p>
         <p><strong>Facilities and Services:</strong></p>
         <div class="selected-facility">
             <ul>${facilitiesHtml}</ul>
