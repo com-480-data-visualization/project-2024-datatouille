@@ -86,8 +86,93 @@ const cityCoordinates = {
     'Prague': [50.0755, 14.4378], 'Belgrade': [44.7866, 20.4489], 'Andorra la Vella': [42.5063, 1.5218]
 };
 
+const colorThemes = {
+    default: {
+        "Bib Gourmand": "green",
+        "1 Star": "blue",
+        "2 Stars": "yellow",
+        "3 Stars": "red",
+        "default": "gray"
+    },
+    pastel: {
+        "Bib Gourmand": "#77dd77",
+        "1 Star": "#779ecb",
+        "2 Stars": "#fdfd96",
+        "3 Stars": "#ff6961",
+        "default": "#d3d3d3"
+    },
+    vibrant: {
+        "Bib Gourmand": "#e63946",
+        "1 Star": "#f4a261",
+        "2 Stars": "#2a9d8f",
+        "3 Stars": "#264653",
+        "default": "#e76f51"
+    },
+    coolTones: {
+        "Bib Gourmand": "#4A235A", // Deep purple, sophisticated and rich for Bib Gourmand
+        "1 Star": "#5D6D7E",      // Slate gray, elegant and understated for 1 Star
+        "2 Stars": "#2980B9",     // Strong blue, vivid and striking for 2 Stars
+        "3 Stars": "#154360",     // Dark navy, bold and authoritative for 3 Stars
+        "default": "#ABB2B9"      // Silver gray, neutral and versatile for other categories
+    },
+    alpinePalette: {
+        "Bib Gourmand": "#D35400", // Pumpkin Orange: Stands out against greens and is distinct.
+        "1 Star": "#2980B9",      // Strong Blue: Offers good visibility against earth tones.
+        "2 Stars": "#F1C40F",     // Sunflower Yellow: Bright and very visible against darker backgrounds.
+        "3 Stars": "#C0392B",     // Pomegranate Red: Rich and noticeable against varied terrain.
+        "default": "#7F8C8D"      // Asbestos: Neutral gray that blends subtly when needed.
+    }
+        
+};
+
+let currentTheme = 'default'; // Track the currently selected theme
+
 // Initialize and configure the map
-const map = initializeMap();
+let map; // Declare a variable to hold the map instance.
+let currentTileLayer; // Declare a variable to hold the current tile layer, allowing easy changes later.
+
+function initializeMap() {
+    // Initialize the Leaflet map on the 'map' div, set the view to the predefined center and zoom level
+    map = L.map('map', { zoomControl: false }).setView(MAP_CENTER, MAP_ZOOM_LEVEL);
+
+    // Add zoom control with a custom position at the bottom left of the map
+    map.addControl(L.control.zoom({ position: 'bottomleft' }));
+
+    // Set the initial tile layer to 'default' using the setTileLayer function
+    setTileLayer('default');
+
+    // Return the map object for possible further manipulation outside this function
+    return map;
+}
+
+function setTileLayer(theme) {
+    // Define URLs for various map themes using OpenStreetMap data
+    const tileUrls = {
+        default: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // Standard OpenStreetMap tiles
+        pastel: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', // HOT style (Humanitarian OSM Team), more colorful and distinct
+        vibrant: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // Reuse default tiles, assume vibrant styling via CSS
+        coolTones: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+        alpinePalette: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png' // cycle-oriented render
+    };
+
+    // Attribution string required by OpenStreetMap for map data usage
+    const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+    // Retrieve the URL for the selected theme
+    const tileUrl = tileUrls[theme];
+
+    // Remove the current tile layer from the map if it exists (to switch to a new theme)
+    if (currentTileLayer) {
+        map.removeLayer(currentTileLayer);
+    }
+
+    // Create a new tile layer with the selected theme's URL and add it to the map
+    currentTileLayer = L.tileLayer(tileUrl, { attribution });
+    currentTileLayer.addTo(map);
+}
+
+// Initialize the map
+initializeMap();
 
 // Set up SVG overlay for data visualization
 const { svg, g } = setupSvgOverlay();
@@ -101,19 +186,6 @@ addTogglePanelControl();
 // Initialize filter event listeners
 initializeFilterControls();
 
-function initializeMap() {
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-
-    const map = L.map('map', {
-        zoomControl: false
-    }).addLayer(tiles)
-      .setView(MAP_CENTER, MAP_ZOOM_LEVEL);
-
-    map.addControl(L.control.zoom({ position: 'bottomleft' }));
-    return map;
-}
 
 function setupSvgOverlay() {
     const svg = d3.select(map.getPanes().overlayPane).append("svg");
@@ -199,7 +271,8 @@ function resetView(path, featuresData) {
      .join("circle")
      .attr("cx", d => applyLatLngToLayer(d).x)
      .attr("cy", d => applyLatLngToLayer(d).y)
-     .attr("r", getRadius);
+     .attr("r", getRadius)
+     .style("fill", d => getFillColor(d.properties.Award));
 }
 
 function generateEntry(datapoint) {
@@ -290,16 +363,31 @@ function getAwardImage(award) {
     return `<img src="${baseImgPath + awardInfo.file}" alt="${altText}" style="width: ${awardInfo.width}px; height: 20px;"> ${award || 'No Award'}`;
 }
 
+function updateTheme(theme) {
+    currentTheme = theme;
+    setTileLayer(theme);
+    processFilteredData(); // Reapply the data processing to refresh map with new colors
+}
+
+document.getElementById('colorThemeSelector').addEventListener('focus', function() {
+    this.style.backgroundColor = "#f0f0f0"; // Lightens the background on focus
+});
+
+document.getElementById('colorThemeSelector').addEventListener('blur', function() {
+    this.style.backgroundColor = ""; // Resets the background when focus is lost
+});
+
+document.getElementById('colorThemeSelector').addEventListener('change', function() {
+    // This could trigger a visual confirmation that the theme has been changed, e.g., a flash or border glow
+    this.classList.add('theme-changed');
+    setTimeout(() => {
+        this.classList.remove('theme-changed');
+    }, 500);
+});
 
 function getFillColor(award) {
-    const colors = {
-        "Bib Gourmand": "green",
-        "1 Star": "blue",
-        "2 Stars": "yellow",
-        "3 Stars": "red",
-        default: "gray"
-    };
-    return colors[award] || colors.default;
+    const themeColors = colorThemes[currentTheme] || colorThemes['default'];
+    return themeColors[award] || themeColors['default'];
 }
 
 function getRadius() {
@@ -511,4 +599,3 @@ function applyFilters(data, filters) {
         return true;
     });
 }
-

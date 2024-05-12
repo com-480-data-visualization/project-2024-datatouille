@@ -286,8 +286,35 @@
             font-size: 15px; /* Increases font size, set to your preference */
             margin-bottom: 5px; /* Spacing between list items */
         }
+
+        .theme-selector {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(-10px);  /*  Less movement for a subtler appearance */
+            opacity: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .theme-selector label {
+            margin-right: 10px;
+            transition: color 0.3s ease;  /* Simplified to focus on color transitions */
+        }
+
+        .theme-selector:hover label {
+            color: rgb(166, 48, 48); /* Updated to a modern deep blue shade */
+        }
+
+        .navbar-nav:hover .theme-selector {
+            transform: translateY(0);  /* Resets to original position smoothly */
+            opacity: 1;  /* Fully visible on hover */
+        }
+
+        #colorThemeSelector.theme-changed {
+            box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Modern blue glow effect */
+            transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); /* Using cubic-bezier for a 'bounce' effect */
+        }
     
-        </style>
+    </style>
 
 </head>
 <body>
@@ -306,6 +333,16 @@
             <a class="navbar-title-link" href="/project-2024-datatouille/templates/statistics.html">Statistics</a>
             <a class="navbar-title-link" href="/project-2024-datatouille/templates/about_us.html">About Us</a>
             <a class="navbar-title-link" href="/project-2024-datatouille/templates/about_project.html">Project</a>
+            <div class="theme-selector">
+                <label for="colorThemeSelector" class="navbar-title-link">Theme:</label>
+                <select id="colorThemeSelector" onchange="updateTheme(this.value)">
+                    <option value="default">Default</option>
+                    <option value="pastel">Pastel</option>
+                    <option value="vibrant">Vibrant</option>
+                    <option value="coolTones">Cool Tones</option>
+                    <option value="alpinePalette">Alpine</option>
+                </select>
+            </div>
         </div>
     </div>
     
