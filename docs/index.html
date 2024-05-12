@@ -185,14 +185,13 @@
             background-color: rgb(166, 64, 48); /* Darker on hover */
         }
         .toggle-button:hover {
-        background-color: #954a4a; /* Darker shade of burgundy on hover */
-        color: white;
-    
+            background-color: #954a4a; /* Darker shade of burgundy on hover */
+            color: white;
         }
         .tiny-image {
-        width: 20px; /* Adjust the width to your desired size */
-        height: auto; /* Maintain aspect ratio */
-        margin-left: 5px; /* Adjust the margin as needed */
+            width: 20px; /* Adjust the width to your desired size */
+            height: auto; /* Maintain aspect ratio */
+            margin-left: 5px; /* Adjust the margin as needed */
         }
     
         .autocomplete-dropdown {
@@ -289,30 +288,30 @@
         }
 
         .theme-selector {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            transform: translateY(-10px);  /*  Less movement for a subtler appearance */
+            display: block; /* Ensures vertical stacking */
             opacity: 0;
-            display: inline-block;
+            transition: opacity 0.3s ease-in-out;
             vertical-align: middle;
         }
 
+        .theme-selector:hover {
+            opacity: 1; /* Make selector visible on hover */
+        }
+
         .theme-selector label {
-            margin-right: 10px;
-            transition: color 0.3s ease;  /* Simplified to focus on color transitions */
+            display: block; /* Ensures the label takes up full width */
+            color: rgb(166, 64, 48);
+            margin-bottom: 5px; /* Provides spacing between label and dropdown */
         }
 
-        .theme-selector:hover label {
-            color: rgb(166, 48, 48); /* Updated to a modern deep blue shade */
+        #colorThemeSelector {
+            width: 100%; /* Optional: Adjust based on design requirements */
+            box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Styling for when select is active */
+            transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
-        .navbar-nav:hover .theme-selector {
-            transform: translateY(0);  /* Resets to original position smoothly */
-            opacity: 1;  /* Fully visible on hover */
-        }
-
-        #colorThemeSelector.theme-changed {
-            box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Modern blue glow effect */
-            transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); /* Using cubic-bezier for a 'bounce' effect */
+        #colorThemeSelector:focus {
+            box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Enhanced focus state */
         }
     
     </style>

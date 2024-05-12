@@ -369,6 +369,17 @@ function updateTheme(theme) {
     processFilteredData(); // Reapply the data processing to refresh map with new colors
 }
 
+document.getElementById('colorThemeSelector').addEventListener('click', function(event) {
+    this.size = this.length;  // Expand dropdown
+}, false);
+
+document.addEventListener('click', function(event) {
+    const selectElement = document.getElementById('colorThemeSelector');
+    if (event.target !== selectElement) {
+        selectElement.size = 0;  // Collapse dropdown when clicking outside
+    }
+});
+
 document.getElementById('colorThemeSelector').addEventListener('focus', function() {
     this.style.backgroundColor = "#f0f0f0"; // Lightens the background on focus
 });
