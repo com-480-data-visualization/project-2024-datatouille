@@ -14,7 +14,7 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
         modified_path = '/'.join(components)
         return modified_path
 
-def run(server_class=HTTPServer, handler_class=CustomHTTPRequestHandler, port=5000):
+def run(server_class=HTTPServer, handler_class=CustomHTTPRequestHandler, port=8000):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f"Starting server on port {port}...")
