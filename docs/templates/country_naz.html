@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datatouille</title>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Roboto', sans-serif;
+        }
+        #nav-bar {
+            width: 100%;
+            background-color: #faf7f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            height: 100px;
+        }
+        .navbar-title, .navbar-logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-logo { height: 70px; margin-right: 2px; }
+        .navbar-title {
+            color: rgb(166, 48, 48);
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .navbar-nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .navbar a {
+            color: rgb(166, 48, 48);
+            padding: 14px 30px;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            font-size: 18px;
+        }
+        #map { flex: 1; height: 400px; }
+        .container {
+            display: none; /* Hide by default */
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto; /* Allows scrolling within the filter panel */
+        }
+
+        .chart-container {
+            border-radius: 10px;
+            border: 1px solid #ceabab;
+            padding: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            width: auto; /* Adjust width as necessary */
+        }
+
+        .chart-title { color: rgb(166, 48, 48); font-size: 25px; font-weight: bold; margin-bottom: 10px; }
+        .filter-panel {
+            position: fixed;
+            right: 0;
+            top: 100px;
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-left: 1px solid #ceabab;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            height: calc(100% - 100px);
+            transition: right 0.3s;
+            overflow-y: auto;
+            right: -300px; /* Start off-screen */
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-bar" class="navbar navbar-expand-lg navbar-dark">
+        <div class="navbar-logo-container">
+            <img src="/project-2024-datatouille/static/images/website_logo.jpg" class="navbar-logo" alt="Website Logo">
+            <a href="../index.html" class="navbar-title-link">
+                <div class="navbar-title">Datatouille</div>
+            </a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a class="navbar-title-link" href="/project-2024-datatouille/templates/country_view.html">Home</a>
+            <a class="navbar-title-link" href="/project-2024-datatouille/templates/michelin_guide.html">Michelin Guide</a>
+            <a class="navbar-title-link" href="/project-2024-datatouille/templates/statistics.html">Statistics</a>
+            <a class="navbar-title-link" href="/project-2024-datatouille/templates/about_us.html">About Us</a>
+            <a class="navbar-title-link" href="/project-2024-datatouille/templates/about_project.html">Project</a>
+            <a class="navbar-title-link" href="/project-2024-datatouille/templates/country_view.html">Countries</a>
+        </div>
+    </div>
+
+    <div id="map"></div> <!-- Map container -->
+
+    <button id="toggle-filter-button" class="toggle-button">Filters</button>
+    <div id="filter-panel" class="filter-panel collapsed">
+        <h3>Filter Options</h3>
+        <div class="filter-section">
+            <label for="country-input">Country:</label>
+            <input type="text" id="country-input" placeholder="Enter country">
+        </div>
+        <!-- Move chart containers here -->
+        <div class="container">
+            <div class="chart-container" id="bib-gourmand">
+                <div class="chart-title">Bib Gourmand Ratings</div>
+            </div>
+            <div class="chart-container" id="facility-chart">
+                <div class="chart-title">Facility Availability</div>
+            </div>
+            <div class="chart-container" id="price-chart">
+                <div class="chart-title">Price Distributions</div>
+            </div>
+            <div class="chart-container" id="second-horizontal-chart">
+                <div class="chart-title">Cuisine Popularity</div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="/static/statistics.js"></script>
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        document.getElementById('toggle-filter-button').addEventListener('click', function() {
+            var panel = document.getElementById('filter-panel');
+            panel.style.right = (panel.style.right === '0px' ? '-300px' : '0px');
+        });
+
+        const countryInput = document.getElementById("country-input");
+        countryInput.addEventListener("keypress", function(event) {
+          if (event.key === "Enter") {
+              event.preventDefault(); // Prevent form submit
+              const country = countryInput.value.trim();
+              if (country) {
+                  updateCountryData(country);
+                  document.querySelector('.container').style.display = 'flex'; // Show chart container
+              }
+          }
+        });
+
+        function updateCountryData(country) {
+            createBibGourmandTable(country);
+            facilities(country);
+            SecondHorizontalChart(country);
+            createPriceDistributionPlots(country);
+        }
+    </script>
+</body>
+</html>
