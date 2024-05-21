@@ -6,12 +6,46 @@
     <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
     <style>
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        }
+        .styled-table thead tr {
+            background-color: rgb(166, 48, 48);
+            color: #ffffff;
+            text-align: center;
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid rgb(166, 48, 48);
+        }
+        .tiny-image {
+            width: 20px;  /* Set the width to a small fixed size */
+            height: auto; /* Maintain the aspect ratio of the image */
+            vertical-align: middle; /* Align the image vertically with the text if needed */
+        }
         body, html {
             height: 100%;
             width: 100%;
@@ -76,7 +110,7 @@
             position: fixed;
             right: 0;
             top: 100px;
-            width: 300px;
+            width: 500px;
             background-color: #fff;
             padding: 20px;
             border-left: 1px solid #ceabab;
@@ -84,7 +118,7 @@
             height: calc(100% - 100px);
             transition: right 0.3s;
             overflow-y: auto;
-            right: -300px; /* Start off-screen */
+            right: -500px; /* Start off-screen */
         }
     </style>
 </head>
@@ -109,6 +143,7 @@
     <div id="map"></div> <!-- Map container -->
 
     <button id="toggle-filter-button" class="toggle-button">Filters</button>
+    
     <div id="filter-panel" class="filter-panel collapsed">
         <h3>Filter Options</h3>
         <div class="filter-section">
@@ -117,53 +152,26 @@
         </div>
         <!-- Move chart containers here -->
         <div class="container">
-            <div class="chart-container" id="bib-gourmand">
+            <div class="chart-parent" id="bib-gourmand-p">
                 <div class="chart-title">Bib Gourmand Ratings</div>
+                <div class="chart-container" id="bib-gourmand"></div>
             </div>
-            <div class="chart-container" id="facility-chart">
+            <div class="chart-parent" id="facility-chart-p">
                 <div class="chart-title">Facility Availability</div>
+                <div class="chart-container" id="facility-chart"></div>
             </div>
-            <div class="chart-container" id="price-chart">
+            <div class="chart-parent" id="price-chart-p">
                 <div class="chart-title">Price Distributions</div>
+                <div class="chart-container" id="price-chart"></div>
             </div>
-            <div class="chart-container" id="second-horizontal-chart">
+            <div class="chart-parent" id="second-horizontal-chart-p">
                 <div class="chart-title">Cuisine Popularity</div>
+                <div class="chart-container" id="second-horizontal-chart"></div>
             </div>
         </div>
     </div>
     
-
-    <script src="/static/statistics.js"></script>
-    <script>
-        // Initialize map
-        var map = L.map('map').setView([51.505, -0.09], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        document.getElementById('toggle-filter-button').addEventListener('click', function() {
-            var panel = document.getElementById('filter-panel');
-            panel.style.right = (panel.style.right === '0px' ? '-300px' : '0px');
-        });
-
-        const countryInput = document.getElementById("country-input");
-        countryInput.addEventListener("keypress", function(event) {
-          if (event.key === "Enter") {
-              event.preventDefault(); // Prevent form submit
-              const country = countryInput.value.trim();
-              if (country) {
-                  updateCountryData(country);
-                  document.querySelector('.container').style.display = 'flex'; // Show chart container
-              }
-          }
-        });
-
-        function updateCountryData(country) {
-            createBibGourmandTable(country);
-            facilities(country);
-            SecondHorizontalChart(country);
-            createPriceDistributionPlots(country);
-        }
-    </script>
+    <script src="../static/country.js"></script>
+    <script src="../static/country_naz.js"></script>
 </body>
 </html>

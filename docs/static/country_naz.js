@@ -16,6 +16,10 @@ function setupEventListeners() {
 
 
 function updateCountryData(country) {
+    // Clear the existing content
+    const containers = document.querySelectorAll('.chart-container');
+    containers.forEach(container => container.innerHTML = '');
+
     createBibGourmandTable(country);
     facilities(country);
     SecondHorizontalChart(country);
@@ -45,7 +49,7 @@ function adjustContainerSizes() {
 // }
 
 function createBibGourmandTable(country){
-    d3.json("/data/countryAwardsDict.json").then(function(data) {
+    d3.json("../data/countryAwardsDict.json").then(function(data) {
         const countryData = data[country] || {};
 
         // Extract data array from the dictionary
@@ -82,14 +86,16 @@ function createBibGourmandTable(country){
             .append("td")
             .html(function(d, i) {
                 if (i === 0) {
-                    if (d.rating === "Bib Gourmand") {
-                        return "<img src='../static/images/bib_gourmand.jpg' alt='Bib Gourmand' class='tiny-image' /> " + d.rating;
+                    if (d === "Bib Gourmand") {
+                        return "<img src='../static/images/bib_gourmand.jpg' alt='Bib Gourmand' class='tiny-image' /> " + d;
+                    } else if (typeof d === "string" && d.includes("Star")) {
+                        const stars = d.split(" ")[0];
+                        return "<span>" + "<img src='../static/images/1star.svg.png' alt='Star' class='tiny-image' /> ".repeat(parseInt(stars)) + "</span>" + d;
                     } else {
-                        const stars = d.rating.split(" ")[0];
-                        return "<span>" + "<img src='../static/images/1star.svg.png' alt='Star' class='tiny-image' /> ".repeat(parseInt(stars)) + "</span>" + d.rating;
+                        return d; // Fallback in case the data is not as expected
                     }
                 } else {
-                    return d.restaurants;
+                    return d;
                 }
             });
 
@@ -168,7 +174,7 @@ function facilities(country) {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Load the facilities data from the JSON file
-    d3.json("/data/facilities.json").then(function(allFacilities) {
+    d3.json("../data/facilities.json").then(function(allFacilities) {
         // Get data for the specific country or default to an empty object if not found
         const facData = allFacilities[country] || {};
 
@@ -257,7 +263,7 @@ function hideTooltip(tooltip) {
 
 function SecondHorizontalChart(country){
     // Assuming your JSON file's path is correct and accessible
-    d3.json("/data/cuisines.json").then(function(data) {
+    d3.json("../data/cuisines.json").then(function(data) {
         const countryData = data[country] || {};
 
         const margin = { top: 30, right: 30, bottom: 70, left: 60 },
@@ -306,7 +312,7 @@ function createPriceDistributionPlots(country) {
     const tooltip = setupTooltip();
 
     // Load data from JSON file
-    d3.json("/data/prices.json").then(function(data) {
+    d3.json("../data/prices.json").then(function(data) {
         // Filter data for the selected country
         let countryData = data.filter(d => d.country === country);
 
