@@ -161,7 +161,7 @@ function addHorizontalChartBars(svg, data, width, height) {
 }
 
 function facilities(country) {
-    const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+    const margin = { top: 30, right: 100, bottom: 70, left: 60 },
           width = 460 - margin.left - margin.right,
           height = 400 - margin.top - margin.bottom;
 
@@ -272,7 +272,7 @@ function SecondHorizontalChart(country) {
             entries = entries.slice(0, 10);  // Only keep the top 10
         }
 
-        const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+        const margin = { top: 30, right: 100, bottom: 70, left: 60 },
             width = 460 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
 
@@ -308,7 +308,7 @@ function SecondHorizontalChart(country) {
 function createPriceDistributionPlots(country) {
     let activeAwards = new Set();
 
-    const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+    const margin = { top: 30, right: 100, bottom: 70, left: 60 },
           width = 460 - margin.left - margin.right,
           height = 400 - margin.top - margin.bottom;
 
