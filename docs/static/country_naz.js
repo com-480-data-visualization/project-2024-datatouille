@@ -261,18 +261,24 @@ function hideTooltip(tooltip) {
 }
 
 
-function SecondHorizontalChart(country){
-    // Assuming your JSON file's path is correct and accessible
+function SecondHorizontalChart(country) {
     d3.json("../data/cuisines.json").then(function(data) {
         const countryData = data[country] || {};
+        let entries = Object.entries(countryData);
+
+        // Sorting entries by value in descending order and slicing top 10 if more than 10 exist
+        entries = entries.sort((a, b) => b[1] - a[1]);
+        if (entries.length > 10) {
+            entries = entries.slice(0, 10);  // Only keep the top 10
+        }
 
         const margin = { top: 30, right: 30, bottom: 70, left: 60 },
-              width = 460 - margin.left - margin.right,
-              height = 400 - margin.top - margin.bottom;
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
 
-        // Select the container for the second horizontal chart and clear previous contents
+        // Clear previous contents
         const svgContainer = d3.select("#second-horizontal-chart");
-        svgContainer.selectAll("*").remove(); // Clear the SVG if one exists
+        svgContainer.selectAll("*").remove();
 
         const svg = svgContainer
             .append("svg")
@@ -281,15 +287,22 @@ function SecondHorizontalChart(country){
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        setupHorizontalChartAxes(svg, countryData, width, height);
-        addHorizontalChartBars(svg, countryData, width, height);
+        // Reconstructing countryData for adjusted entries
+        let adjustedCountryData = {};
+        entries.forEach(([key, value]) => {
+            adjustedCountryData[key] = value;
+        });
+
+        setupHorizontalChartAxes(svg, adjustedCountryData, width, height);
+        addHorizontalChartBars(svg, adjustedCountryData, width, height);
         adjustContainerSizes();
         svg.selectAll(".axis--y text")
-        .style("font-size", "5px"); // Adjust the font size as needed
+            .style("font-size", "7px");  // Adjust the font size as needed
     }).catch(function(error) {
         console.error("Error loading cuisine data: ", error);
     });
 }
+
 
 
 function createPriceDistributionPlots(country) {
