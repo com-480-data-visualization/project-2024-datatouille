@@ -120,6 +120,20 @@
             overflow-y: auto;
             right: -500px; /* Start off-screen */
         }
+        .toggle-button {
+            position: fixed;
+            right: 0; /* Stick to the right edge */
+            top: 100px; /* Center vertically */
+            z-index: 1010; /* Ensure it's above other elements */
+            border-radius: 0 0 0 5px; /* Rounded corners on the left side */
+            background-color: rgb(166, 48, 48);
+            color: white; /* Text color for the button */
+        }
+        .toggle-button:hover {
+        background-color: #954a4a; /* Darker shade of burgundy on hover */
+        color: white;
+    
+        }
     </style>
 </head>
 <body>
@@ -142,7 +156,8 @@
 
     <div id="map"></div> <!-- Map container -->
 
-    <button id="toggle-filter-button" class="toggle-button">Filters</button>
+    <!-- Toggle Button for Filter Panel -->
+    <button id="toggle-filter-button" class="btn btn-info toggle-button"> Filter</button>
     
     <div id="filter-panel" class="filter-panel collapsed">
         <h3>Filter Options</h3>
