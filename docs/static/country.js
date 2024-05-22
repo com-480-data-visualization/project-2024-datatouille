@@ -295,13 +295,67 @@ document.addEventListener("DOMContentLoaded", function() {
     setupEventListeners();
 });
 
+function formatCountryName(countryName) {
+    // Define a mapping dictionary for special cases
+    const countryMappings = {
+        "china": "China Mainland",
+        "hong kong": "Hong Kong SAR China",
+        "korea": "South Korea",
+        "uae": "United Arab Emirates",
+        "czechia": "Czech Republic",
+        "macau": "Macau SAR China",
+        "uk": "United Kingdom",
+        "turkey": "Türkiye",
+        "england": "United Kingdom",
+        "scotland": "United Kingdom"
+    };
+
+    // Convert the input to lowercase and trim whitespace
+    const normalizedCountryName = countryName.trim().toLowerCase();
+
+    // Check if the input matches any special case
+    if (countryMappings.hasOwnProperty(normalizedCountryName)) {
+        return countryMappings[normalizedCountryName];
+    }
+
+    // Define a list of acronyms and special cases that should remain in uppercase
+    const specialCases = ["USA"];
+
+    // Split the country name into words
+    const words = normalizedCountryName.split(/\s+/);
+
+    // Capitalize the first letter of each word
+    const formattedWords = words.map(word => {
+        // Check if the word is in the list of special cases
+        if (specialCases.includes(word.toUpperCase())) {
+            return word.toUpperCase();
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+
+    // Join the words back into a single string
+    return formattedWords.join(' ');
+}
+
+
 function setupEventListeners() {
     const countryInput = document.getElementById("country-input");
     countryInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault(); // Prevent the default action to avoid submitting a form if applicable
-            updateCountryData(countryInput.value.trim());
+            // Get the trimmed input value
+            let countryName = countryInput.value.trim();
+
+            // Format the country name
+            countryName = formatCountryName(countryName);
+
+            // Update country data with the modified input value
+            updateCountryData(countryName);
             document.querySelector('.container').style.display = 'block'; // Adjust to make sure it fits well in the panel
+            if (countryName && countryDetails[countryName]) {
+                // Country level zoom
+                map.setView(countryDetails[countryName].coords, countryDetails[countryName].zoom);
+            } 
         }
     });
 }
