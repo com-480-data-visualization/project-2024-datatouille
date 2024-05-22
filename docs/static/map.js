@@ -442,6 +442,48 @@ function toggleFilterPanel() {
     map.invalidateSize();  // Ensure the map adjusts to new dimensions
 }
 
+function formatCountryName(countryName) {
+    // Define a mapping dictionary for special cases
+    const countryMappings = {
+        "china": "China Mainland",
+        "hong kong": "Hong Kong SAR China",
+        "korea": "South Korea",
+        "uae": "United Arab Emirates",
+        "czechia": "Czech Republic",
+        "macau": "Macau SAR China",
+        "uk": "United Kingdom",
+        "turkey": "Türkiye",
+        "england": "United Kingdom",
+        "scotland": "United Kingdom"
+    };
+
+    // Convert the input to lowercase and trim whitespace
+    const normalizedCountryName = countryName.trim().toLowerCase();
+
+    // Check if the input matches any special case
+    if (countryMappings.hasOwnProperty(normalizedCountryName)) {
+        return countryMappings[normalizedCountryName];
+    }
+
+    // Define a list of acronyms and special cases that should remain in uppercase
+    const specialCases = ["USA"];
+
+    // Split the country name into words
+    const words = normalizedCountryName.split(/\s+/);
+
+    // Capitalize the first letter of each word
+    const formattedWords = words.map(word => {
+        // Check if the word is in the list of special cases
+        if (specialCases.includes(word.toUpperCase())) {
+            return word.toUpperCase();
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+
+    // Join the words back into a single string
+    return formattedWords.join(' ');
+}
+
 // Filter part
 function initializeFilterControls() {
     document.getElementById('apply-filters').addEventListener('click', function() {
@@ -449,8 +491,9 @@ function initializeFilterControls() {
         // Check if any cuisines are selected; if none, set to null
         selectedCuisines = selectedCuisines.length > 0 ? selectedCuisines : null;
         const selectedAmbiances = collectAmbianceTags();
+        const countryInputElement = document.getElementById('country-input');
         currentFilters = {
-            country: document.getElementById('country-input').value || null,
+            country: countryInputElement.value ? formatCountryName(countryInputElement.value) : null,
             city: document.getElementById('city-input').value || null,
             name: document.getElementById('name-input').value || null,
             awards: (tempAwards = Array.from(document.querySelectorAll('#filter-form input[name="award"]:checked')).map(input => input.value), tempAwards.length > 0 ? tempAwards : null),
