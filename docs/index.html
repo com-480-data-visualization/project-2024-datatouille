@@ -168,6 +168,25 @@
             font-weight: bold;
             margin-bottom: 10px;
         }
+
+        /* Style for the color circles */
+        .color-circle {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-left: 2px;
+            vertical-align: middle;
+            transition: all 0.3s ease; /* Smooth transition for the changes */
+        }
+
+        /* Style for the color circles when checkbox is checked */
+        .filter-section input[type="checkbox"]:checked + .btn-checkbox .color-circle {
+            width: 16px; /* Increase the size */
+            height: 16px; /* Increase the size */
+            border: 2px solid white; /* Add a border */
+        }
     
         #apply-filters {
             width: 100%;
@@ -401,13 +420,16 @@
                     <p><strong>Awards:</strong></p>
                     <div>
                         <input type="checkbox" id="bib-gourmand" name="award" value="Bib Gourmand" hidden>
-                        <label for="bib-gourmand" class="btn-checkbox">Bib Gourmand
+                        <label for="bib-gourmand" class="btn-checkbox">
+                            <span class="color-circle" id="circle-bib-gourmand"></span>
+                            Bib Gourmand
                             <img src="static\images\bib_gourmand.jpg" alt="Bib Gourmand" class="tiny-image">
                         </label>
                     </div>
                     <div>
                         <input type="checkbox" id="one-star" name="award" value="1 Star" hidden>
                         <label for="one-star" class="btn-checkbox">
+                            <span class="color-circle" id="circle-one-star"></span>
                             1 Star
                             <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
                         </label>
@@ -415,6 +437,7 @@
                     <div>
                         <input type="checkbox" id="two-stars" name="award" value="2 Stars" hidden>
                         <label for="two-stars" class="btn-checkbox">
+                            <span class="color-circle" id="circle-two-stars"></span>
                             2 Stars
                             <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
                             <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
@@ -423,6 +446,7 @@
                     <div>
                         <input type="checkbox" id="three-stars" name="award" value="3 Stars" hidden>
                         <label for="three-stars" class="btn-checkbox">
+                            <span class="color-circle" id="circle-three-stars"></span>
                             3 Stars
                             <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
                             <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">

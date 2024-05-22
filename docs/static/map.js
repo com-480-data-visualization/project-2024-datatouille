@@ -186,6 +186,27 @@ addTogglePanelControl();
 // Initialize filter event listeners
 initializeFilterControls();
 
+function applyThemeColors(theme) {
+    const themeColors = colorThemes[theme] || colorThemes['default'];
+    
+    const awardTypes = {
+        'bib-gourmand': 'Bib Gourmand',
+        'one-star': '1 Star',
+        'two-stars': '2 Stars',
+        'three-stars': '3 Stars'
+    };
+    
+    for (const [id, award] of Object.entries(awardTypes)) {
+        const circle = document.getElementById(`circle-${id}`);
+        if (circle) {
+            circle.style.backgroundColor = themeColors[award] || themeColors['default'];
+        }
+    }
+}
+
+// Call the function initially to set the theme
+applyThemeColors(currentTheme);
+
 
 function setupSvgOverlay() {
     const svg = d3.select(map.getPanes().overlayPane).append("svg");
@@ -365,6 +386,7 @@ function getAwardImage(award) {
 
 function updateTheme(theme) {
     currentTheme = theme;
+    applyThemeColors(currentTheme);
     setTileLayer(theme);
     processFilteredData(); // Reapply the data processing to refresh map with new colors
 }
