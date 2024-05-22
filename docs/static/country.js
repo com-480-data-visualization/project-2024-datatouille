@@ -1,7 +1,5 @@
  // Initialize Leaflet map
 
-
-
  // Define constants for configuration
  const MAP_CENTER = [46.519653, 6.632273];
  const MAP_ZOOM_LEVEL = 4;
@@ -35,7 +33,7 @@
      'Brazil': { coords: [-15.8267, -47.9218], zoom: 5 },
      'Denmark': { coords: [55.6761, 12.5683], zoom: 8 },
      'United Arab Emirates': { coords: [24.4539, 54.3773], zoom: 8 },
-     'Turkey': { coords: [39.9334, 32.8597], zoom: 6 },
+     'Türkiye': { coords: [39.9334, 32.8597], zoom: 6 },
      'Vietnam': { coords: [21.0285, 105.8542], zoom: 7 },
      'Ireland': { coords: [53.3498, -6.2603], zoom: 8 },
      'Sweden': { coords: [59.3293, 18.0686], zoom: 6 },
