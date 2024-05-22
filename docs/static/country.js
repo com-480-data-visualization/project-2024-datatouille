@@ -35,7 +35,7 @@
      'Brazil': { coords: [-15.8267, -47.9218], zoom: 5 },
      'Denmark': { coords: [55.6761, 12.5683], zoom: 8 },
      'United Arab Emirates': { coords: [24.4539, 54.3773], zoom: 8 },
-     'Turkey': { coords: [39.9334, 32.8597], zoom: 6 },
+     'Türkiye': { coords: [39.9334, 32.8597], zoom: 6 },
      'Vietnam': { coords: [21.0285, 105.8542], zoom: 7 },
      'Ireland': { coords: [53.3498, -6.2603], zoom: 8 },
      'Sweden': { coords: [59.3293, 18.0686], zoom: 6 },
@@ -295,17 +295,70 @@ document.addEventListener("DOMContentLoaded", function() {
     setupEventListeners();
 });
 
+function formatCountryName(countryName) {
+    // Define a mapping dictionary for special cases
+    const countryMappings = {
+        "china": "China Mainland",
+        "hong kong": "Hong Kong SAR China",
+        "korea": "South Korea",
+        "uae": "United Arab Emirates",
+        "czechia": "Czech Republic",
+        "macau": "Macau SAR China",
+        "uk": "United Kingdom",
+        "turkey": "Türkiye",
+        "england": "United Kingdom",
+        "scotland": "United Kingdom"
+    };
+
+    // Convert the input to lowercase and trim whitespace
+    const normalizedCountryName = countryName.trim().toLowerCase();
+
+    // Check if the input matches any special case
+    if (countryMappings.hasOwnProperty(normalizedCountryName)) {
+        return countryMappings[normalizedCountryName];
+    }
+
+    // Define a list of acronyms and special cases that should remain in uppercase
+    const specialCases = ["USA"];
+
+    // Split the country name into words
+    const words = normalizedCountryName.split(/\s+/);
+
+    // Capitalize the first letter of each word
+    const formattedWords = words.map(word => {
+        // Check if the word is in the list of special cases
+        if (specialCases.includes(word.toUpperCase())) {
+            return word.toUpperCase();
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+
+    // Join the words back into a single string
+    return formattedWords.join(' ');
+}
+
+
 function setupEventListeners() {
     const countryInput = document.getElementById("country-input");
     countryInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault(); // Prevent the default action to avoid submitting a form if applicable
-            updateCountryData(countryInput.value.trim());
+            // Get the trimmed input value
+            let countryName = countryInput.value.trim();
+
+            // Format the country name
+            countryName = formatCountryName(countryName);
+
+            // Update country data with the modified input value
+            updateCountryData(countryName);
             document.querySelector('.container').style.display = 'block'; // Adjust to make sure it fits well in the panel
+            if (countryName && countryDetails[countryName]) {
+                // Country level zoom
+                map.setView(countryDetails[countryName].coords, countryDetails[countryName].zoom);
+            } 
         }
     });
 }
-
 
 function updateCountryData(country) {
     // Clear the existing content
