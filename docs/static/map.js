@@ -125,11 +125,25 @@ const colorThemes = {
         
 };
 
+// Initialize heatmap configuration
+const cfg = {
+    "radius": 0.15,
+    "maxOpacity": .8,
+    "scaleRadius": true,
+    "useLocalExtrema": true,
+    latField: 'lat',
+    lngField: 'lng',
+    valueField: 'count'
+};
+
 let currentTheme = 'default'; // Track the currently selected theme
 
 // Initialize and configure the map
 let map; // Declare a variable to hold the map instance.
 let currentTileLayer; // Declare a variable to hold the current tile layer, allowing easy changes later.
+let isHeatmapActive = false;
+
+let heatmapLayer = new HeatmapOverlay(cfg); // Initialize heatmap layer
 
 function initializeMap() {
     // Initialize the Leaflet map on the 'map' div, set the view to the predefined center and zoom level
@@ -140,6 +154,9 @@ function initializeMap() {
 
     // Set the initial tile layer to 'default' using the setTileLayer function
     setTileLayer('default');
+
+    // Listen for zoomend events to toggle between heatmap and circle markers
+    map.on('zoomend', handleZoomLevelChange);
 
     // Return the map object for possible further manipulation outside this function
     return map;
@@ -227,14 +244,10 @@ function processFilteredData() {
 
     // Clear existing map entries
     clearMapEntries();
+    updateHeatmap(featuresData);
 
     const transform = d3.geoTransform({ point: projectPoint });
     const path = d3.geoPath().projection(transform);
-
-    featuresData.forEach(d => generateEntry(d));
-
-    map.on("viewreset", () => resetView(path, featuresData));
-    resetView(path, featuresData);
 
     // First check for name filter before updating map view generally
     if (currentFilters.name) {
@@ -243,11 +256,64 @@ function processFilteredData() {
         if (matchedData) {
             const coordinates = matchedData.geometry.coordinates;
             map.setView(new L.LatLng(coordinates[1], coordinates[0]), 13);
+            // Update heatmap or circle markers based on the current zoom level
+            handleZoomLevelChange();
             return; // Stop further map center updates
         }
     }
     // Update map center based on filters
     updateMapCenter();
+
+    // Check the current zoom level and update the respective layers
+    const currentZoom = map.getZoom();
+    if (currentZoom <= 6) {
+        updateHeatmap(featuresData);
+    } else {
+        featuresData.forEach(d => generateEntry(d));
+        map.on("viewreset", () => resetView(path, featuresData));
+        resetView(path, featuresData);
+    }
+
+    // Update heatmap or circle markers based on the current zoom level
+    handleZoomLevelChange();
+}
+
+function updateHeatmap(data) {
+    const heatmapData = {
+        data: data.map(d => ({
+            lat: d.geometry.coordinates[1],
+            lng: d.geometry.coordinates[0],
+            count: 1
+        }))
+    };
+
+    heatmapLayer.setData(heatmapData);
+}
+
+function handleZoomLevelChange() {
+    const currentZoom = map.getZoom();
+    if (currentZoom <= 6) {
+        if (!isHeatmapActive) {
+            clearMapEntries();
+            heatmapLayer.addTo(map);
+            const featuresData = applyFilters(allFeaturesData, currentFilters);
+            updateHeatmap(featuresData);
+            isHeatmapActive = true;
+        }
+    } else {
+        if (isHeatmapActive) {
+            map.removeLayer(heatmapLayer);
+            const featuresData = applyFilters(allFeaturesData, currentFilters);
+            const transform = d3.geoTransform({ point: projectPoint });
+            const path = d3.geoPath().projection(transform);
+
+            featuresData.forEach(d => generateEntry(d));
+
+            map.on("viewreset", () => resetView(path, featuresData));
+            resetView(path, featuresData);
+            isHeatmapActive = false;
+        }
+    }
 }
 
 function clearMapEntries() {
