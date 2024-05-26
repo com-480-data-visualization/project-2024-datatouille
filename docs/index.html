@@ -358,7 +358,7 @@
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 8px;
+            height: 20px;
             background: transparent;
             position: absolute;
             top: 0; /* Position the slider at the top */
@@ -371,7 +371,6 @@
             background: #d3d3d3;
             border: none;
             border-radius: 5px;
-            position: relative;
             z-index: 1;
         }
 
@@ -380,36 +379,36 @@
             appearance: none;
             width: 20px;
             height: 20px;
-            background: rgb(166, 64, 48); /* Green color */
+            background: #4CAF50; /* Green color */
             cursor: pointer;
             pointer-events: auto; /* Make the thumb interactable */
             border-radius: 50%;
             border: none;
             position: relative;
             top: -6px; /* Position the thumb on top of the track */
-            z-index: 2;
+            z-index: 3; /* Ensure it is above the track */
         }
 
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
-            background: rgb(166, 64, 48);
+            background: #4CAF50;
             cursor: pointer;
             pointer-events: auto;
             border-radius: 50%;
             border: none;
             position: relative;
             top: -6px; /* Position the thumb on top of the track */
-            z-index: 2;
+            z-index: 3; /* Ensure it is above the track */
         }
 
         .slider-fill {
             position: absolute;
             height: 8px;
-            background: rgb(166, 64, 48);
+            background: #4CAF50;
             border-radius: 5px;
             top: 6px; /* Position the fill correctly */
-            z-index: 0; /* Ensure it is behind the slider thumbs */
+            z-index: 2; /* Ensure it is above the track but below the thumbs */
         }
     
     </style>
