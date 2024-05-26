@@ -302,7 +302,7 @@
  function uncollapseFilterPanel() {
     const panel = document.getElementById('filter-panel');
     const mapArea = document.getElementById('map');
-    const panelWidth = '500px';  // Set the panel width
+    const panelWidth = '550px';  // Set the panel width
 
     if (panel.classList.contains('collapsed')) {
         panel.style.right = '0';
@@ -316,7 +316,7 @@
 function collapseFilterPanel() {
     const panel = document.getElementById('filter-panel');
     const mapArea = document.getElementById('map');
-    const panelWidth = '500px';  // Set the panel width
+    const panelWidth = '550px';  // Set the panel width
 
     if (!panel.classList.contains('collapsed')) {
         panel.style.right = `-${panelWidth}`;
@@ -330,7 +330,7 @@ function collapseFilterPanel() {
  function toggleFilterPanel() {
      const panel = document.getElementById('filter-panel');
      const mapArea = document.getElementById('map');
-     const panelWidth = '500px';  // Set the panel width
+     const panelWidth = '550px';  // Set the panel width
  
      if (panel.classList.contains('collapsed')) {
          panel.style.right = '0';
@@ -414,9 +414,33 @@ function setupEventListeners() {
             if (countryName && countryDetails[countryName]) {
                 // Country level zoom
                 map.setView(countryDetails[countryName].coords, countryDetails[countryName].zoom);
-            } 
+            }else{
+                setCountryNotFound();
+                map.setView(MAP_CENTER, MAP_ZOOM_LEVEL);
+            }
         }
     });
+}
+
+function setCountryNotFound() {
+    const countryNameDiv = document.getElementById("country-name");
+    countryNameDiv.innerHTML = "<h2>Country not found :(</h2>"; // Display a not found message
+
+    const containerDiv = document.querySelector('.container');
+    containerDiv.style.display = 'none'; // Hide the data container
+
+    // Create or update an existing image element for 'country not found'
+    let notFoundImage = document.getElementById('not-found-image');
+    if (!notFoundImage) {
+        notFoundImage = document.createElement('img');
+        notFoundImage.id = 'not-found-image';
+        document.getElementById('filter-panel').appendChild(notFoundImage);
+    }
+    notFoundImage.src = '/project-2024-datatouille/static/images/country_not_found.jpeg';
+    notFoundImage.style.display = 'block'; // Make sure the image is visible
+    notFoundImage.style.width = '100%'; // Adjust width to fit the panel
+    notFoundImage.style.height = 'auto'; // Maintain aspect ratio
+    notFoundImage.style.marginTop = '20px'; // Add some space at the top
 }
 
 function updateCountryData(country) {
@@ -567,9 +591,9 @@ function addHorizontalChartBars(svg, data, width, height) {
 }
 
 function facilities(country) {
-    const margin = { top: 30, right: 100, bottom: 70, left: 60 },
-          width = 460 - margin.left - margin.right,
-          height = 400 - margin.top - margin.bottom;
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+            width = 460 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
 
     // Select the container for the chart and set up the SVG element
     const svg = d3.select("#facility-chart")
@@ -603,7 +627,8 @@ function facilities(country) {
         addHorizontalChartBars(svg, adjustedFacData, width, height);
         adjustContainerSizes();  // Ensure container sizes are adjusted after chart creation
         svg.selectAll(".axis--y text")
-            .style("font-size", "5px"); // Adjust the font size as needed
+            .style("font-size", "5px")
+
     }).catch(function(error) {
         console.error('Error loading the facilities data for ' + country + ':', error);
     });
@@ -691,7 +716,7 @@ function SecondHorizontalChart(country) {
             entries = entries.slice(0, 10);  // Only keep the top 10
         }
 
-        const margin = { top: 30, right: 100, bottom: 70, left: 60 },
+        const margin = { top: 30, right: 30, bottom: 70, left: 60 },
             width = 460 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
 
