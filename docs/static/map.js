@@ -625,6 +625,7 @@ function updateSliderBackground(minSlider, maxSlider) {
 }
 
 
+
 // Filter part
 function initializeFilterControls() {
     document.getElementById('apply-filters').addEventListener('click', function() {

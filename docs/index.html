@@ -358,9 +358,10 @@
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 20px;
+            height: 8px;
             background: transparent;
             position: absolute;
+            top: 0; /* Position the slider at the top */
             pointer-events: none; /* Ensure the range inputs are not directly interactable */
         }
 
@@ -370,6 +371,8 @@
             background: #d3d3d3;
             border: none;
             border-radius: 5px;
+            position: relative;
+            z-index: 1;
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -377,34 +380,36 @@
             appearance: none;
             width: 20px;
             height: 20px;
-            background: #4CAF50; /* Green color */
+            background: rgb(166, 64, 48); /* Green color */
             cursor: pointer;
             pointer-events: auto; /* Make the thumb interactable */
             border-radius: 50%;
             border: none;
             position: relative;
             top: -6px; /* Position the thumb on top of the track */
+            z-index: 2;
         }
 
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
-            background: #4CAF50;
+            background: rgb(166, 64, 48);
             cursor: pointer;
             pointer-events: auto;
             border-radius: 50%;
             border: none;
             position: relative;
             top: -6px; /* Position the thumb on top of the track */
+            z-index: 2;
         }
 
         .slider-fill {
             position: absolute;
             height: 8px;
-            background: #4CAF50;
+            background: rgb(166, 64, 48);
             border-radius: 5px;
             top: 6px; /* Position the fill correctly */
-            z-index: -1; /* Ensure it is behind the slider thumbs */
+            z-index: 0; /* Ensure it is behind the slider thumbs */
         }
     
     </style>
@@ -546,9 +551,9 @@
                             <span id="rating-max-display">5.0</span>
                         </div>
                         <div class="range-slider">
+                            <div class="slider-fill" id="slider-fill"></div>
                             <input type="range" id="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
                             <input type="range" id="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
-                            <div class="slider-fill" id="slider-fill"></div>
                         </div>
                     </div>
                 </div>
