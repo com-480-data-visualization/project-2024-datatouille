@@ -363,6 +363,7 @@
             position: absolute;
             top: 0; /* Position the slider at the top */
             pointer-events: none; /* Ensure the range inputs are not directly interactable */
+            z-index: 1; /* Ensure it is below the fill */
         }
 
         input[type="range"]::-webkit-slider-runnable-track {
@@ -371,7 +372,7 @@
             background: #d3d3d3;
             border: none;
             border-radius: 5px;
-            z-index: 1;
+            transition: background 0.3s ease; /* Smooth background transition */
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -387,6 +388,12 @@
             position: relative;
             top: -6px; /* Position the thumb on top of the track */
             z-index: 3; /* Ensure it is above the track */
+            transition: background 0.3s ease, transform 0.3s ease; /* Smooth background and transform transition */
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #45a049; /* Darker green on hover */
+            transform: scale(1.2); /* Slightly enlarge on hover */
         }
 
         input[type="range"]::-moz-range-thumb {
@@ -400,6 +407,12 @@
             position: relative;
             top: -6px; /* Position the thumb on top of the track */
             z-index: 3; /* Ensure it is above the track */
+            transition: background 0.3s ease, transform 0.3s ease; /* Smooth background and transform transition */
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            background: #45a049; /* Darker green on hover */
+            transform: scale(1.2); /* Slightly enlarge on hover */
         }
 
         .slider-fill {
@@ -409,6 +422,7 @@
             border-radius: 5px;
             top: 6px; /* Position the fill correctly */
             z-index: 2; /* Ensure it is above the track but below the thumbs */
+            transition: left 0.3s ease, width 0.3s ease; /* Smooth position and width transition */
         }
     
     </style>
