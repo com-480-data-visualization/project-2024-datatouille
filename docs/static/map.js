@@ -417,6 +417,10 @@ function createPopupContent(datapoint) {
         .map(facility => `<li>${facility.trim()}</li>`)
         .join('');
 
+    const googleRating = datapoint.properties.google_rating === 0 
+        ? 'No Ratings Available' 
+        : datapoint.properties.google_rating;
+
     return `
         <h2>${datapoint.properties.Name}</h2>
         <p><strong>Country:</strong> ${datapoint.properties.Country}</p>
@@ -425,12 +429,14 @@ function createPopupContent(datapoint) {
         <p><strong>Cuisine:</strong> ${datapoint.properties.PrimaryCuisine}</p>
         <p><strong>Price:</strong> ${datapoint.properties.Price}</p>
         <p><strong>Address:</strong> ${datapoint.properties.Address}</p>
+        <p><strong>Google Ratings:</strong> ${googleRating}</p>
         <p><strong>Facilities and Services:</strong></p>
         <div class="selected-facility">
             <ul>${facilitiesHtml}</ul>
         </div>
     `;
 }
+
 
 
 function getAwardImage(award) {
@@ -741,5 +747,3 @@ function applyFilters(data, filters) {
         return true;
     });
 }
-
-
