@@ -585,8 +585,10 @@ function formatCountryName(countryName) {
 function updateRatingDisplay() {
     const minRating = document.getElementById('rating-min').value;
     const maxRating = document.getElementById('rating-max').value;
-    document.getElementById('rating-display').innerText = `${minRating} - ${maxRating}`;
+    document.getElementById('rating-min-display').innerText = minRating;
+    document.getElementById('rating-max-display').innerText = maxRating;
 }
+
 
 // Filter part
 function initializeFilterControls() {
