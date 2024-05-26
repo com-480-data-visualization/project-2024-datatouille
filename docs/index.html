@@ -335,31 +335,54 @@
             box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Enhanced focus state */
         }
 
-        .rating-range-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .slider-container {
             position: relative;
-            width: 45%;
+            width: 100%;
+            height: 40px; /* Adjust height as needed */
+            margin-top: 10px;
         }
 
         input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
             width: 100%;
-            margin: 0;
+            height: 8px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            position: absolute;
+            pointer-events: none; /* Ensure the range inputs are not directly interactable */
         }
 
-        .slider-container span {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50; /* Green color */
+            cursor: pointer;
+            pointer-events: auto; /* Make the thumb interactable */
+            border-radius: 50%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            cursor: pointer;
+            pointer-events: auto;
+            border-radius: 50%;
+        }
+
+        .rating-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .rating-values div {
             font-weight: bold;
-            background-color: #e0f7e9; /* Light green background */
-            padding: 2px 5px;
-            border-radius: 3px;
         }
     
     </style>
@@ -495,15 +518,13 @@
                 <!-- Rating Filter -->
                 <div class="filter-section">
                     <label for="rating-range">Rating:</label>
-                    <div class="rating-range-container">
-                        <div class="slider-container">
-                            <input type="range" id="rating-min" name="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
-                            <span id="rating-min-display">0.0</span>
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" id="rating-max" name="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
-                            <span id="rating-max-display">5.0</span>
-                        </div>
+                    <div class="slider-container">
+                        <input type="range" id="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
+                        <input type="range" id="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
+                    </div>
+                    <div class="rating-values">
+                        <div>Min: <span id="rating-min-display">0.0</span></div>
+                        <div>Max: <span id="rating-max-display">5.0</span></div>
                     </div>
                 </div>
 

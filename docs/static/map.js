@@ -583,10 +583,29 @@ function formatCountryName(countryName) {
 
 // Update the display for the rating sliders
 function updateRatingDisplay() {
-    const minRating = document.getElementById('rating-min').value;
-    const maxRating = document.getElementById('rating-max').value;
-    document.getElementById('rating-min-display').innerText = minRating;
-    document.getElementById('rating-max-display').innerText = maxRating;
+    const minSlider = document.getElementById('rating-min');
+    const maxSlider = document.getElementById('rating-max');
+    const minDisplay = document.getElementById('rating-min-display');
+    const maxDisplay = document.getElementById('rating-max-display');
+
+    const minValue = parseFloat(minSlider.value);
+    const maxValue = parseFloat(maxSlider.value);
+
+    // Ensure min does not exceed max
+    if (minValue > maxValue) {
+        minSlider.value = maxValue;
+        minDisplay.innerText = maxValue.toFixed(1);
+    } else {
+        minDisplay.innerText = minValue.toFixed(1);
+    }
+
+    // Ensure max does not go below min
+    if (maxValue < minValue) {
+        maxSlider.value = minValue;
+        maxDisplay.innerText = minValue.toFixed(1);
+    } else {
+        maxDisplay.innerText = maxValue.toFixed(1);
+    }
 }
 
 
