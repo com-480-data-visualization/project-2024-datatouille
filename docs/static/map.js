@@ -580,6 +580,11 @@ function formatCountryName(countryName) {
     return formattedWords.join(' ');
 }
 
+// Update the display for the rating slider
+function updateRatingDisplay(type, value) {
+    document.getElementById(`rating-${type}-display`).innerText = value;
+}
+
 // Filter part
 function initializeFilterControls() {
     document.getElementById('apply-filters').addEventListener('click', function() {
@@ -588,6 +593,8 @@ function initializeFilterControls() {
         selectedCuisines = selectedCuisines.length > 0 ? selectedCuisines : null;
         const selectedAmbiances = collectAmbianceTags();
         const countryInputElement = document.getElementById('country-input');
+        const ratingMinValue = parseFloat(document.getElementById('rating-min').value);
+        const ratingMaxValue = parseFloat(document.getElementById('rating-max').value);
         currentFilters = {
             country: countryInputElement.value ? formatCountryName(countryInputElement.value) : null,
             city: document.getElementById('city-input').value || null,
@@ -597,6 +604,8 @@ function initializeFilterControls() {
             priceRange: document.getElementById('price-range').value || null,
             facilitiesAndServices: selectedAmbiances,
             cuisine: selectedCuisines,
+            ratingMin: ratingMinValue === 0 ? null : ratingMinValue,
+            ratingMax: ratingMaxValue === 5 ? null : ratingMaxValue // Add rating filter
         };
         console.log('Applying filters:', currentFilters);
         processFilteredData(); // Reload data with new filters
@@ -746,6 +755,10 @@ function applyFilters(data, filters) {
             // Ensure every selected facility/service is included in the facilities list
             if (!filters.facilitiesAndServices.every(facility => facilitiesList.includes(facility.toLowerCase()))) return false;
         }
+        // New filter condition for rating
+        if (filters.ratingMin !== null && d.properties.google_rating < filters.ratingMin) return false;
+        if (filters.ratingMax !== null && d.properties.google_rating > filters.ratingMax) return false;
         return true;
+        
     });
 }

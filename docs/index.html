@@ -105,7 +105,7 @@
         }
     
         .filter-section {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
     
         .filter-section label {
@@ -334,6 +334,15 @@
         #colorThemeSelector:focus {
             box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Enhanced focus state */
         }
+
+        #rating-min-display, #rating-max-display {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
     
     </style>
 
@@ -463,6 +472,21 @@
                     <input type="text" id="cuisine-input" name="cuisine" placeholder="Type Cuisine ..." autocomplete="on">
                     <div id="cuisine-list" class="suggestions-list"></div>
                     <div id="selected-cuisines" class="selected-cuisines"></div> <!-- Container for selected cuisines -->
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-section">
+                    <label>Rating:</label>
+                    <div>
+                        <label for="rating-min">Min:</label>
+                        <input type="range" id="rating-min" name="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay('min', this.value)">
+                        <span id="rating-min-display">0.0</span>
+                    </div>
+                    <div>
+                        <label for="rating-max">Max:</label>
+                        <input type="range" id="rating-max" name="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay('max', this.value)">
+                        <span id="rating-max-display">5.0</span>
+                    </div>
                 </div>
 
                 <!-- Price Filter -->
