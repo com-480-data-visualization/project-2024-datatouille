@@ -606,6 +606,25 @@ function updateRatingDisplay() {
     } else {
         maxDisplay.innerText = maxValue.toFixed(1);
     }
+
+    // Update slider background
+    updateSliderBackground(minSlider, maxSlider);
+}
+
+function updateSliderBackground(minSlider, maxSlider) {
+    const min = parseFloat(minSlider.value);
+    const max = parseFloat(maxSlider.value);
+
+    const range = maxSlider.max - maxSlider.min;
+    const minPercent = ((min - minSlider.min) / range) * 100;
+    const maxPercent = ((max - maxSlider.min) / range) * 100;
+
+    minSlider.style.background = `linear-gradient(to right, #d3d3d3 0%, #d3d3d3 ${minPercent}%, #4CAF50 ${minPercent}%, #4CAF50 ${maxPercent}%, #d3d3d3 ${maxPercent}%, #d3d3d3 100%)`;
+    maxSlider.style.background = `linear-gradient(to right, #d3d3d3 0%, #d3d3d3 ${minPercent}%, #4CAF50 ${minPercent}%, #4CAF50 ${maxPercent}%, #d3d3d3 ${maxPercent}%, #d3d3d3 100%)`;
+
+    const sliderFill = document.getElementById('slider-fill');
+    sliderFill.style.left = `${minPercent}%`;
+    sliderFill.style.width = `${maxPercent - minPercent}%`;
 }
 
 

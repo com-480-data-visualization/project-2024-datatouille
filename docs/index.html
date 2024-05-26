@@ -338,8 +338,14 @@
         .slider-container {
             position: relative;
             width: 100%;
-            height: 40px; /* Adjust height as needed */
-            margin-top: 10px;
+            height: 60px; /* Adjust height as needed */
+        }
+
+        #slider-values {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
         input[type="range"] {
@@ -349,13 +355,14 @@
             height: 8px;
             background: transparent;
             position: absolute;
+            top: 20px; /* Adjust to position the slider thumb properly */
             pointer-events: none; /* Ensure the range inputs are not directly interactable */
         }
 
         input[type="range"]::-webkit-slider-runnable-track {
             width: 100%;
             height: 8px;
-            background: linear-gradient(to right, #d3d3d3 0%, #d3d3d3 100%);
+            background: #d3d3d3;
             border: none;
             border-radius: 5px;
         }
@@ -365,87 +372,34 @@
             appearance: none;
             width: 20px;
             height: 20px;
-            background: rgb(166, 64, 48); /* Datatouille color */
+            background: rgb(166, 64, 48); /* Green color */
             cursor: pointer;
             pointer-events: auto; /* Make the thumb interactable */
             border-radius: 50%;
             border: none;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: rgb(166, 64, 48); /* Datatouille color */
-            cursor: pointer;
-            pointer-events: auto;
-            border-radius: 50%;
-            border: none;
-        }
-
-        .rating-values {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-        .rating-values div {
-            font-weight: bold;
-            
-        }.slider-container {
             position: relative;
-            width: 100%;
-            height: 40px; /* Adjust height as needed */
-            margin-top: 10px;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 8px;
-            background: transparent;
-            position: absolute;
-            pointer-events: none; /* Ensure the range inputs are not directly interactable */
-        }
-
-        input[type="range"]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 8px;
-            background: linear-gradient(to right, #d3d3d3 0%, #d3d3d3 100%);
-            border: none;
-            border-radius: 5px;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #4CAF50; /* Green color */
-            cursor: pointer;
-            pointer-events: auto; /* Make the thumb interactable */
-            border-radius: 50%;
-            border: none;
+            top: -6px; /* Position the thumb on top of the track */
         }
 
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
-            background: #4CAF50;
+            background: rgb(166, 64, 48);
             cursor: pointer;
             pointer-events: auto;
             border-radius: 50%;
             border: none;
+            position: relative;
+            top: -6px; /* Position the thumb on top of the track */
         }
 
-        .rating-values {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-        .rating-values div {
-            font-weight: bold;
+        #slider-fill {
+            position: absolute;
+            top: 20px; /* Same as input[type="range"] top value */
+            height: 8px;
+            background: rgb(166, 64, 48);
+            border-radius: 5px;
+            z-index: -1; /* Ensure it is behind the slider thumbs */
         }
     
     </style>
@@ -582,12 +536,13 @@
                 <div class="filter-section">
                     <label for="rating-range">Rating:</label>
                     <div class="slider-container">
+                        <div id="slider-values">
+                            <span id="rating-min-display">0.0</span>
+                            <span id="rating-max-display">5.0</span>
+                        </div>
                         <input type="range" id="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
                         <input type="range" id="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
-                    </div>
-                    <div class="rating-values">
-                        <div>Min: <span id="rating-min-display">0.0</span></div>
-                        <div>Max: <span id="rating-max-display">5.0</span></div>
+                        <div id="slider-fill"></div>
                     </div>
                 </div>
 
