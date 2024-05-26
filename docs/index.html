@@ -347,12 +347,73 @@
             appearance: none;
             width: 100%;
             height: 8px;
-            background: #d3d3d3;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity .2s;
+            background: transparent;
             position: absolute;
             pointer-events: none; /* Ensure the range inputs are not directly interactable */
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #d3d3d3 0%, #d3d3d3 100%);
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: rgb(166, 64, 48); /* Datatouille color */
+            cursor: pointer;
+            pointer-events: auto; /* Make the thumb interactable */
+            border-radius: 50%;
+            border: none;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: rgb(166, 64, 48); /* Datatouille color */
+            cursor: pointer;
+            pointer-events: auto;
+            border-radius: 50%;
+            border: none;
+        }
+
+        .rating-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .rating-values div {
+            font-weight: bold;
+            
+        }.slider-container {
+            position: relative;
+            width: 100%;
+            height: 40px; /* Adjust height as needed */
+            margin-top: 10px;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: transparent;
+            position: absolute;
+            pointer-events: none; /* Ensure the range inputs are not directly interactable */
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, #d3d3d3 0%, #d3d3d3 100%);
+            border: none;
+            border-radius: 5px;
         }
 
         input[type="range"]::-webkit-slider-thumb {
@@ -364,6 +425,7 @@
             cursor: pointer;
             pointer-events: auto; /* Make the thumb interactable */
             border-radius: 50%;
+            border: none;
         }
 
         input[type="range"]::-moz-range-thumb {
@@ -373,6 +435,7 @@
             cursor: pointer;
             pointer-events: auto;
             border-radius: 50%;
+            border: none;
         }
 
         .rating-values {
