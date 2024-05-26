@@ -15,6 +15,74 @@
     <script src="https://unpkg.com/leaflet.pattern"></script>
 
     <style>
+        .autocomplete-dropdown {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background: white;
+        border: 1px solid #ccc;
+        border-top: none;
+        position: absolute;
+        width: calc(100% - 2px); /* adjust width as per your input field */
+        max-height: 150px;
+        overflow-y: auto;
+        display: none; /* Hidden by default */
+    }
+
+        .autocomplete-dropdown li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .autocomplete-dropdown li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .selected-countries {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .country-chip {
+            background-color:rgb(166, 48, 48); /* Red background */
+            color: white; /* White text */
+            padding: 5px 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .close-btn {
+            margin-left: 8px;
+            cursor: pointer;
+            display: inline-block;
+            padding: 0 4px;
+        }
+
+        .suggestions-list {
+            border: 1px solid #ccc;
+            border-top: none;
+            position: absolute;
+            z-index: 1000;
+            width: calc(100% - 2px);
+            background: white;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+
         .styled-table {
             width: 100%;
             border-collapse: collapse;
@@ -112,7 +180,7 @@
             position: fixed;
             right: 0;
             top: 100px;
-            width: 500px;
+            width: 550px;
             background-color: #fff;
             padding: 20px;
             border-left: 1px solid #ceabab;
@@ -120,7 +188,7 @@
             height: calc(100% - 100px);
             transition: right 0.3s;
             overflow-y: auto;
-            right: -500px; /* Start off-screen */
+            right: -550px; /* Start off-screen */
         }
         .toggle-button {
             position: fixed;
@@ -164,12 +232,14 @@
 
     <!-- Toggle Button for Filter Panel -->
     <button id="toggle-filter-button" class="btn btn-info toggle-button"> Panel </button>
-    
+    <!-- Move chart containers here -->
+
     <div id="filter-panel" class="filter-panel collapsed">
         <div class="filter-section">
-            <label for="country-input">Country:</label>
-            <input type="text" id="country-input" placeholder="Search country">
+            <input type="text" id="country-input" placeholder="Search country" style="width: 450px;" autocomplete="on">
+            <div id="country-list" class="suggestions-list"></div>
         </div>
+        <div style="padding: 20px;"></div>
         <!-- Move chart containers here -->
         <div id="country-name" class="country-name-title"></div>
         <div class="container">

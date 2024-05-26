@@ -66,6 +66,7 @@
  let map; // Declare a variable to hold the map instance.
  let currentTileLayer; // Declare a variable to hold the current tile layer, allowing easy changes later.
  
+ 
  function initializeMap() {
      // Initialize the Leaflet map on the 'map' div, set the view to the predefined center and zoom level
      map = L.map('map', { zoomControl: false }).setView(MAP_CENTER, MAP_ZOOM_LEVEL);
@@ -77,9 +78,78 @@
      // Return the map object for possible further manipulation outside this function
      return map;
  }
- 
- 
+
+ let geojson; // Hold your GeoJSON layer globally
+ let currentLayer; // Track the currently selected layer for style resetting
+
  function setBorders(map) {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    d3.json('/project-2024-datatouille/data/world-administrative-boundaries-filtered.geojson').then(function(data) {
+        geojson = L.geoJSON(data, {
+            onEachFeature: function(feature, layer) {
+                layer.on({
+                    mouseover: function(e) {
+                        var layer = e.target;
+                        if (currentLayer === layer) return;
+                        layer.setStyle({
+                            weight: 3,
+                            color: '#954a4a',
+                            fillOpacity: 0.4
+                        });
+                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                            layer.bringToFront();
+                        }
+                    },
+                    mouseout: function(e) {
+                        if (currentLayer === e.target) return;
+                        geojson.resetStyle(e.target);
+                    },
+                    click: function(e) {
+                        if (currentLayer) {
+                            geojson.resetStyle(currentLayer);
+                        }
+                        if (currentLayer == layer) {
+                            currentLayer = null;
+                            currentEntity = "all";
+                            document.querySelector('.container').style.display = 'none';
+                            document.getElementById('country-name').innerHTML = '';
+                            map.setView(MAP_CENTER, MAP_ZOOM_LEVEL);
+                            collapseFilterPanel();
+                            return;
+                        }
+                        currentLayer = layer;
+                        layer.setStyle({
+                            weight: 3,
+                            color: '#A63030',
+                            fillOpacity: 0.7
+                        });
+                        currentEntity = feature.properties.name;
+                        updateCountryData(currentEntity);
+                        document.querySelector('.container').style.display = 'block';
+                        var bounds = layer.getBounds();
+                        map.fitBounds(bounds);
+                        uncollapseFilterPanel();
+                    }
+                });
+            },
+            style: function(feature) {
+                return {
+                    color: 'grey',
+                    weight: 1,
+                    fillOpacity: 0.1
+                };
+            }
+        }).addTo(map);
+    }).catch(function(error) {
+        console.error('Error loading GeoJSON:', error);
+    });
+}
+
+ 
+ function setBorders2(map) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -120,7 +190,7 @@
 }
 
 
- function setBorders2(map) {
+ function setBorders3(map) {
    // Add a tile layer
    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -213,30 +283,6 @@
      });
  }
  
- function updateMapCenter() {
-     if (currentFilters.city && currentFilters.city in cityCoordinates) {
-         // Zoom closer for city
-         map.setView(cityCoordinates[currentFilters.city], 11);
-     } else if (currentFilters.country && countryDetails[currentFilters.country]) {
-         // Country level zoom
-         map.setView(countryDetails[currentFilters.country].coords, countryDetails[currentFilters.country].zoom);
-     } else if (currentFilters.continents && currentFilters.continents.length === 1 && continentCoordinates[currentFilters.continents[0]]) {
-         // Continent level zoom
-         map.setView(continentCoordinates[currentFilters.continents[0]].coords, continentCoordinates[currentFilters.continents[0]].zoom);
-     } else if (currentFilters.continents && currentFilters.continents.length > 1) {
-         // More general view for multiple continents
-         map.setView([0, 0], 3); // World view
-     } else if ( currentFilters.awards || currentFilters.priceRange || currentFilters.ambiance || currentFilters.cuisine) {
-         // More general view for multiple continents
-         return;
-     } else {
-         // Default view
-         map.setView(MAP_CENTER, MAP_ZOOM_LEVEL);
-     }
- }
- 
- 
- 
  function projectPoint(x, y) {
      return map.latLngToLayerPoint(new L.LatLng(y, x));
  }
@@ -265,6 +311,19 @@
         panel.classList.remove('collapsed');
 
         map.invalidateSize();  // Ensure the map adjusts to new dimensions
+    }
+}
+function collapseFilterPanel() {
+    const panel = document.getElementById('filter-panel');
+    const mapArea = document.getElementById('map');
+    const panelWidth = '500px';  // Set the panel width
+
+    if (!panel.classList.contains('collapsed')) {
+        panel.style.right = `-${panelWidth}`;
+        mapArea.style.width = '100%';
+        document.getElementById('toggle-filter-button').style.right = '0';
+        panel.classList.add('collapsed');
+        map.invalidateSize();  // Update map size as panel hides
     }
 }
 
@@ -522,12 +581,26 @@ function facilities(country) {
 
     // Load the facilities data from the JSON file
     d3.json("../data/facilities.json").then(function(allFacilities) {
-        // Get data for the specific country or default to an empty object if not found
         const facData = allFacilities[country] || {};
 
+        // Convert object to array of entries and sort by value in descending order
+        let entries = Object.entries(facData);
+        entries = entries.sort((a, b) => b[1] - a[1]);
+
+        // Slice to keep only the top 10 entries if more than 10 exist
+        if (entries.length > 10) {
+            entries = entries.slice(0, 10);
+        }
+
+        // Reconstruct facData from the adjusted entries
+        let adjustedFacData = {};
+        entries.forEach(([key, value]) => {
+            adjustedFacData[key] = value;
+        });
+
         // Set up the axes using the loaded data
-        setupHorizontalChartAxes(svg, facData, width, height);
-        addHorizontalChartBars(svg, facData, width, height);
+        setupHorizontalChartAxes(svg, adjustedFacData, width, height);
+        addHorizontalChartBars(svg, adjustedFacData, width, height);
         adjustContainerSizes();  // Ensure container sizes are adjusted after chart creation
         svg.selectAll(".axis--y text")
             .style("font-size", "5px"); // Adjust the font size as needed
@@ -535,7 +608,6 @@ function facilities(country) {
         console.error('Error loading the facilities data for ' + country + ':', error);
     });
 }
-
 
 function setupVerticalChartAxes(svg, data, width, height) {
     const x = d3.scaleBand()
@@ -743,3 +815,64 @@ function createPriceDistributionPlots(country) {
         console.error('Error fetching price data:', error);
     });
 }
+
+//COUNTRY
+// Extracting all country names as an array
+const predefinedCountries = Object.keys(countryDetails);
+
+document.getElementById('country-input').addEventListener('input', function() {
+    const input = this.value;
+    const countryList = document.getElementById('country-list');
+    countryList.innerHTML = ''; // Clear existing suggestions
+
+    if (input.length > 0) {
+        const filteredCountries = predefinedCountries.filter(country =>
+            country.toLowerCase().includes(input.toLowerCase())
+        );
+
+        filteredCountries.forEach(function(country) {
+            const div = document.createElement('div');
+            div.textContent = country;
+            div.className = 'suggestion-item';
+            div.onclick = function() {
+                form = document.getElementById('country-input')
+                form.value = country;
+                form.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
+                countryList.innerHTML = ''; // Clear suggestions after selection
+            };
+            countryList.appendChild(div);
+        });
+    }
+});
+
+function addSelectedCountry(country) {
+    const container = document.getElementById('country-input');
+    const chip = document.createElement('div');
+    chip.className = 'country-chip';
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = country;
+    textSpan.className = 'country-text';  // A specific class for the text part
+
+    const closeBtn = document.createElement('span');
+    closeBtn.textContent = '×';
+    closeBtn.className = 'close-btn';
+    closeBtn.onclick = function() {
+        container.removeChild(chip);
+    };
+
+    chip.appendChild(textSpan);
+    chip.appendChild(closeBtn);
+    container.appendChild(chip);
+}
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', function(event) {
+    const countryInput = document.getElementById('country-input');
+    const countryList = document.getElementById('country-list');
+    if (!countryInput.contains(event.target)) {
+        countryList.innerHTML = '';
+    }
+});
+
+// COUNTRY
