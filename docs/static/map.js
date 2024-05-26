@@ -258,13 +258,11 @@ function processFilteredData() {
         if (matchedData) {
             const coordinates = matchedData.geometry.coordinates;
             map.setView(new L.LatLng(coordinates[1], coordinates[0]), 13);
-            // Update heatmap or circle markers based on the current zoom level
-            handleZoomLevelChange();
-            return; // Stop further map center updates
         }
+    } else {
+        // Update map center based on other filters
+        updateMapCenter();
     }
-    // Update map center based on filters
-    updateMapCenter();
 
     // Check the current zoom level and update the respective layers
     const currentZoom = map.getZoom();
@@ -272,6 +270,7 @@ function processFilteredData() {
         clearMapEntries();
         updateHeatmap(featuresData);
     } else {
+        clearMapEntries();
         featuresData.forEach(d => generateEntry(d));
         map.on("viewreset", () => resetView(path, featuresData));
         resetView(path, featuresData);
