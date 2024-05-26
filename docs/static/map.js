@@ -267,6 +267,7 @@ function processFilteredData() {
     // Check the current zoom level and update the respective layers
     const currentZoom = map.getZoom();
     if (currentZoom <= 6) {
+        clearMapEntries();
         updateHeatmap(featuresData);
     } else {
         featuresData.forEach(d => generateEntry(d));
@@ -303,6 +304,7 @@ function handleZoomLevelChange() {
     } else {
         if (isHeatmapActive) {
             map.removeLayer(heatmapLayer);
+            clearMapEntries();
             const featuresData = applyFilters(allFeaturesData, currentFilters);
             const transform = d3.geoTransform({ point: projectPoint });
             const path = d3.geoPath().projection(transform);
