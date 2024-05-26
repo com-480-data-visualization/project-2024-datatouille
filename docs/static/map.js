@@ -202,6 +202,7 @@ addTogglePanelControl();
 
 // Initialize filter event listeners
 initializeFilterControls();
+updateRatingDisplay(); // Set initial rating display values
 
 function applyThemeColors(theme) {
     const themeColors = colorThemes[theme] || colorThemes['default'];
@@ -580,9 +581,11 @@ function formatCountryName(countryName) {
     return formattedWords.join(' ');
 }
 
-// Update the display for the rating slider
-function updateRatingDisplay(type, value) {
-    document.getElementById(`rating-${type}-display`).innerText = value;
+// Update the display for the rating sliders
+function updateRatingDisplay() {
+    const minRating = document.getElementById('rating-min').value;
+    const maxRating = document.getElementById('rating-max').value;
+    document.getElementById('rating-display').innerText = `${minRating} - ${maxRating}`;
 }
 
 // Filter part
