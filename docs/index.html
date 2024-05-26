@@ -348,14 +348,19 @@
             font-weight: bold;
         }
 
+        .range-slider {
+            position: relative;
+            width: 100%;
+            height: 20px;
+        }
+
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 8px;
+            height: 20px;
             background: transparent;
             position: absolute;
-            top: 20px; /* Adjust to position the slider thumb properly */
             pointer-events: none; /* Ensure the range inputs are not directly interactable */
         }
 
@@ -372,7 +377,7 @@
             appearance: none;
             width: 20px;
             height: 20px;
-            background: rgb(166, 64, 48); /* Green color */
+            background: #4CAF50; /* Green color */
             cursor: pointer;
             pointer-events: auto; /* Make the thumb interactable */
             border-radius: 50%;
@@ -384,7 +389,7 @@
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
-            background: rgb(166, 64, 48);
+            background: #4CAF50;
             cursor: pointer;
             pointer-events: auto;
             border-radius: 50%;
@@ -393,12 +398,12 @@
             top: -6px; /* Position the thumb on top of the track */
         }
 
-        #slider-fill {
+        .slider-fill {
             position: absolute;
-            top: 20px; /* Same as input[type="range"] top value */
             height: 8px;
-            background: rgb(166, 64, 48);
+            background: #4CAF50;
             border-radius: 5px;
+            top: 6px; /* Position the fill correctly */
             z-index: -1; /* Ensure it is behind the slider thumbs */
         }
     
@@ -540,9 +545,11 @@
                             <span id="rating-min-display">0.0</span>
                             <span id="rating-max-display">5.0</span>
                         </div>
-                        <input type="range" id="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
-                        <input type="range" id="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
-                        <div id="slider-fill"></div>
+                        <div class="range-slider">
+                            <input type="range" id="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
+                            <input type="range" id="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
+                            <div class="slider-fill" id="slider-fill"></div>
+                        </div>
                     </div>
                 </div>
 

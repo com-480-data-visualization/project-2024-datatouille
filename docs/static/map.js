@@ -203,6 +203,7 @@ addTogglePanelControl();
 // Initialize filter event listeners
 initializeFilterControls();
 updateRatingDisplay(); // Set initial rating display values
+updateSliderBackground(document.getElementById('rating-min'), document.getElementById('rating-max'));
 
 function applyThemeColors(theme) {
     const themeColors = colorThemes[theme] || colorThemes['default'];
@@ -581,7 +582,6 @@ function formatCountryName(countryName) {
     return formattedWords.join(' ');
 }
 
-// Update the display for the rating sliders
 function updateRatingDisplay() {
     const minSlider = document.getElementById('rating-min');
     const maxSlider = document.getElementById('rating-max');
@@ -618,9 +618,6 @@ function updateSliderBackground(minSlider, maxSlider) {
     const range = maxSlider.max - maxSlider.min;
     const minPercent = ((min - minSlider.min) / range) * 100;
     const maxPercent = ((max - maxSlider.min) / range) * 100;
-
-    minSlider.style.background = `linear-gradient(to right, #d3d3d3 0%, #d3d3d3 ${minPercent}%, #4CAF50 ${minPercent}%, #4CAF50 ${maxPercent}%, #d3d3d3 ${maxPercent}%, #d3d3d3 100%)`;
-    maxSlider.style.background = `linear-gradient(to right, #d3d3d3 0%, #d3d3d3 ${minPercent}%, #4CAF50 ${minPercent}%, #4CAF50 ${maxPercent}%, #d3d3d3 ${maxPercent}%, #d3d3d3 100%)`;
 
     const sliderFill = document.getElementById('slider-fill');
     sliderFill.style.left = `${minPercent}%`;
