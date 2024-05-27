@@ -16,6 +16,7 @@
             font-family: 'Roboto', sans-serif;
             background: url('static/images/starter_page_logo.png') no-repeat center center fixed;
             background-size: cover;
+            transition: opacity 1s ease-out;
         }
 
         #container {
@@ -133,6 +134,14 @@
             100% { transform: translateY(100vh); }
         }
     </style>
+    <script>
+        function fadeOutAndRedirect(url) {
+            document.body.style.opacity = 0;
+            setTimeout(function() {
+                window.location.href = url;
+            }, 1000);
+        }
+    </script>
 </head>
 <body>
     <div class="floating-figure figure1"></div>
@@ -145,7 +154,7 @@
         <div>
             <div id="title">Datatouille</div>
             <div id="subtitle">Discover Michelin Guide Restaurants</div>
-            <button id="startButton" onclick="window.location.href='/project-2024-datatouille/templates/main_page.html'">Start Exploring</button>
+            <button id="startButton" onclick="fadeOutAndRedirect('/project-2024-datatouille/templates/main_page.html')">Start Exploring</button>
         </div>
     </div>
 
