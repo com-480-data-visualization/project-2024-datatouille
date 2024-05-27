@@ -639,7 +639,6 @@ function setFlag(countryName) {
         "Zambia": "ZM",
         "Zimbabwe": "ZW"
     };
-    
     const isoCode = countryISO[countryName] ? countryISO[countryName] : null;
         if (!isoCode) {
             console.error('ISO code not found for country:', countryName);
@@ -651,6 +650,10 @@ function setFlag(countryName) {
             countryImage = document.createElement('img');
             countryImage.id = 'country-flag';
             countryImage.style.marginLeft = '10px'; // Space between name and flag
+            countryImage.style.borderRadius = '50%'; // Make the image circular
+            countryImage.style.objectFit = 'cover'; // Ensure the image covers the area
+            countryImage.style.width = '20px'; // Set the width (and height for a circle)
+            countryImage.style.height = '20px'; // Set the height equal to the width
         }
     
         countryImage.src = `../static/images/country_flags/${isoCode.toLowerCase()}.png`;
@@ -663,6 +666,7 @@ function setFlag(countryName) {
         countryNameContainer.innerHTML = `<span>${countryName}</span>`; // Use a span to contain text
         countryNameContainer.appendChild(countryImage); // Append the flag next to the text
     }
+
     
 
 function updateCountryData(country) {
