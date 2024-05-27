@@ -19,6 +19,10 @@ def index():
 def about_project():
    return render_template('about_project.html')
 
+@app.route('/project-2024-datatouille/templates/main_page.html')
+def main_page():
+   return render_template('main_page.html')
+
 @app.route('/project-2024-datatouille/templates/about_us.html')
 def about_us():
    return render_template('about_us.html')

@@ -1,627 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Datatouille</title>
-    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <script src="https://d3js.org/d3.v5.min.js" type="text/javascript"></script>
-    <script src="https://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
-    <script src="/project-2024-datatouille/static/heatmap.min.js"></script>
-    <script src="/project-2024-datatouille/static/leaflet-heatmap.js"></script>
-    <link rel="icon" sizes="192x192" type="image/png" href="/project-2024-datatouille/static/images/website_logo.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datatouille - Michelin Guide Restaurants Visualization</title>
     <style>
-        html, body {
-            height: 100%;
-            width: 100%;
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             font-family: 'Roboto', sans-serif;
+            background: url('static/images/starter_page_logo.png') no-repeat center center fixed;
+            background-size: cover;
         }
-        #nav-bar {
-            width: 100%;
-            background-color: #faf7f7;
+
+        #container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 20px 20px;
-            height: 100px; /* Assuming 70px is the total height including padding */
-        }
-        .navbar-title, .navbar-logo-container {
-            display: flex;
-            align-items: center;
-        }
-        .navbar-logo {
-            height: 75px;
-            margin-right: 2px; /* Space between logo and title */
-        }
-        .navbar-title {
-            color: rgb(166, 48, 48);
-            font-size: 28px;
-            font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .navbar-nav {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        .navbar a {
-            color: rgb(166, 48, 48);
-            padding: 14px 30px;
-            text-decoration: none;
+            height: 100vh;
             text-align: center;
-            display: block;
-            font-size: 18px;
-        }
-        #map {
-            flex: 1;
-            height: 100%;
-        }
-       
-        /* Modern Filter Panel Styling */
-        .filter-panel {
-            position: fixed;
-            right: 0;
-            top: 100px; /* Adjust based on your navbar height */
-            width: 300px; /* Width of the panel */
-            height: calc(100% - 100px); /* Full height minus navbar */
-            background-color: #ffffff; /* White background for a clean look */
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-            border-left: 1px solid #e7e7e7; /* Light border for definition */
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.5); /* Adding a transparent layer to ensure text visibility */
             padding: 20px;
-            box-sizing: border-box;
-            transition: right 0.3s ease-in-out;
-            overflow-y: auto; /* Allows scrolling if content is too long */
-            z-index: 1000;
-            right: -300px; /* Start off-screen */
+            border-radius: 10px;
         }
-    
-        .collapsed {
-            right: -300px; /* Remain offscreen when collapsed */
-        }
-    
-        .toggle-button {
-            position: fixed;
-            right: 0; /* Stick to the right edge */
-            top: 100px; /* Center vertically */
-            z-index: 1010; /* Ensure it's above other elements */
-            border-radius: 0 0 0 5px; /* Rounded corners on the left side */
-            background-color: rgb(166, 48, 48);
-            color: white; /* Text color for the button */
-        }
-    
-        #filter-content h3 {
-            text-align: center; /* Center the heading */
-            margin-bottom: 10px;
-            color: #333; /* Dark gray for contrast */
-            font-size: 24px; /* Larger font size */
-        }
-    
-        .filter-section {
-            margin-bottom: 15px;
-        }
-    
-        .filter-section label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 16px; /* smaller font size */
-            color: #333;
-        }
-    
-        .filter-section input[type="text"], .filter-section select {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-    
-        .filter-section input[type="checkbox"] {
-            margin-right: 5px;
-        }
-    
-        /* Style checkboxes like buttons for a modern touch */
-        .filter-section input[type="checkbox"] + label {
-            background-color: #f7f7f7;
-            padding: 5px 10px;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            display: inline-block;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-    
-        /* Change background for checked state */
-        .filter-section input[type="checkbox"]:checked + label {
-            background-color: rgb(166, 48, 48);
+
+        #title {
+            font-size: 4em;
             color: white;
+            animation: fadeIn 2s ease-in-out;
         }
-    
-        /* Style for checkboxes to look like buttons */
-        .btn-checkbox {
-            display: inline-block;
-            padding: 4px 12px;
-            margin: 2px;
-            text-align: center;
-            background-color: #f7f7f7;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-    
-        /* Change background for checked state */
-        .filter-section input[type="checkbox"]:checked + .btn-checkbox {
-            background-color: rgb(166, 48, 48);
+
+        #subtitle {
+            font-size: 1.8em;
             color: white;
-        }
-    
-        /* Style for the heading */
-        .filter-section p {
-            font-weight: bold;
-            margin-bottom: 10px;
+            margin-top: 0.5em;
+            animation: fadeIn 3s ease-in-out;
         }
 
-        /* Style for the color circles */
-        .color-circle {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 10px;
-            margin-left: 2px;
-            vertical-align: middle;
-            transition: all 0.3s ease; /* Smooth transition for the changes */
-        }
-
-        /* Style for the color circles when checkbox is checked */
-        .filter-section input[type="checkbox"]:checked + .btn-checkbox .color-circle {
-            width: 16px; /* Increase the size */
-            height: 16px; /* Increase the size */
-            border: 2px solid white; /* Add a border */
-        }
-    
-        #apply-filters {
-            width: 100%;
-            padding: 10px;
-            background-color: rgb(166, 48, 48);
+        #startButton {
+            margin-top: 2em;
+            padding: 1em 2em;
+            font-size: 1.5em;
             color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-    
-        #apply-filters:hover {
-            background-color: rgb(166, 64, 48); /* Darker on hover */
-        }
-        .toggle-button:hover {
-            background-color: #954a4a; /* Darker shade of burgundy on hover */
-            color: white;
-        }
-        .tiny-image {
-            width: 20px; /* Adjust the width to your desired size */
-            height: auto; /* Maintain aspect ratio */
-            margin-left: 5px; /* Adjust the margin as needed */
-        }
-    
-        .autocomplete-dropdown {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            background: white;
-            border: 1px solid #ccc;
-            border-top: none;
-            position: absolute;
-            width: calc(100% - 2px); /* adjust width as per your input field */
-            max-height: 150px;
-            overflow-y: auto;
-            display: none; /* Hidden by default */
-        }
-    
-        .autocomplete-dropdown li {
-            padding: 8px;
-            cursor: pointer;
-        }
-    
-        .autocomplete-dropdown li:hover {
-            background-color: #f0f0f0;
-        }
-    
-        .selected-cuisines {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-    
-        .cuisine-chip {
-            background-color: #d10000; /* Red background */
-            color: white; /* White text */
-            padding: 5px 10px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            display: inline-flex;
-            align-items: center;
-        }
-    
-        .close-btn {
-            margin-left: 8px;
-            cursor: pointer;
-            display: inline-block;
-            padding: 0 4px;
-        }
-    
-        .suggestions-list {
-            border: 1px solid #ccc;
-            border-top: none;
-            position: absolute;
-            z-index: 1000;
-            width: calc(100% - 2px);
-            background: white;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-    
-        .suggestion-item {
-            padding: 8px;
-            cursor: pointer;
-            text-align: left;
-        }
-    
-        .suggestion-item:hover {
-            background-color: #f0f0f0;
-        }
-    
-        .tag {
-            display: inline-block;
-            background-color: red; /* Red background for the tag */
-            color: white;           /* White text color */
-            padding: 5px 10px;      /* Padding around the text */
-            margin: 2px;            /* Space between tags */
-            border-radius: 5px;     /* Rounded corners for the tag */
-            cursor: pointer;        /* Pointer cursor on hover */
-        }
-    
-        .tag:hover {
-            opacity: 0.8;           /* Slightly transparent on hover for better UI feedback */
-        }
-    
-        .selected-facility ul {
-            list-style-type: disc; /* Uses default disc for bullets */
-            padding-left: 20px; /* Adjust as needed for alignment */
-            margin-top: 5px; /* Spacing above the list */
-        }
-    
-        .selected-facility ul li {
-            font-size: 15px; /* Increases font size, set to your preference */
-            margin-bottom: 5px; /* Spacing between list items */
-        }
-
-        .theme-selector {
-            display: block; /* Ensures vertical stacking */
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            vertical-align: middle;
-        }
-
-        .theme-selector:hover {
-            opacity: 1; /* Make selector visible on hover */
-        }
-
-        .theme-selector label {
-            display: block; /* Ensures the label takes up full width */
-            color: rgb(166, 64, 48);
-            margin-bottom: 5px; /* Provides spacing between label and dropdown */
-        }
-
-        #colorThemeSelector {
-            width: 100%; /* Optional: Adjust based on design requirements */
-            box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Styling for when select is active */
-            transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-
-        #colorThemeSelector:focus {
-            box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Enhanced focus state */
-        }
-
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 60px; /* Adjust height as needed */
-        }
-
-        #slider-values {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .range-slider {
-            position: relative;
-            width: 100%;
-            height: 20px;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 20px;
-            background: transparent;
-            position: absolute;
-            top: 0; /* Position the slider at the top */
-            pointer-events: none; /* Ensure the range inputs are not directly interactable */
-            z-index: 1; /* Ensure it is below the fill */
-        }
-
-        input[type="range"]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 8px;
-            background: #d3d3d3;
+            background: rgb(166, 48, 48);
             border: none;
             border-radius: 5px;
-            transition: background 0.2s ease; /* Smooth background transition */
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #4CAF50; /* Green color */
             cursor: pointer;
-            pointer-events: auto; /* Make the thumb interactable */
-            border-radius: 50%;
-            border: none;
-            position: relative;
-            top: -6px; /* Position the thumb on top of the track */
-            z-index: 3; /* Ensure it is above the track */
-            transition: background 0.2s ease, transform 0.2s ease; /* Smooth background and transform transition */
+            animation: bounceIn 4s ease-in-out, pulse 2s infinite;
+            transition: background 0.3s, transform 0.3s;
         }
 
-        input[type="range"]::-webkit-slider-thumb:hover {
-            background: #45a049; /* Darker green on hover */
-            transform: scale(1.2); /* Slightly enlarge on hover */
+        #startButton:hover {
+            background: rgb(108, 22, 9);
+            transform: scale(1.1);
         }
 
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #4CAF50;
-            cursor: pointer;
-            pointer-events: auto;
-            border-radius: 50%;
-            border: none;
-            position: relative;
-            top: -6px; /* Position the thumb on top of the track */
-            z-index: 3; /* Ensure it is above the track */
-            transition: background 0.2s ease, transform 0.2s ease; /* Smooth background and transform transition */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        input[type="range"]::-moz-range-thumb:hover {
-            background: #45a049; /* Darker green on hover */
-            transform: scale(1.2); /* Slightly enlarge on hover */
+        @keyframes bounceIn {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
         }
 
-        .slider-fill {
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .floating-figure {
             position: absolute;
-            height: 8px;
-            background: #4CAF50;
-            border-radius: 5px;
-            top: 6px; /* Position the fill correctly */
-            z-index: 2; /* Ensure it is above the track but below the thumbs */
-            transition: left 0.2s ease, width 0.2s ease; /* Smooth position and width transition */
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: 0;
         }
-    
+
+        .figure1 { top: 10%; left: 20%; animation-delay: 0s; }
+        .figure2 { top: 30%; left: 70%; animation-delay: 2s; }
+        .figure3 { top: 50%; left: 40%; animation-delay: 4s; }
+        .figure4 { top: 70%; left: 80%; animation-delay: 6s; }
+        .figure5 { top: 90%; left: 10%; animation-delay: 8s; }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .rain .star, .rain .bib {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            background-size: contain;
+        }
+
+        .star {
+            background: url('static/images/one_star_transparent.png') no-repeat center center;
+        }
+
+        .bib {
+            background: url('static/images/bib_gourmand_transparent.png') no-repeat center center;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
     </style>
-
 </head>
 <body>
-    <div id="nav-bar" class="navbar navbar-expand-lg navbar-dark">
-        <div class="navbar-logo-container">
-            <img src="/project-2024-datatouille/static/images/website_logo.jpg" class="navbar-logo" alt="Website Logo">
-            <!-- Make the title a link to the main page -->
-            <a href="#main" class="navbar-title-link">
-                <div class="navbar-title">Datatouille</div>
-            </a>
-        </div>
-        <div class="navbar-nav ml-auto">
-            <!-- Make the Home link refer back to the main page -->
-            <a class="navbar-title-link" href="/project-2024-datatouille/index.html">Home</a>
-            <a class="navbar-title-link" href="/project-2024-datatouille/templates/michelin_guide.html">Michelin Guide</a>
-            <a class="navbar-title-link" href="/project-2024-datatouille/templates/statistics.html">Statistics</a>
-            <a class="navbar-title-link" href="/project-2024-datatouille/templates/about_us.html">About Us</a>
-            <a class="navbar-title-link" href="/project-2024-datatouille/templates/about_project.html">Project</a>
-            <a class="navbar-title-link" href="/project-2024-datatouille/templates/country.html">Countries</a>
-            <div class="theme-selector">
-                <label for="colorThemeSelector" class="navbar-title-link">Theme:</label>
-                <select id="colorThemeSelector" onchange="updateTheme(this.value)">
-                    <option value="default">Default</option>
-                    <option value="pastel">Pastel</option>
-                    <option value="vibrant">Vibrant</option>
-                    <option value="coolTones">Cool Tones</option>
-                    <option value="alpinePalette">Alpine</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    
-    <div id="map"></div>
-    
-    <!-- Toggle Button for Filter Panel -->
-    <button id="toggle-filter-button" class="btn btn-info toggle-button">Filters</button>
+    <div class="floating-figure figure1"></div>
+    <div class="floating-figure figure2"></div>
+    <div class="floating-figure figure3"></div>
+    <div class="floating-figure figure4"></div>
+    <div class="floating-figure figure5"></div>
 
-   <!-- Filter Panel -->
-    <div id="filter-panel" class="filter-panel collapsed">
-        <div id="filter-content">
-            <h3 style="color: #800020;">Filter Options</h3>
-            <form id="filter-form">
-                <!-- Country Filter -->
-                <div class="filter-section">
-                    <label for="country-input">Country:</label>
-                    <input type="text" id="country-input" name="country" placeholder="Enter country">
-                </div>
-        
-                <!-- City Filter -->
-                <div class="filter-section">
-                    <label for="city-input">City:</label>
-                    <input type="text" id="city-input" name="city" placeholder="Enter city">
-                </div>
-
-                <!-- Name Filter -->
-                <div class="filter-section">
-                    <label for="name-input">Name:</label>
-                    <input type="text" id="name-input" name="name" placeholder="Enter name">
-                </div>
-
-                <!-- Continent Filter -->
-                <div class="filter-section">
-                    <p><strong>Continent:</strong></p>
-                    <div>
-                        <input type="checkbox" id="continent-asia" name="continent" value="Asia" hidden>
-                        <label for="continent-asia" class="btn-checkbox">Asia</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="continent-europe" name="continent" value="Europe" hidden>
-                        <label for="continent-europe" class="btn-checkbox">Europe</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="continent-north-america" name="continent" value="North America" hidden>
-                        <label for="continent-north-america" class="btn-checkbox">North America</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="continent-south-america" name="continent" value="South America" hidden>
-                        <label for="continent-south-america" class="btn-checkbox">South America</label>
-                    </div>
-                </div>
-
-                <!-- Awards Filter -->
-                <div class="filter-section">
-                    <p><strong>Awards:</strong></p>
-                    <div>
-                        <input type="checkbox" id="bib-gourmand" name="award" value="Bib Gourmand" hidden>
-                        <label for="bib-gourmand" class="btn-checkbox">
-                            <span class="color-circle" id="circle-bib-gourmand"></span>
-                            Bib Gourmand
-                            <img src="static\images\bib_gourmand.jpg" alt="Bib Gourmand" class="tiny-image">
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="one-star" name="award" value="1 Star" hidden>
-                        <label for="one-star" class="btn-checkbox">
-                            <span class="color-circle" id="circle-one-star"></span>
-                            1 Star
-                            <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="two-stars" name="award" value="2 Stars" hidden>
-                        <label for="two-stars" class="btn-checkbox">
-                            <span class="color-circle" id="circle-two-stars"></span>
-                            2 Stars
-                            <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
-                            <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
-                        </label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="three-stars" name="award" value="3 Stars" hidden>
-                        <label for="three-stars" class="btn-checkbox">
-                            <span class="color-circle" id="circle-three-stars"></span>
-                            3 Stars
-                            <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
-                            <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
-                            <img src="static/images/one_star.jpg" alt="Michelin Star" class="tiny-image">
-                        </label>
-                    </div>
-                </div>
-                
-                <!-- Cuisine Filter with Multiple Selection -->
-                <div class="filter-section">
-                    <label for="cuisine-input">Cuisine:</label>
-                    <input type="text" id="cuisine-input" name="cuisine" placeholder="Type Cuisine ..." autocomplete="on">
-                    <div id="cuisine-list" class="suggestions-list"></div>
-                    <div id="selected-cuisines" class="selected-cuisines"></div> <!-- Container for selected cuisines -->
-                </div>
-
-                <!-- Rating Filter -->
-                <div class="filter-section">
-                    <label for="rating-range">Rating:</label>
-                    <div class="slider-container">
-                        <div id="slider-values">
-                            <span id="rating-min-display">0.0</span>
-                            <span id="rating-max-display">5.0</span>
-                        </div>
-                        <div class="range-slider">
-                            <div class="slider-fill" id="slider-fill"></div>
-                            <input type="range" id="rating-min" min="0" max="5" step="0.1" value="0" oninput="updateRatingDisplay()">
-                            <input type="range" id="rating-max" min="0" max="5" step="0.1" value="5" oninput="updateRatingDisplay()">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Price Filter -->
-                <div class="filter-section">
-                    <label for="price-range">Price:</label>
-                    <select id="price-range" name="price-range">
-                        <option value="">Select</option>
-                        <option value="1">$ (Cheap)</option>
-                        <option value="2">$$ (Affordable)</option>
-                        <option value="3">$$$ (Moderate)</option>
-                        <option value="4">$$$$ (Expensive)</option>
-                    </select>
-                </div>
-
-                <!-- Ambiance Filter -->
-                <div class="filter-section">
-                    <label for="ambiance-dropdown">Facilities and Services:</label>
-                    <select id="ambiance-dropdown">
-                        <option value="">Select Facility/Service</option>
-                        <option value="Air conditioning">Air conditioning</option>
-                        <option value="Booking essential">Booking essential</option>
-                        <option value="Brunch">Brunch</option>
-                        <option value="Car park">Car park</option>
-                        <option value="Cash only">Cash only</option>
-                        <option value="Cash only - lunch">Cash only - lunch</option>
-                        <option value="Counter dining">Counter dining</option>
-                        <option value="Credit cards not accepted">No Credit cards</option>
-                        <option value="Foreign credit cards not accepted">No Foreign credit cards</option>
-                        <option value="Garden or park">Garden or park</option>
-                        <option value="Great view">Great view</option>
-                        <option value="Interesting wine list">Interesting wine list</option>
-                        <option value="No facility and/or service listed">No facility and/or service</option>
-                        <option value="Notable sake list">Notable sake list</option>
-                        <option value="Restaurant offering vegetarian menus">Vegetarian Menu</option>
-                        <option value="Reservations not accepted">No Reservations</option>
-                        <option value="Shoes must be removed">Shoes must be removed</option>
-                        <option value="Terrace">Terrace</option>
-                        <option value="Valet parking">Valet parking</option>
-                        <option value="Wheelchair access">Wheelchair access</option>
-                        <option value="Bring your own bottle">Bring your own bottle</option>
-                    </select>
-                    <div id="ambiance-tag-container" class="selected-ambiance"></div>
-                </div>
-        
-                <!-- Submit Button -->
-                <div class="filter-section">
-                    <button type="button" id="apply-filters" class="btn btn-primary">Apply Filters</button>
-                </div>
-            </form>
+    <div id="container">
+        <div>
+            <div id="title">Datatouille</div>
+            <div id="subtitle">Discover Michelin Guide Restaurants</div>
+            <button id="startButton" onclick="window.location.href='/project-2024-datatouille/templates/main_page.html'">Start Exploring</button>
         </div>
     </div>
 
-    <script src="/project-2024-datatouille/static/map.js"></script>
-    
+    <div class="rain">
+        <div class="star" style="animation-duration: 5s;"></div>
+        <div class="star" style="animation-duration: 7s; left: 20%;"></div>
+        <div class="star" style="animation-duration: 9s; left: 40%;"></div>
+        <div class="star" style="animation-duration: 8s; left: 60%;"></div>
+        <div class="star" style="animation-duration: 9s; left: 80%;"></div>
+        
+        <div class="bib" style="animation-duration: 6s; left: 10%;"></div>
+        <div class="bib" style="animation-duration: 8s; left: 30%;"></div>
+        <div class="bib" style="animation-duration: 7s; left: 70%;"></div>
+        <div class="bib" style="animation-duration: 8s; left: 90%;"></div>
+    </div>
 </body>
 </html>
