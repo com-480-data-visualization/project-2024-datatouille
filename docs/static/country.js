@@ -189,7 +189,6 @@
     });
 }
 
-
  function setBorders3(map) {
    // Add a tile layer
    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -412,6 +411,7 @@ function setupEventListeners() {
             updateCountryData(countryName);
             document.querySelector('.container').style.display = 'block'; // Adjust to make sure it fits well in the panel
             if (countryName && countryDetails[countryName]) {
+                setFlag(countryName);
                 // Country level zoom
                 map.setView(countryDetails[countryName].coords, countryDetails[countryName].zoom);
             }else{
@@ -442,6 +442,228 @@ function setCountryNotFound() {
     notFoundImage.style.height = 'auto'; // Maintain aspect ratio
     notFoundImage.style.marginTop = '20px'; // Add some space at the top
 }
+
+function setFlag(countryName) {
+    const countryISO = {
+        "Afghanistan": "AF",
+        "Albania": "AL",
+        "Algeria": "DZ",
+        "Andorra": "AD",
+        "Angola": "AO",
+        "Antigua and Barbuda": "AG",
+        "Argentina": "AR",
+        "Armenia": "AM",
+        "Australia": "AU",
+        "Austria": "AT",
+        "Azerbaijan": "AZ",
+        "Bahamas": "BS",
+        "Bahrain": "BH",
+        "Bangladesh": "BD",
+        "Barbados": "BB",
+        "Belarus": "BY",
+        "Belgium": "BE",
+        "Belize": "BZ",
+        "Benin": "BJ",
+        "Bhutan": "BT",
+        "Bolivia": "BO",
+        "Bosnia and Herzegovina": "BA",
+        "Botswana": "BW",
+        "Brazil": "BR",
+        "Brunei": "BN",
+        "Bulgaria": "BG",
+        "Burkina Faso": "BF",
+        "Burundi": "BI",
+        "Cabo Verde": "CV",
+        "Cambodia": "KH",
+        "Cameroon": "CM",
+        "Canada": "CA",
+        "Central African Republic": "CF",
+        "Chad": "TD",
+        "Chile": "CL",
+        "China": "CN",
+        "Colombia": "CO",
+        "Comoros": "KM",
+        "Congo (Congo-Brazzaville)": "CG",
+        "Costa Rica": "CR",
+        "Croatia": "HR",
+        "Cuba": "CU",
+        "Cyprus": "CY",
+        "Czechia (Czech Republic)": "CZ",
+        "Democratic Republic of the Congo": "CD",
+        "Denmark": "DK",
+        "Djibouti": "DJ",
+        "Dominica": "DM",
+        "Dominican Republic": "DO",
+        "Ecuador": "EC",
+        "Egypt": "EG",
+        "El Salvador": "SV",
+        "Equatorial Guinea": "GQ",
+        "Eritrea": "ER",
+        "Estonia": "EE",
+        "Eswatini": "SZ",
+        "Ethiopia": "ET",
+        "Fiji": "FJ",
+        "Finland": "FI",
+        "France": "FR",
+        "Gabon": "GA",
+        "Gambia": "GM",
+        "Georgia": "GE",
+        "Germany": "DE",
+        "Ghana": "GH",
+        "Greece": "GR",
+        "Grenada": "GD",
+        "Guatemala": "GT",
+        "Guinea": "GN",
+        "Guinea-Bissau": "GW",
+        "Guyana": "GY",
+        "Haiti": "HT",
+        "Honduras": "HN",
+        "Hungary": "HU",
+        "Iceland": "IS",
+        "India": "IN",
+        "Indonesia": "ID",
+        "Iran": "IR",
+        "Iraq": "IQ",
+        "Ireland": "IE",
+        "Israel": "IL",
+        "Italy": "IT",
+        "Jamaica": "JM",
+        "Japan": "JP",
+        "Jordan": "JO",
+        "Kazakhstan": "KZ",
+        "Kenya": "KE",
+        "Kiribati": "KI",
+        "Kuwait": "KW",
+        "Kyrgyzstan": "KG",
+        "Laos": "LA",
+        "Latvia": "LV",
+        "Lebanon": "LB",
+        "Lesotho": "LS",
+        "Liberia": "LR",
+        "Libya": "LY",
+        "Liechtenstein": "LI",
+        "Lithuania": "LT",
+        "Luxembourg": "LU",
+        "Madagascar": "MG",
+        "Malawi": "MW",
+        "Malaysia": "MY",
+        "Maldives": "MV",
+        "Mali": "ML",
+        "Malta": "MT",
+        "Marshall Islands": "MH",
+        "Mauritania": "MR",
+        "Mauritius": "MU",
+        "Mexico": "MX",
+        "Micronesia": "FM",
+        "Moldova": "MD",
+        "Monaco": "MC",
+        "Mongolia": "MN",
+        "Montenegro": "ME",
+        "Morocco": "MA",
+        "Mozambique": "MZ",
+        "Myanmar (formerly Burma)": "MM",
+        "Namibia": "NA",
+        "Nauru": "NR",
+        "Nepal": "NP",
+        "Netherlands": "NL",
+        "New Zealand": "NZ",
+        "Nicaragua": "NI",
+        "Niger": "NE",
+        "Nigeria": "NG",
+        "North Korea": "KP",
+        "North Macedonia (formerly Macedonia)": "MK",
+        "Norway": "NO",
+        "Oman": "OM",
+        "Pakistan": "PK",
+        "Palau": "PW",
+        "Palestine State": "PS",
+        "Panama": "PA",
+        "Papua New Guinea": "PG",
+        "Paraguay": "PY",
+        "Peru": "PE",
+        "Philippines": "PH",
+        "Poland": "PL",
+        "Portugal": "PT",
+        "Qatar": "QA",
+        "Romania": "RO",
+        "Russia": "RU",
+        "Rwanda": "RW",
+        "Saint Kitts and Nevis": "KN",
+        "Saint Lucia": "LC",
+        "Saint Vincent and the Grenadines": "VC",
+        "Samoa": "WS",
+        "San Marino": "SM",
+        "Sao Tome and Principe": "ST",
+        "Saudi Arabia": "SA",
+        "Senegal": "SN",
+        "Serbia": "RS",
+        "Seychelles": "SC",
+        "Sierra Leone": "SL",
+        "Singapore": "SG",
+        "Slovakia": "SK",
+        "Slovenia": "SI",
+        "Solomon Islands": "SB",
+        "Somalia": "SO",
+        "South Africa": "ZA",
+        "South Korea": "KR",
+        "South Sudan": "SS",
+        "Spain": "ES",
+        "Sri Lanka": "LK",
+        "Sudan": "SD",
+        "Suriname": "SR",
+        "Sweden": "SE",
+        "Switzerland": "CH",
+        "Syria": "SY",
+        "Tajikistan": "TJ",
+        "Tanzania": "TZ",
+        "Thailand": "TH",
+        "Timor-Leste": "TL",
+        "Togo": "TG",
+        "Tonga": "TO",
+        "Trinidad and Tobago": "TT",
+        "Tunisia": "TN",
+        "Türkiye": "TR",
+        "Turkmenistan": "TM",
+        "Tuvalu": "TV",
+        "Uganda": "UG",
+        "Ukraine": "UA",
+        "United Arab Emirates": "AE",
+        "United Kingdom": "GB",
+        "United States of America": "US",
+        "Uruguay": "UY",
+        "Uzbekistan": "UZ",
+        "Vanuatu": "VU",
+        "Venezuela": "VE",
+        "Vietnam": "VN",
+        "Yemen": "YE",
+        "Zambia": "ZM",
+        "Zimbabwe": "ZW"
+    };
+    
+    const isoCode = countryISO[countryName] ? countryISO[countryName] : null;
+        if (!isoCode) {
+            console.error('ISO code not found for country:', countryName);
+            return;
+        }
+    
+        let countryImage = document.getElementById('country-flag');
+        if (!countryImage) {
+            countryImage = document.createElement('img');
+            countryImage.id = 'country-flag';
+            countryImage.style.marginLeft = '10px'; // Space between name and flag
+        }
+    
+        countryImage.src = `../static/images/country_flags/${isoCode.toLowerCase()}.png`;
+        countryImage.alt = 'Country Flag';
+        countryImage.style.height = '20px'; // Adjust size as needed
+    
+        const countryNameContainer = document.getElementById("country-name");
+        countryNameContainer.style.display = 'flex'; // Use flexbox to align items inline
+        countryNameContainer.style.alignItems = 'center'; // Align items vertically
+        countryNameContainer.innerHTML = `<span>${countryName}</span>`; // Use a span to contain text
+        countryNameContainer.appendChild(countryImage); // Append the flag next to the text
+    }
+    
 
 function updateCountryData(country) {
     // Clear the existing content
