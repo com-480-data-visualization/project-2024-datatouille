@@ -101,6 +101,57 @@
         .intro-paragraph {
             margin-bottom: 2em; /* Adds space equivalent to roughly 2 lines */
         }
+        .team-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+
+        .team-info img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px; /* Added margin-bottom for spacing */
+        }
+
+        .team-description {
+            text-align: center; /* This ensures all text within the description is centered */
+        }
+
+        .team-description h3 {
+            color: rgb(166, 48, 48); /* Dark blue for headings */
+            margin-top: 0;
+            margin-bottom: 5px; /* Added for spacing consistency */
+        }
+        .team-description p {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -170,16 +221,6 @@
 
         <div class="feature">
             <div class="feature-icon">
-                <img src="../static/icons/fifth_icon.png" alt="Personalized Recommendations">
-            </div>
-            <div class="feature-description">
-                <h3>Personalized Recommendations</h3>
-                <p>Combines user-selected preferences and budget considerations to offer tailored restaurant recommendations, aligning options closely with individual tastes and financial expectations.</p>
-            </div>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">
                 <img src="../static/icons/sixth_icon.png" alt="Interactive Map">
             </div>
             <div class="feature-description">
@@ -188,6 +229,35 @@
             </div>
         </div>
         
+    </div>
+    <div class="team-content">
+        <h1>About Us</h1>
+        <p>Welcome to Datatouille! This website has been designed by three EPFL students as part of the Data Visualization (COM-480) Course. </p>
+        <p>Our main motivation to focus on Michelin Guide data, beyond our gourmet interests, stems from the noticeable lack of effective visualizations that help audiences by filtering restaurants according to various features via an interactive map to display these filtered results in an engaging way, including closest Michelin restaurants to a selected location and routes that feature the selected restaurants world-wide.</p>
+        <h2>Meet Our Team</h2>
+        <div class="team-container">
+            <div class="team-info">
+                <img src="../static/images/ilkergul_datatouille.png" alt="Ilker Gül">
+                <div class="team-description">
+                    <h3>Ilker Gül</h3>
+                    <p>MSc. in CS @ EPFL | BSc in CS @ Sabanci University</p>
+                </div>
+            </div>
+            <div class="team-info">
+                <img src="../static/images/berke.jpeg" alt="Berke">
+                <div class="team-description">
+                    <h3>Berke Argin</h3>
+                    <p>MSc. in CS @ EPFL | BSc in CS @ Bogazici University</p>
+                </div>
+            </div>
+            <div class="team-info">
+                <img src="../static/images/nazlican.jpeg" alt="Nazlican">
+                <div class="team-description">
+                    <h3>Nazlican Turan</h3>
+                    <p>MSc. in CS @ EPFL | BSc in CS @ Sabanci University</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
