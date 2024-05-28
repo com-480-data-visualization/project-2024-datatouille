@@ -81,6 +81,7 @@
 
  let geojson; // Hold your GeoJSON layer globally
  let currentLayer; // Track the currently selected layer for style resetting
+ let nameLayer = {}; // Track the layers by name for easy access
 
  function setBorders(map) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -90,6 +91,8 @@
     d3.json('/project-2024-datatouille/data/world-administrative-boundaries-filtered.geojson').then(function(data) {
         geojson = L.geoJSON(data, {
             onEachFeature: function(feature, layer) {
+                countryName = formatCountryName(feature.properties.name)
+                nameLayer[countryName] = layer;
                 layer.on({
                     mouseover: function(e) {
                         var layer = e.target;
@@ -131,7 +134,10 @@
                         document.querySelector('.container').style.display = 'block';
                         var bounds = layer.getBounds();
                         map.fitBounds(bounds);
+                        setFlag(currentEntity)
                         uncollapseFilterPanel();
+                        setCountryNotFound(false)
+                        document.getElementById("country-input").value = "";
                     }
                 });
             },
@@ -148,112 +154,6 @@
     });
 }
 
- 
- function setBorders2(map) {
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    d3.json('/project-2024-datatouille/data/world-administrative-boundaries-filtered.geojson').then(function(data) {
-        L.geoJSON(data, {
-            onEachFeature: function(feature, layer) {
-                layer.on('click', function(e) {
-                    currentEntity = feature.properties.name;
-                    updateCountryData(currentEntity);
-                    document.querySelector('.container').style.display = 'block';
-                    var bounds = layer.getBounds();
-                    map.fitBounds(bounds);
-                    uncollapseFilterPanel();
-                });
-            },
-            style: function(feature) {
-                let isoCode = feature.properties.iso_3166_1_alpha_2_codes ? feature.properties.iso_3166_1_alpha_2_codes.toLowerCase() : null;
-                if (!isoCode) {
-                    return {
-                        color: 'grey',
-                        weight: 1,
-                        fillOpacity: 0.1
-                    };
-                }
-                let patternUrl = '../static/images/country_flags/' + isoCode + '.png';
-
-                return {
-                    color: 'grey',
-                    weight: 1,
-                    fillOpacity: 0.1
-                };
-            }
-        }).addTo(map);
-    }).catch(function(error) {
-        console.error('Error loading GeoJSON:', error);
-    });
-}
-
- function setBorders3(map) {
-   // Add a tile layer
-   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-   }).addTo(map);
- 
-   // Load GeoJSON data
-   d3.json('/project-2024-datatouille/data/world-administrative-boundaries-filtered.geojson').then(function(data) {
-       // Process each feature to add custom pattern
-       L.geoJSON(data, {
-           onEachFeature: function(feature, layer) {
-               layer.on('click', function(e) {
-                   currentEntity = feature.properties.name;
-                   updateCountryData(currentEntity);
-                   document.querySelector('.container').style.display = 'block';
-                   // Zoom to the bounds of the clicked feature
-                   var bounds = layer.getBounds();
-                   map.fitBounds(bounds);
-                   uncollapseFilterPanel();
-               });
-           },
-           style: function(feature) {
-               // Get the ISO alpha-2 code and convert it to lower case
-               if (!feature.properties.iso_3166_1_alpha_2_codes) {
-                   return {
-                       color: 'grey', // Boundary color
-                       weight: 1, // Boundary weight
-                       fillOpacity: 0.1 // Adjust fill opacity as needed
-                   };
-               }
-               let isoCode = feature.properties.iso_3166_1_alpha_2_codes.toLowerCase();
-               console.log(isoCode);
-               // Define the pattern
-               
-               let pattern = new L.Pattern({
-                   width: 50,
-                   height: 50
-               });
-               /*
-               pattern.addShape(new L.PatternShape({
-                   type: 'image',
-                   url: '../static/images/country_flags/' + isoCode + '.png',
-                   width: 50,
-                   height: 50
-               }));
-               //console.log(pattern)
-               console.log('Adding pattern to map:', pattern);
-                try {
-                    pattern.addTo(map);
-                } catch (error) {
-                    console.error('Error adding pattern to map:', error);
-                }
-                */
-               return {
-                   //fillPattern: pattern,
-                   color: 'grey', // Boundary color
-                   weight: 1, // Boundary weight
-                   fillOpacity: 0.1 // Adjust fill opacity as needed
-               };
-           }
-       }).addTo(map);
-   }).catch(function(error) {
-       console.error('Error loading GeoJSON:', error);
-   });
- }
  
  // Initialize the map
  initializeMap();
@@ -274,7 +174,6 @@
  
  
  function clearMapEntries() {
-     // Assuming markers are added to a specific layer or directly to the map
      map.eachLayer(function(layer) {
          if (layer instanceof L.CircleMarker) { // Only remove CircleMarkers, preserving base tiles and other layers
              map.removeLayer(layer);
@@ -404,43 +303,77 @@ function setupEventListeners() {
             // Get the trimmed input value
             let countryName = countryInput.value.trim();
 
-            // Format the country name
-            countryName = formatCountryName(countryName);
-
-            // Update country data with the modified input value
-            updateCountryData(countryName);
-            document.querySelector('.container').style.display = 'block'; // Adjust to make sure it fits well in the panel
-            if (countryName && countryDetails[countryName]) {
+            layer = nameLayer[formatCountryName(countryName)];
+            if (currentLayer) {
+                geojson.resetStyle(currentLayer);
+            }
+            if (layer) {
+                if (currentLayer == layer) {
+                    currentLayer = null;
+                    currentEntity = "all";
+                    document.querySelector('.container').style.display = 'none';
+                    document.getElementById('country-name').innerHTML = '';
+                    map.setView(MAP_CENTER, MAP_ZOOM_LEVEL);
+                    collapseFilterPanel();
+                    return;
+                }
+                currentLayer = layer;
+                layer.setStyle({
+                    weight: 3,
+                    color: '#A63030',
+                    fillOpacity: 0.7
+                });
+                
+                
+                document.querySelector('.container').style.display = 'block';
+                var bounds = layer.getBounds();
+                map.fitBounds(bounds);
+                uncollapseFilterPanel();
+                // Format the country name
+                countryName = formatCountryName(countryName);
+                
+                updateCountryData(countryName);
                 setFlag(countryName);
-                // Country level zoom
-                map.setView(countryDetails[countryName].coords, countryDetails[countryName].zoom);
-            }else{
-                setCountryNotFound();
+                document.querySelector('.container').style.display = 'block'; // Adjust to make sure it fits well in the panel
+                setCountryNotFound(false);
+            }
+            else{
+                setCountryNotFound(true);
                 map.setView(MAP_CENTER, MAP_ZOOM_LEVEL);
             }
         }
     });
 }
 
-function setCountryNotFound() {
-    const countryNameDiv = document.getElementById("country-name");
-    countryNameDiv.innerHTML = "<h2>Country not found :(</h2>"; // Display a not found message
-
-    const containerDiv = document.querySelector('.container');
-    containerDiv.style.display = 'none'; // Hide the data container
+function setCountryNotFound(status) {
 
     // Create or update an existing image element for 'country not found'
-    let notFoundImage = document.getElementById('not-found-image');
-    if (!notFoundImage) {
-        notFoundImage = document.createElement('img');
-        notFoundImage.id = 'not-found-image';
-        document.getElementById('filter-panel').appendChild(notFoundImage);
+    if (status) {
+        const countryNameDiv = document.getElementById("country-name");
+        countryNameDiv.innerHTML = "<h2>Country not found :(</h2>"; // Display a not found message
+    
+        const containerDiv = document.querySelector('.container');
+        containerDiv.style.display = 'none'; // Hide the data container
+
+        let notFoundImage = document.getElementById('not-found-image');
+        if (!notFoundImage) {
+            notFoundImage = document.createElement('img');
+            notFoundImage.id = 'not-found-image';
+            document.getElementById('filter-panel').appendChild(notFoundImage);
+        }
+        notFoundImage.src = '/project-2024-datatouille/static/images/country_not_found.jpeg';
+        notFoundImage.style.display = 'block'; // Make sure the image is visible
+        notFoundImage.style.width = '100%'; // Adjust width to fit the panel
+        notFoundImage.style.height = 'auto'; // Maintain aspect ratio
+        notFoundImage.style.marginTop = '20px'; // Add some space at the top
+
+    }else{
+        let notFoundImage = document.getElementById('not-found-image');
+        if (notFoundImage){
+            notFoundImage.remove();
+        }
     }
-    notFoundImage.src = '/project-2024-datatouille/static/images/country_not_found.jpeg';
-    notFoundImage.style.display = 'block'; // Make sure the image is visible
-    notFoundImage.style.width = '100%'; // Adjust width to fit the panel
-    notFoundImage.style.height = 'auto'; // Maintain aspect ratio
-    notFoundImage.style.marginTop = '20px'; // Add some space at the top
+
 }
 
 function setFlag(countryName) {
@@ -650,9 +583,12 @@ function setFlag(countryName) {
             countryImage = document.createElement('img');
             countryImage.id = 'country-flag';
             countryImage.style.marginLeft = '10px'; // Space between name and flag
-            countryImage.style.borderRadius = '50%'; // Make the image circular
+            //countryImage.style.borderRadius = '50%'; // Make the image circular
             countryImage.style.objectFit = 'cover'; // Ensure the image covers the area
-            countryImage.style.width = '20px'; // Set the width (and height for a circle)
+            if(countryName=="Switzerland")
+                countryImage.style.width = '20px'; // Set the width (and height for a circle)
+            else
+                countryImage.style.width = '30px'; // Set the width (and height for a circle)
             countryImage.style.height = '20px'; // Set the height equal to the width
         }
     
