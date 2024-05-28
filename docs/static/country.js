@@ -350,7 +350,7 @@ function setCountryNotFound(status) {
     // Create or update an existing image element for 'country not found'
     if (status) {
         const countryNameDiv = document.getElementById("country-name");
-        countryNameDiv.innerHTML = "<h2>Country not found :(</h2>"; // Display a not found message
+        countryNameDiv.innerHTML = "<h2>Country not listed:(</h2>"; // Display a not found message
     
         const containerDiv = document.querySelector('.container');
         containerDiv.style.display = 'none'; // Hide the data container
