@@ -586,15 +586,14 @@ function setFlag(countryName) {
             //countryImage.style.borderRadius = '50%'; // Make the image circular
             countryImage.style.objectFit = 'cover'; // Ensure the image covers the area
             if(countryName=="Switzerland")
-                countryImage.style.width = '20px'; // Set the width (and height for a circle)
-            else
                 countryImage.style.width = '30px'; // Set the width (and height for a circle)
-            countryImage.style.height = '20px'; // Set the height equal to the width
+            else
+                countryImage.style.width = '50px'; // Set the width (and height for a circle)
+            countryImage.style.height = '30px'; // Set the height equal to the width
         }
     
         countryImage.src = `../static/images/country_flags/${isoCode.toLowerCase()}.png`;
         countryImage.alt = 'Country Flag';
-        countryImage.style.height = '20px'; // Adjust size as needed
     
         const countryNameContainer = document.getElementById("country-name");
         countryNameContainer.style.display = 'flex'; // Use flexbox to align items inline
