@@ -169,7 +169,7 @@ function setTileLayer(theme) {
         pastel: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', // HOT style (Humanitarian OSM Team), more colorful and distinct
         vibrant: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // Reuse default tiles, assume vibrant styling via CSS
         coolTones: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-        alpinePalette: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png' // cycle-oriented render
+        alpinePalette: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' // cycle-oriented render
     };
 
     // Attribution string required by OpenStreetMap for map data usage
