@@ -343,7 +343,7 @@ function facilities(){
         'Notable sake list': 127,
         'Credit cards not accepted': 80,
         'Shoes must be removed': 57,
-        'Foreign cards not accepted': 41,
+        'Foreign cards unaccepted': 41,
         'Cash only - lunch': 36,
         'Bring your own bottle': 12,
     };
