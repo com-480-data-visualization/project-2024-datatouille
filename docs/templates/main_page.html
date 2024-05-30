@@ -313,6 +313,7 @@
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
             vertical-align: middle;
+            position: relative; /* Ensure it positions relative to its container */
         }
 
         .theme-selector:hover {
@@ -329,11 +330,26 @@
             width: 100%; /* Optional: Adjust based on design requirements */
             box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Styling for when select is active */
             transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+            max-height: 150px; /* Maximum height before scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+            background-color: white; /* Ensure background is always white */
+            position: absolute; /* Position dropdown absolutely */
+            z-index: 10; /* Ensure it appears above other elements */
         }
 
         #colorThemeSelector:focus {
             box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Enhanced focus state */
         }
+
+        #colorThemeSelector.theme-changed {
+            border: 2px solid #2980b9; /* Example visual confirmation for theme change */
+        }
+
+        .theme-selector:hover .navbar-title-link,
+        .theme-selector:hover #colorThemeSelector {
+            opacity: 1; /* Ensure all elements are visible on hover */
+        }
+
 
         .slider-container {
             position: relative;
