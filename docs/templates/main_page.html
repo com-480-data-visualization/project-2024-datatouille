@@ -313,9 +313,9 @@
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
             vertical-align: middle;
-            position: relative; /* Ensure it positions relative to its container */
-            z-index: 9999; /* Ensure it appears above other elements */
-            padding-right: 10px; /* Add padding to the right */
+            position: relative; /* Ensures proper positioning of child elements */
+            margin-right: 35px;
+            margin-left: 10px;
         }
 
         .theme-selector:hover {
@@ -329,29 +329,32 @@
         }
 
         #colorThemeSelector {
-            width: auto; /* Adjust width to fit content */
+            width: 100%; /* Optional: Adjust based on design requirements */
             box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Styling for when select is active */
-            transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-            max-height: 150px; /* Maximum height before scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
-            background-color: white; /* Ensure background is always white */
-            position: absolute; /* Position dropdown absolutely */
-            z-index: 10000; /* Ensure it appears above other elements */
-            margin: 5px; /* Add some margin to fit within the page */
-            padding-right: 10px; /* Ensure padding between options and right border */
+            transition: box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Added transform and opacity for animation */
+            position: absolute; /* Ensures the dropdown options appear in the right place */
+            top: 30px; /* Adjust this value to ensure dropdown options appear below the select box */
+            z-index: 10000; /* Ensures the dropdown appears above other content */
+            min-width: 100px;
+            color: rgb(166, 64, 48); /* Sets the color of the text for options */
+            transform: translateY(-10px); /* Initial state for dropdown animation */
+            opacity: 0; /* Initial opacity for animation */
+        }
+
+        .theme-selector:hover #colorThemeSelector {
+            display: block; /* Show the select on hover */
+            transform: translateY(0); /* Animation for dropdown */
+            opacity: 1; /* Fade in effect */
         }
 
         #colorThemeSelector:focus {
             box-shadow: 0 0 15px 3px rgba(41, 128, 185, 0.75); /* Enhanced focus state */
+            transform: scale(1.05); /* Adds a slight zoom effect */
         }
 
-        #colorThemeSelector.theme-changed {
-            border: 2px solid #2980b9; /* Example visual confirmation for theme change */
-        }
-
-        .theme-selector:hover .navbar-title-link,
-        .theme-selector:hover #colorThemeSelector {
-            opacity: 1; /* Ensure all elements are visible on hover */
+        #colorThemeSelector option {
+            color: rgb(166, 64, 48); /* Sets the color of the text for options */
+            padding: 5px 10px;
         }
 
         .slider-container {
