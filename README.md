@@ -6,7 +6,7 @@
 |İlker Gül|353296|
 |Berke Argin|376695|
 
-[Milestone 1](#milestone-1-29th-march-5pm) • [Milestone 2](#milestone-2-26th-april-5pm) • [Milestone 3](#milestone-3-31st-may-5pm) • [Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) 
+[Milestone 1](#milestone-1-29th-march-5pm) • [Milestone 2](#milestone-2-26th-april-5pm) • [Milestone 3](#milestone-3-31st-may-5pm) • [Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) • [Process Book](https://github.com/com-480-data-visualization/project-2024-datatouille/blob/main/milestone3/Datatouille_Process-Book.pdf) 
 
 ## Project Logo
 <p align="center">
