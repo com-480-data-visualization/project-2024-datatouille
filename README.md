@@ -6,7 +6,7 @@
 |İlker Gül|353296|
 |Berke Argin|376695|
 
-[Milestone 1](#milestone-1-29th-march-5pm) • [Milestone 2](#milestone-2-26th-april-5pm) • [Milestone 3](#milestone-3) • [Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) 
+[Milestone 1](#milestone-1-29th-march-5pm) • [Milestone 2](#milestone-2-26th-april-5pm) • [Milestone 3](#milestone-2-31st-may-5pm) • [Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) 
 
 ## Project Logo
 <p align="center">
@@ -144,10 +144,22 @@ Visit our initial [Project Website](https://com-480-data-visualization.github.io
 
 
 
-
 ## Milestone 3 (31st May, 5pm)
 
 **80% of the final grade**
+
+Here are some key resources for Milestone 3:
+
+### 📄 Process Book
+For detailed insights and analysis regarding Project, check out our comprehensive [Process Book](https://github.com/com-480-data-visualization/project-2024-datatouille/blob/main/milestone3/Datatouille_Process-Book.pdf).
+
+### 🌐 Project Website
+Visit our [Project Website](https://com-480-data-visualization.github.io/project-2024-datatouille/index.html) to explore Michelin restaurants and more detailed content about our work.
+
+### 📺  Screencast
+Visit our [Screencast video]() to learn more about our project with a demonstration.
+
+
 
 
 ## Late policy
